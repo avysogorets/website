@@ -1,0 +1,226 @@
+* {
+    margin:0;
+    padding:0;
+    font-family: 'Garamond', Arial Bold;
+    box-sizing: border-box;
+    border: 0px;
+}
+
+body {
+    height: 100%;
+    background: black;
+    color: black;
+}
+
+.header {
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    padding-left: 3%;
+    padding-right: 7%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    width: 55px;
+    margin-right: auto;
+    margin-left: 0;
+    margin-top: 0;
+    background: transparent;
+    opacity: 0;
+    animation: slideTop 1s ease forwards;
+}
+
+.navbar a {
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    margin-left: 35px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: calc(0.2s * var(--i));
+}
+
+.navbar a.active,
+.navbar a:hover {
+    background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.panel {
+    display: flex;
+    background: var(--c);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    height: 100%;
+    background: var(--c);
+    padding-top: 20px;
+    padding-left: 50px;
+    flex-direction: column;
+    display: flex;
+    justify-content: var(--j);
+}
+
+.big-text {
+    max-width: 90%;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    font-weight: 700;
+    color: var(--c);
+    font-size: 32px;
+    opacity: 0;
+    animation: slideRight 0.5s ease forwards;
+    animation-delay: 0.2s;
+}
+
+.small-text {
+    padding-top: 0px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+    font-weight: 100;
+    color: var(--c);
+    font-size: 16px;
+    opacity: 0;
+    animation: slideLeft 0.5s ease forwards;
+    animation-delay: calc(0.4s + calc(0.1s * var(--d)));
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.paper {
+    height: 120px;
+    max-width: 80%;
+    display: flex;
+    justify-items: start;
+    align-items: center;
+    color: black;
+    margin-left: 50px;
+    margin-top:20px;
+}
+
+.home-sci {
+    display: flex;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: center;
+    background: black
+}
+
+.home-sci a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    background: linear-gradient(violet, rgb(93, 184, 249));
+    text-decoration: none;
+    color: white;
+    border-radius: 50%;
+    font-size: 27px;
+    padding: 5px;
+    margin: 20px 20px;
+    z-index: 1;
+    opacity: 0;
+    animation: slideTop 0.5s ease forwards;
+    animation-delay: calc(0.3s * var(--j));
+}
+
+.home-sci a::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: black;
+    border-radius: 50%;
+    transform: scale(0.88);
+    z-index: -1;
+    transition: 0.5s ease;
+}
+
+.text-gradient {
+    background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.home-sci a:hover::after {
+    transform: scale(0);
+}
+
+
+@keyframes slideTop {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes slideLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes slideBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+
+/*
+@media (
+    max-width: 500px
+)
+{
+    .content {background-color: aqua;}
+}
+*/
