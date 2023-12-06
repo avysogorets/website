@@ -5,50 +5,68 @@
     <meta http-equiv="X-UA-Compatible"
     content="'IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="style.css?v22" />
+    <link type="text/css" rel="stylesheet" href="/style.css?v22" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
     <title>Artem Vysogorets</title>
 </head>
-<body style="height:100vh; overflow: hidden">
+<body style="height:100vh; overflow-y: hidden">
     <header class="header">
-        <a href="index.html" class="logo"><img src="imgs/av/horz_ww_logo.png" style="width:100%"></a>
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo.png" style="width:100%">
+        </a>
         <nav class="navbar">
-            <a href="index.html" style="--i:1;"  class="active">Home</a>
-            <a href="aboutme.html" style="--i:2;">About me</a>
-            <a href="publications.html" style="--i:3;">Publications</a>
-            <a href="imgs/cv.pdf" style="--i:4;">CV </a>
-            <!--<a href="blog.html" style="--i:5;">Blog</a>-->
+            <a href="/index.html" style="--i:1;" class="active menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="menu-option-horz">Blog</a>
         </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor: pointer;"></i>
+            </div>
+            <ul class="menu-dropdown">
+                <li><a href="/index.html" style="--i:0;" class="active menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
     </header>
-    <div class="panel" style="--c:black;height:calc(100% - 49px);">
+    <div class="panel" style="--c:black;height:calc(100% - 49px);overflow: hidden;">
         <div class="content" style="--c:black;--j:space-between;font-size:48;margin-right:10%;">
-            <div class="big-text" style="--c:white;font-size:42px;margin-bottom:3%;margin-top:7%">
+            <div class="giant-text" style="--c:white;">
                 Hi, I'm Artem Vysogorets,
             </div>
-            <div class="small-text" style="--c:white;--d:0;font-size:20px;font-style:oblique;"> 
+            <div class="middle-text" style="--c:white;--d:0;font-style:oblique;"> 
                 A final-year Ph.D. in Data Science at New York University advised by Julia Kempe.
-                My research interests encompass a range of topics in fundamental deep learning such
-                as network & data pruning, active & continual learning, and geometry of the
+                My research interests encompass a range of topics in fundamental deep learning including network & data pruning, active & continual learning, and the geometry of
                 loss landscapes at initialization.
             </div>
-            <div class="small-text" style="--c:white;--d:0.5;font-size:20px;font-style:oblique;">
+            <div class="middle-text" style="--c:white;--d:0.5;font-style:oblique;">
                 Previously, I received a B.S. in Mathematics from the University of
                 Massachusetts Amherst and had internships at Samsung AI, Bloomberg, and IBM.
             </div>
             <div class="home-sci">
-                <a href="http://www.github.com/avysogorets" style="--j:0.5"><i class='bx bxl-github'></i></a>
+                <a href="https://www.github.com/avysogorets" style="--j:0.5"><i class='bx bxl-github'></i></a>
                 <a href="https://leetcode.com/avysogorets/" style="--j:1"><iconify-icon icon="simple-icons:leetcode"></iconify-icon></a>
-                <a href="http://www.linkedin.com/in/avysogorets" style="--j:1.5"><i class='bx bxl-linkedin-square'></i></a>
+                <a href="https://www.linkedin.com/in/avysogorets" style="--j:1.5"><i class='bx bxl-linkedin-square'></i></a>
                 <a href="mailto:arvysogorets@gmail.com" style="--j:2"><i class='bx bx-envelope'></i></a>
             </div>
         </div>
-        <div style="background:white;height:100%">
-            <img src="imgs/av/vert_bb_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
+        <div class="side-panel" style="height:100%">
+            <img src="/imgs/av/vert_bb_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
         </div>
     </div>
+<script src="/utils.js"></script>
 </body>
 </html>

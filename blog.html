@@ -14,7 +14,7 @@
 		<script id="MathJax-script" async
 				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 		</script>
-    	<title>AV: Publications</title>
+    	<title>AV: Blog</title>
 	</head>
 <body>
     <header class="header">
@@ -24,9 +24,9 @@
         <nav class="navbar">
             <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
             <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
-            <a href="/publications.html" style="--i:3;" class="active menu-option-horz">Publications</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
             <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
-            <a href="/blog.html" style="--i:5;" class=" menu-option-horz">Blog</a>
+            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
         </nav>
         <menu>
             <div class="menu-icon">
@@ -43,43 +43,62 @@
     </header>
 	<div class="panel" style="--c:black;align-items:start;">
 		<div class="content" style="--c:black;--j:start;margin-bottom:50px;width:100%">
-			<div class="big-text" style="--c:white;">
-				Selected Publications
-			</div>
-			<div class="paper">
-				<div style="height:100%;background:black">
-					<a href="https://www.jmlr.org/papers/v24/22-0415.html">
-						<img src="/imgs/papers/paper-2021.png" style="height:100%;opacity:0;animation:fadeIn 0.8s ease forwards;animation-delay:calc(0.4s + 0.1s);">
-					</a>
+			<div class="category">
+				<div class="big-text" style="--c:white;">
+					<span onclick="toggleSubcategories('mathematics')" style="--c:white;cursor:pointer;">
+						<span style="font-size: 12px;vertical-align:middle;">▶</span> Mathematics
+					</span>
 				</div>
-				<div class="small-text" style="--c:white;--d:1">
-					<span class="text-gradient">Vysogorets, A.</span>, & Kempe, J. (2021). Connectivity Matters: "Neural Network 
-					Pruning Through the Lens of Effective Sparsity."
-					<span style="font-style:italic;"> Journal of Machine Learning Research</span>, 24, 99:1-99:23.
+				<ul id="mathematics" class="subcategories">
+					<li>
+						<div style="padding-top:3px;margin-left:10px;">
+							<span class="small-text" style="--c:grey;font-size:20px;--d:1">
+								Linear Algebra (coming soon)
+							</span>
+						</div>
+					</li>
+					<li>
+						<div style="padding-top:3px;margin-left:10px;">
+							<span class="small-text" style="--c:grey;font-size:20px;--d:1">
+								Statistical Learning Theory (coming soon)
+							</span>
+						</div>
+					</li>
+					<li>
+						<div style="padding-top:3px;margin-left:10px;">
+							<a href="/blog/mathematics/brainteasers.html" style="text-decoration:none;">
+								<span class="small-text" style="--c:white;font-size:20px;--d:1">
+									Brainteasers
+								</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+
+				<div class="big-text" style="--c:white;">
+					<span onclick="toggleSubcategories('preferans')" style="--c:white;cursor:pointer;">
+						<span style="font-size: 12px;vertical-align:middle;">▶</span> Preferans
+					</span>
 				</div>
-			</div>
-			<div class="paper">
-				<div style="height:100%;background:black;">
-					<a href="https://www.combinatorics.org/ojs/index.php/eljc/article/view/v27i1p17">
-						<img src="/imgs/papers/paper-2019.png" style="height:100%;opacity:0;animation:fadeIn 0.8s ease forwards;animation-delay:calc(0.4s + 0.2s);">
-					</a>
-				</div>
-				<div class="small-text" style="--c:white;--d:2">
-					Braden, T., & <span class="text-gradient">Vysogorets, A.</span> (2019). "Kazhdan-Lusztig Polynomials of Matroids Under Deletion."
-					<span style="font-style:italic;">Electronic Journal of Combinatorics</span>, 27, 1.
-				</div>
-			</div>
-			<div class="paper" style="--d:3">
-				<div style="height:100%;background:black;">
-					<a href="https://arxiv.org/abs/2210.01987">
-						<img src="/imgs/papers/paper-2023.png" style="height:100%;opacity:0;animation:fadeIn 0.8s ease forwards;animation-delay:calc(0.4s + 0.3s);">
-					</a>
-				</div>
-				<div class="small-text" style="--c:white;--d:3">
-					Bhardwaj, D., Kempe, J., <span class="text-gradient">Vysogorets, A.</span>, Teng, A., & Ezekwem, E.C. (2022). 
-					"ImpressLearn: Continual Learning via Combined Task Impressions."
-					<span style="font-style:italic;">ArXiv, abs/2210.01987</span>. Under review in AAAI 2023.
-				</div>
+				<ul id="preferans" class="subcategories">
+					<li>
+						<div style="padding-top:3px;margin-left:10px;">
+							<span class="small-text" style="--c:grey;font-size:20px;--d:1">
+								Etudes (coming soon)
+							</span>
+						</div>
+					</li>
+					<li>
+						<div style="padding-top:3px;margin-left:10px;">
+							<a href="https://github.com/avysogorets/preferans-solver" style="text-decoration:none;">
+								<span class="small-text" style="--c:white;font-size:20px;--d:1">
+									Solver
+								</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+
 			</div>
 		</div>
 		<div class="side-panel" style="height:calc(100vh - 49px);position:sticky;top:49px">

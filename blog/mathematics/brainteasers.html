@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible"
+    	content="'IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link type="text/css" rel="stylesheet" href="/style.css?v22" />
+    	<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async
+				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+		</script>
+    	<title>AV-brainteasers</title>
+	</head>
+<body>
+    <header class="header">
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo-nb.png" style="width:100%">
+        </a>
+        <nav class="navbar">
+            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
+        </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor: pointer;"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="active menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
+    </header>
+	<div class="panel" style="--c:white;align-items:start;">
+		<div class="content" style="--c:white;--j:start;margin-bottom:50px;width:100%;">
+			<div class="big-text" style="--c:black;">
+                Contents
+            </div>
+            <ul style="list-style:none;">
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#cards" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);font-size:20px;--d:1">
+                                1. A deck of cards in a dark room
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#train" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);font-size:20px;--d:1">
+                                2. The number of cars in a circular train
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#badges" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);font-size:20px;--d:1">
+                                3. Identify the hiding employee
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#salary" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);font-size:20px;--d:1">
+                                4. Find the average salary
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#island" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);font-size:20px;--d:1">
+                                5. A hundered islanders with blue eyes
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="big-text" style="--c:black;">
+                Problems
+            </div>
+            <div class="small-text" id="cards" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">1. A deck of cards in a dark room. </span> You are given a deck of \(N\) cards with exactly \(k\) cards oriented face-down and others oriented face-up.
+                The values of both \(N\) and \(k\) are known.
+                You are in a completely dark room and there is no way to tell the orientation of any card in the deck. Split the 
+                deck into two not necessarily equal piles so that the number of cards face-down in each pile is the same.
+            </div>
+            <br>
+            <div class="small-text" id="train" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">2. The number of cars in a circular train. </span> You enter one of the cars of a circular train (the first car is attached to the last car; the number of cars is finite). Each car
+                is equipped with a light switch and a corresponding light bulb. You are allowed to move between cars and interact with the switches, which are initially in arbitrary
+                positions. Develop an algorithm that correctly identifies the total number of cars in the train in finite time.
+            </div>
+            <br>
+            <div class="small-text" id="badges" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">3. Identify the hiding employee. </span> Each employee of a large corporation has a badge with a unique integer ID number. Every time an employee enters or leaves the office
+                building, they scan their badge at the gates, which gets registered in the daily logs. One day, exaclty one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
+                extra space where \(N\) is the total number of employees. 
+            </div>
+            <br>
+            <div class="small-text" id="salary" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">4. Find the average salary. </span> You and all other members of your team decide to figure out the average salary within your team. Suggest a procedure that does not involve any external or non-verbal means of communication 
+                (i.e., no computers, notes, etc.) that will let you collectively figure out the average salary while also not revealing anyone's salary to anyone else.
+            </div>
+            <br>
+            <div class="small-text" id="island" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">5. A hundred islanders with blue eyes. </span> All \(100\) people inhabiting one remote island have blue eyes but neither knows their own eye color. There are no mirrors on the island,
+                and the inhabitants have no means of learning about their eye color except by using logic. Every evening all 100 people come together for a daily gathering where everyone can see everyone else but no communication
+                is allowed. The tradition dictates that once a person learns about his eye color, he is required to leave the island right after the gathering on the same day. No one had left the island for decades until a foreigner visited 
+                the island, sneaked into the daily gathering and said: "At least one of you has blue eyes" and left the island immediately. What will happen to the population of the island?
+            </div>
+        </div>
+		<div class="side-panel" style="height:calc(100vh - 48.5px);position:sticky;top:48.5px">
+			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
+		</div>
+	</div>
+<script src="/utils.js"></script>
+</body>
+</html>

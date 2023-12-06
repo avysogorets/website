@@ -5,29 +5,47 @@
     <meta http-equiv="X-UA-Compatible"
     content="'IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="style.css?v22" />
+    <link type="text/css" rel="stylesheet" href="/style.css?v22" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>About me</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>AV: About me</title>
 </head>
 <body>
     <header class="header">
-        <a href="index.html" class="logo"><img src="imgs/av/horz_ww_logo-nb.png" style="width:100%"></a>
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo.png" style="width:100%">
+        </a>
         <nav class="navbar">
-            <a href="index.html" style="--i:1;">Home</a>
-            <a href="aboutme.html" style="--i:2;" class="active">About me</a>
-            <a href="publications.html" style="--i:3;">Publications</a>
-            <a href="imgs/cv.pdf" style="--i:4;">CV </a>
-            <!--<a href="blog.html" style="--i:5;">Blog</a>-->
+            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="active menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="menu-option-horz">Blog</a>
         </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor: pointer;"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="active menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
     </header>
     <div class="panel" style="--c:white;align-items:start;">
-        <div style="height:calc(100vh - 48px);background:white;position:sticky;top:48px">
-            <img src="imgs/me/Artem-Vysogorets-l.PNG" style="height:100%; animation: fadeIn 2s ease forwards;">
+        <div class="side-panel" style="height:calc(100vh - 48px);position:sticky;top:48px">
+            <img src="/imgs/me/Artem-Vysogorets-l.PNG" style="height:100%; animation: fadeIn 2s ease forwards;">
         </div>
-        <div class="content" style="--c:white;--j:start;">
+        <div class="content" style="--c:white;--j:start;margin-right:2%">
             <div class="big-text" style="--c:black;font-size:26px;">
                 Biography
             </div>
@@ -40,7 +58,7 @@
                 at the Center for Data Science at NYU. I received U.S. citizenship in 2021.
             </div>
             <div class="big-text" style="--c:black;font-size:26px;">
-                Interests
+                Hobbies
             </div>
             <div class="small-text" style="--c:rgb(88, 88, 88);--d:0"> 
                 I used to take tennis classes when I was a kid and, like many others,
@@ -49,11 +67,11 @@
                 Fun fact: Daniil and I attended the same high school in Moscow in 2010-2011!<br><br>
 
                 I am very enthusiastic about Preferans&mdash;a fascinating card game that originated in Russia
-                in the 18-th century. Some people say that Preferans is an easier version of Bridge but I can neither
+                in the 19-th century. Some people say that Preferans is an easier version of Bridge but I can neither
                 confirm nor deny this statement. My lifelong dream is to go on a week-long train trip across Siberia 
                 and play Preferans with my friends all along.<br><br>
 
-                I occasionally play the guitar. It's very relaxing, although I easily get frustrated when it doesn't come out right.
+                I occasionally play the guitar. It's very relaxing, although I easily get frustrated with myself when it doesn't come out right.
                 Some of my favourite songs are written by Boris Grebenshikov, Yuri Shevchuk, and Leonid Fedorov. 
             </div>
             <div class="big-text" style="--c:black;font-size:26px;">
@@ -64,6 +82,7 @@
             </div>
         </div>
     </div>
+<script src="/utils.js"></script>
 </body>
 </html>
 
