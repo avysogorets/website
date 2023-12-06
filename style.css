@@ -241,10 +241,11 @@ body {
 }
 
 .menu-icon {
-    display: none;
-    margin-right: 0px;
-    text-align: right;
+    margin-bottom: 6px;
     margin-left: auto;
+    margin-right: 0;
+    display: none;
+    text-align: right;
     width:150px;
     align-content: center;
     background: transparent;
