@@ -17,9 +17,7 @@ body {
     top: 0px;
     width: 100%;
     padding-left: 3%;
-    padding-right: 0;
-    /*padding-top: 10px;
-    padding-bottom: 10px;*/
+    padding-right: 3%;
     background: black;
     display: flex;
     justify-content: space-around;
@@ -89,13 +87,13 @@ body {
 .content {
     height: 100%;
     background: var(--c);
-    margin-top: 5%;
-    margin-bottom: 5%;
-    margin-left: 5%;
-    margin-right:5%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    margin-left: 7%;
+    margin-right: 7%;
     flex-direction: column;
     display: flex;
-    justify-content: var(--j);
+    justify-content: start;
 }
 
 
@@ -138,7 +136,7 @@ body {
     padding-right: 2%;
     font-weight: 700;
     color: var(--c);
-    font-size: 20px;
+    font-size: 22px;
     opacity: 0;
     animation: slideLeft 0.5s ease forwards;
     animation-delay: calc(0.4s + calc(0.1s * var(--d)));
@@ -153,7 +151,7 @@ body {
     padding-right: 0;
     font-weight: 100;
     color: var(--c);
-    font-size: 16px;
+    font-size: 18px;
     opacity: 0;
     animation: slideLeft 0.5s ease forwards;
     animation-delay: calc(0.4s + calc(0.1s * var(--d)));
@@ -259,7 +257,7 @@ body {
     display: none;
     text-align: right;
     width:150px;
-    align-content: center;
+    align-content: right;
     vertical-align: middle;
     background: transparent;
 }
@@ -293,7 +291,7 @@ header menu {
     max-height: 100px;
     display: inline-block;
     position: relative;
-    margin-right: 20px;
+    margin-right: 8px;
 }
 
 
@@ -358,7 +356,7 @@ header menu {
     .giant-text {font-size: 28px;}
     .big-text {font-size: 20px;}
     .middle-text {font-size: 16px;}
-    .small-text {font-size: 12px;}
+    .small-text {font-size: 14px;}
     .body {overflow-y: visible;}
     .home-sci {justify-content: space-between;
         margin-top: 15%;
@@ -366,5 +364,5 @@ header menu {
     .paper {margin-left: 20px;
         max-width: 100%;
         margin-top:1%;}
-    .paper-icon {height: 80%;}
+    .paper-icon {height: 85%;}
 }
