@@ -12,13 +12,14 @@ body {
 }
 
 .header {
+    height: 49px;
     position: sticky;
     top: 0px;
     width: 100%;
     padding-left: 3%;
     padding-right: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /*padding-top: 10px;
+    padding-bottom: 10px;*/
     background: black;
     display: flex;
     justify-content: space-around;
@@ -28,9 +29,13 @@ body {
 
 .logo {
     width: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-right: auto;
-    margin-left: 0;
-    margin-top: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background: transparent;
     opacity: 0;
     animation: slideTop 1s ease forwards;
@@ -109,7 +114,7 @@ body {
 
 .big-text {
     font-family: Arial, Helvetica, sans-serif;
-    max-width: 90%;
+    width: 90%;
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 4%;
@@ -124,7 +129,7 @@ body {
 
 .middle-text {
     font-family: Arial, Helvetica, sans-serif;
-    max-width: 90%;
+    width: 90%;
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 6%;
@@ -139,7 +144,7 @@ body {
 
 .small-text {
     font-family: Arial, Helvetica, sans-serif;
-    max-width: 90%;
+    width: 90%;
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 4%;
@@ -241,13 +246,14 @@ body {
 }
 
 .menu-icon {
-    margin-bottom: 6px;
+    /*margin-bottom: 6px;*/
     margin-left: auto;
     margin-right: 0;
     display: none;
     text-align: right;
     width:150px;
     align-content: center;
+    vertical-align: middle;
     background: transparent;
 }
 
@@ -264,7 +270,8 @@ ul.menu-dropdown {
     background: transparent;
     position: absolute;
     color: white;
-    margin: 0;
+    margin-top: 6px;
+    margin-right: 0;
     z-index: 200;
     overflow: hidden;
     transition: max-height 0.5s ease-out;
@@ -276,6 +283,7 @@ ul.menu-dropdown.visible {
 }
 
 header menu {
+    max-height: 100px;
     display: inline-block;
     position: relative;
     margin-right: 20px;
@@ -333,7 +341,7 @@ header menu {
 
 
 @media (
-    max-width: 800px
+    max-width: 768px
 )
 {
     .side-panel {display: none;}
@@ -343,4 +351,5 @@ header menu {
     .giant-text {font-size: 32px;}
     .big-text {font-size: 24px;}
     .middle-text {font-size: 18px;}
+    .body {overflow-y: visible;}
 }
