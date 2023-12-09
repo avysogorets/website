@@ -78,6 +78,7 @@ body {
 
 .panel {
     display: flex;
+    height:calc(100% - 49px);
     background: var(--c);
     flex-direction: row;
     justify-content: center;
@@ -87,10 +88,10 @@ body {
 .content {
     height: 100%;
     background: var(--c);
-    margin-top: 3%;
-    margin-bottom: 3%;
-    margin-left: 7%;
-    margin-right: 7%;
+    padding-top: max(20px, min(7%, 30px));
+    padding-bottom: max(20px, min(7%, 30px));
+    padding-left: max(25px, min(5%, 70px));
+    padding-right: max(20px, min(5%, 50px));
     flex-direction: column;
     display: flex;
     justify-content: start;
@@ -99,11 +100,8 @@ body {
 
 .giant-text {
     font-family: Arial, Helvetica, sans-serif;
-    max-width: 100%;
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 2%;
-    padding-right: 0;
     font-weight: 700;
     color: var(--c);
     font-size: 42px;
@@ -114,11 +112,8 @@ body {
 
 .big-text {
     font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 4%;
-    padding-right: 0;
     font-weight: 700;
     color: var(--c);
     font-size: 32px;
@@ -129,11 +124,8 @@ body {
 
 .middle-text {
     font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 6%;
-    padding-right: 2%;
     font-weight: 700;
     color: var(--c);
     font-size: 22px;
@@ -144,10 +136,8 @@ body {
 
 .small-text {
     font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 4%;
     padding-right: 0;
     font-weight: 100;
     color: var(--c);
@@ -159,13 +149,24 @@ body {
 
 .paper {
     height: 120px;
-    margin-left:50px;
     max-width: 100%;
     display: flex;
     justify-items: start;
     align-items: center;
     color: black;
     margin-top:5%;
+}
+
+it {
+    font-style: italic;
+}
+
+mjx-container[jax="CHTML"][display="true"] {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+    overflow-x:scroll;
+    overflow-y: hidden;
 }
 
 .home-sci {
@@ -240,7 +241,7 @@ body {
 }
 
 .subcategories {
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     transition: max-height 0.5s ease-out;
     max-height: 0px;
@@ -361,8 +362,7 @@ header menu {
     .home-sci {justify-content: space-between;
         margin-top: 15%;
         margin-bottom: 15%;}
-    .paper {margin-left: 20px;
-        max-width: 100%;
+    .paper {max-width: 100%;
         margin-top:1%;}
     .paper-icon {height: 85%;}
 }

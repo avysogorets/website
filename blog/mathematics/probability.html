@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible"
+    	content="'IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link type="text/css" rel="stylesheet" href="/style.css?v22" />
+    	<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async
+				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+		</script>
+        <script>
+            window.MathJax = {
+            chtml: {
+                scale: 0.85
+            },
+            svg: {
+                scale: 0.85
+            }
+            };
+        </script>
+    	<title>AV Blog</title>
+	</head>
+<body>
+    <header class="header">
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo-nb.png" style="width:100%">
+        </a>
+        <nav class="navbar">
+            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
+        </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="active menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
+    </header>
+	<div class="panel" style="--c:white;align-items:start;">
+		<div class="content" style="--c:white;--j:start;margin-bottom:50px;width:100%;overflow-x:auto;">
+			<div class="big-text" style="--c:black;">
+                Contents
+            </div>
+            <ul style="list-style:none;">
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a href="#intro" style="text-decoration: none;">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                1. Introduction
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="big-text" style="--c:black;">
+                Introduction
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
+                <span style="font-weight: bold;"> Definition</span> [\(\sigma\)-algebra]. A \(\sigma\)-algebra \(\mathcal{A}\) on a set \(\Omega\) is a collection of its subsets such that it contains \(\Omega\) and is closed under complements, countable intersections, and countable unions. We call elements of \(\mathcal{A}\) events.
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Definition</span> [probability measure]. A probability measure \(\mathbb{P}\) on \(\sigma\)-algebra \((\Omega,\mathcal{A})\) is a function \(\mathbb{P}\colon\mathcal{A}\rightarrow[0,1]\) satisfying \(\mathbb{P}(\Omega)=1\) and sigma-additivity, i.e., given any
+                countable collection \(\{A_i\}_{i\in I}\) of disjoint subsets \(A_i\in\mathcal{A}\), we have \(\mathbb{P}\left(\bigcup_{i\in I}A_i\right)=\sum_{i\in I}\mathbb{P}(A_i)\). The triplet \((\Omega, \mathcal{A}, \mathbb{P})\) is called a probability space.
+                <hr style="height:10px; visibility:hidden;"/>
+                Note that, in general, infinite sums require extra care as they may have different values for different rearrangements of the summands (see conditionally convergent series). However, the positivity assumption on \(\mathbb{P}\) makes the above infinite series absolutely convergent, and so its value is independent of the order of individual terms.
+                The prefix <it>sigma-</it> in sigma-additivity highlights that the corresponding property holds for countably infinite collections \(\{A_i\}_{i\in I}\). In constrast, additivity ensures the condition only for finite collections of subsets.
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition</span> [continuity of probabilities]. Given a monotone increasing sequence \(\{A_i\}_{i=1}^{\infty}\) of events (\(A_i\subseteq A_{i+1}\) for all \(i\)) with a limit \(A=\bigcup_{i=1}^{\infty}\) (often written as \(A_i\uparrow A\)), we have \(\lim_{n\rightarrow\infty}\mathbb{P}(A_n)=\mathbb{P}(A)\).
+                <br>
+                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;font-style:italic;">
+                Proof.
+                </span>
+                <ul id='1' class="subcategories" style="color:black;">
+                <hr style="height:10px; visibility:hidden;"/>
+                Define a sequence of events \(\{B_i\}_{i=1}^{\infty}\) where \(B_1=A_1\) and \(B_i = A_{i}\setminus A_{i-1}\) for \(i>1\) (note that we implicitly assume that \(B_i\in\mathcal{A}\),
+                which can be shown using the definition of \(\mathcal{A}\)). Since \(B_i\cap B_j = \emptyset\) whenever \(i\ne j\), sigma-additivity of the probability yields \(\mathbb{P}(A_n) = \mathbb{P}\left(\bigcup_{i=1}^{n} B_i\right)\)\(=\sum_{i=1}^{n}\mathbb{P}(B_i)\). Taking the limit on both sides, we recover \(\lim_{n\rightarrow\infty}\mathbb{P}(A_n)=\sum_{n=1}^{\infty}\mathbb{P}(B_n)\),
+                which is \(\mathbb{P}\left(\bigcup_{i=1}^{\infty}B_i\right)=\mathbb{P}(A)\) by the application of sigma-additivity once again. <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Definition</span> [independence]. Two events \(A, B\in\mathcal{A}\) are independent (with respect to the given probability measure \(\mathbb{P}\)) if \(\mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B).\) A collection of events \(\{A_i\}_{i\in I}\) is independent if for any finite subset \(J\subseteq I\), we have 
+                \(\mathbb{P}\big(\bigcap_{j\in J}A_j\big)=\prod_{j\in J}\mathbb{P}(A_j)\).
+                <hr style="height:10px; visibility:hidden;"/>
+                We can make a few basic observations using this definition. First, an event that holds with probability \(1\) is independent to any other event. Furthermore, if two disjoint events both have non-zero probability, they cannot be independent.
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Definition</span> [conditional probability]. Given an event \(A\in\mathcal{A}\) of a probability space \((\Omega,\mathcal{A},\mathbb{P})\) with \(\mathbb{P}(A)>0\), we define a conditional probability measure \(\mathbb{P}(\cdot|A)\colon\mathcal{A}\rightarrow[0,1]\) as \(\mathbb{P}(B|A)=\mathbb{P}(A\cap B)/\mathbb{P}(A)\).
+                <br>
+                <span onclick="toggleSubcategories('2')" style="color:black;cursor:pointer;font-style:italic;">
+                Proof.
+                </span>
+                <ul id='2' class="subcategories" style="color:black;">
+                <hr style="height:10px; visibility:hidden;"/>
+                We need to show that conditional probability function is indeed a well-defined probability measure. Clearly, \(\mathbb{P}(\Omega|A) = 1\). Given a countable collection of disjoint events \(\{B_i\}_{i\in I}\), we have \[\mathbb{P}\left(\bigcup_{i\in I}B_i\Big|A\right) = \frac{\mathbb{P}\left(\bigcup_{i\in I}B_i\cap A\right)}{\mathbb{P}(A)}=\frac{\sum_{i\in I}\mathbb{P}(B_i\cap A)}{\mathbb{P}(A)}=\sum_{i\in I}\mathbb{P}(B_i|A),\]
+                as desired.
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                Note that \(\mathbb{P}(B|A) = \mathbb{P}(B)\) is \(A,B\) are two independent events.
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition</span> [chain rule]. Let \(\{A_i\}_{i=1}^{n}\) be a collection of events such that \(\mathbb{P}\left(\bigcap_{i=1}^{n-1}A_i\right)>0\). Then, \[\mathbb{P}\left(\bigcap_{i=1}^nA_i\right)=\mathbb{P}(A_1)\mathbb{P}(A_2|A_1)\mathbb{P}(A_3|A_1\cap A_2)\ldots\mathbb{P}\left(A_n\Big|\bigcap_{i=1}^{n-1}A_i\right).\]
+                <br>
+                <span onclick="toggleSubcategories('5')" style="color:black;cursor:pointer;font-style:italic;">
+                Proof.
+                </span>
+                <ul id='5' class="subcategories" style="color:black;">
+                <hr style="height:10px; visibility:hidden;"/>
+                Using the definition of conditional probability. <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition</span> [total probability]. Given an event \(A\in\mathcal{A}\) and a partition \(\Omega=\bigcup_{i\in I}E_i\) by countably many disjoint events \(E_i\), we have \(\mathbb{P}(A)=\sum_{i\in I}\mathbb{P}(A|E_i)\mathbb{P}(E_i)\). 
+                <br>
+                <span onclick="toggleSubcategories('3')" style="color:black;cursor:pointer;font-style:italic;">
+                Proof.
+                </span>
+                <ul id='3' class="subcategories" style="color:black;">
+                <hr style="height:10px; visibility:hidden;"/>
+                By definition of conditional probability and sigma-additivity of probability measures. <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition</span> [Bayes theorem]. Given an event \(A\) and a partition \(\Omega=\bigcup_{i\in I}E_i\) by countably many disjoint events with \(\mathbb{P}(E_i)>0\), we have \[\mathbb{P}(E_i|A)=\frac{\mathbb{P}(A|E_i)\mathbb{P}(E_i)}{\sum_{j\in I}\mathbb{P}(A|E_j)\mathbb{P}(E_j)}.\]
+                <span onclick="toggleSubcategories('4')" style="color:black;cursor:pointer;font-style:italic;">
+                Proof.
+                </span>
+                <ul id='4' class="subcategories" style="color:black;">
+                <hr style="height:10px; visibility:hidden;"/>
+                By definition of conditional probability and the law of total probability. <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                As the name suggests, Bayes theorem is the basis of Bayesian inference. In this context, the Bayes rule is commonly known as \(p(H|E)\propto p(E|H)p(H)\) where \(H\) is the hypothesis (e.g., model parameters) and \(E\) is the evidence (e.g., data).
+            </div>
+        </div>
+        <div class="side-panel" style="height:calc(100vh - 49px);position:sticky;top:49px">
+			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
+		</div>
+    </div>
+<script src="/utils.js"></script>
+</body>
+</html>
