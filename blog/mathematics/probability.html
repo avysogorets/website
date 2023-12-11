@@ -3,7 +3,7 @@
   	<head>
     	<meta charset="UTF-8">
     	<meta http-equiv="X-UA-Compatible"
-    	content="'IE=edge">
+    	content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<link type="text/css" rel="stylesheet" href="/style.css?v22" />
     	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,15 +51,15 @@
             </ul>
         </menu>
     </header>
-	<div class="panel" style="--c:white;align-items:start;">
-		<div class="content" style="--c:white;--j:start;margin-bottom:50px;width:100%;overflow-x:auto;">
+	<div class="panel" style="--c:white;">
+		<div class="content" style="--c:white;--j:start;">
 			<div class="big-text" style="--c:black;">
                 Contents
             </div>
             <ul style="list-style:none;">
                 <li>
                     <div style="padding-top:3px;;">
-                        <a href="#intro" style="text-decoration: none;">
+                        <a href="#intro" style="text-decoration: none;" onclick="jump('#into')">
                             <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
                                 1. Introduction
                             </span>
@@ -68,7 +68,7 @@
                 </li>
             </ul>
             <br>
-            <div class="big-text" style="--c:black;">
+            <div class="big-text" id="intro" style="--c:black;">
                 Introduction
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
@@ -142,7 +142,7 @@
                 As the name suggests, Bayes theorem is the basis of Bayesian inference. In this context, the Bayes rule is commonly known as \(p(H|E)\propto p(E|H)p(H)\) where \(H\) is the hypothesis (e.g., model parameters) and \(E\) is the evidence (e.g., data).
             </div>
         </div>
-        <div class="side-panel" style="height:calc(100vh - 49px);position:sticky;top:49px">
+        <div class="side-panel" style="height:100%;">
 			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
 		</div>
     </div>

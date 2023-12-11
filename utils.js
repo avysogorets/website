@@ -18,3 +18,11 @@ function toggleSubcategories(id) {
         subcategories.style.maxHeight = null;
     }
 }
+
+function jump(id) {
+    const e = document.querySelector(id);
+    const t = e.getClientRects()[0].y - 55;
+
+    const c = document.querySelector('.content');
+    c.scrollTo({top: t, behavior: "smooth"})
+}
