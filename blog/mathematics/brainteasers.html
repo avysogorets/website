@@ -17,16 +17,17 @@
         <script>
             window.MathJax = {
             chtml: {
-                scale: 0.88
+                scale: 0.85
             },
             svg: {
-                scale: 0.88
+                scale: 0.85
             }
             };
         </script>
     	<title>AV Blog</title>
 	</head>
 <body>
+    <div style="display: flex;flex-direction: column;">
     <header class="header">
         <a href="/index.html" class="logo">
             <img src="/imgs/av/horz_ww_logo-nb.png" style="width:100%">
@@ -120,6 +121,15 @@
                         </a>
                     </div>
                 </li>
+                <li>
+                    <div style="padding-top:3px;margin-left:10px;">
+                        <a href="#eggs" style="text-decoration: none;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1">
+                                7. Two eggs and a \(100\) floors
+                            </span>
+                        </a>
+                    </div>
+                </li>
             </ul>
             <br>
             <div class="big-text" style="--c:black;">
@@ -166,11 +176,17 @@
                 that each costs $\(1\). You observe the game long enough and find out that the game is, on average, profitable for the player. Inspired by his success, you dare to play yourself but the gambler suddenly wants to change the rules and pay you $\(5\) for every \(HH\) (heads, then heads again) you throw. Note that 
                 a sequence of three heads earns you only $\(5\) unless followed by another heads. Would you agree to play the game on these terms?
             </div>
+            <br>
+            <div class="small-text" id="eggs" style="--c:rgb(88,88,88);--d:1;">
+                <span style="color:black;font-weight:bold;">8. Two eggs and \(100\) floors. </span> A building has \(100\) floors. The \(k\)-th floor is the highest floor an egg can be dropped from without breaking.
+                If an egg is dropped from above that floor, it will break. If it is dropped from that floor or below, it will be completely undamaged and you can drop the egg again. What is the minimum number of throws needed to find \(k\)?
+            </div>
         </div>
 		<div class="side-panel" style="height:calc(100vh - 48.5px);position:sticky;top:49px">
 			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
 		</div>
 	</div>
 <script src="/utils.js"></script>
+</div>
 </body>
 </html>
