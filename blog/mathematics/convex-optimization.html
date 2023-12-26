@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible"
+    	content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link type="text/css" rel="stylesheet" href="/style.css?v22" />
+    	<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async
+				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+		</script>
+        <script>
+            window.MathJax = {
+            chtml: {
+                scale: 0.9
+            },
+            svg: {
+                scale: 0.9
+            }
+            };
+        </script>
+    	<title>AV Blog</title>
+	</head>
+<body>
+    <header class="header">
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
+        </a>
+        <nav class="navbar">
+            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
+        </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="active menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
+    </header>
+	<div class="panel" style="--c:white;">
+		<div class="content" style="--c:white;--j:start;">
+			<div class="big-text" style="--c:black;">
+                Contents
+            </div>
+            <ul style="list-style:none;">
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a style="text-decoration:none;cursor:pointer;" onclick="jump('#introduction')">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                1. Introduction
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a style="text-decoration:none;cursor:pointer;" onclick="jump('#subgradients')">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                2. Subgradients
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a style="text-decoration:none;cursor:pointer;" onclick="jump('#duality')">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                3. Duality
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="middle-text" id="introduction" style="--d:1;--c:black;display:flex;align-items:center;margin-top:25px;">
+                <div style="flex-grow:0;">Introduction</div><!--</div><div class="divider"></div>-->
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;"> 
+            <span style="font-weight: bold;"> Definition</span> [convex set]. A set \(C\subseteq\mathbb{R}^n\) is convex if for any \(x,y\in C\) and \(\lambda\in[0,1],\)
+            we have \(\lambda x+(1-\lambda)y\in C\).
+            </div>
+            <hr style="height:30px; visibility:hidden;"/> 
+            <div class="middle-text" id="subgradients" style="--d:1;--c:black;display:flex;align-items: center;margin-top:25px;">
+                <div style="flex-grow:0;">Subgradients</div><!--</div><div class="divider"></div>-->
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;"> 
+                <span style="font-weight: bold;"> Definition</span> [subgradient]. Consider any function \(f\colon D\rightarrow\mathbb{R}\) with domain \(D\subseteq\mathbb{R}^n\).
+                We say that \(g\in\mathbb{R}^n\) is a subgradient of \(f\) at \(x\) if, for any \(z\in D\), we have\(f(z)\geq f(x)+g^{\top}(z-x)\).
+                The collection of all subgradeints of \(f\) at \(x\) is called <it>subdifferential</it> and is denoted by \(\partial f(x)\). The function \(f\) is 
+                <it>subdifferentiable</it> at \(x\) if \(\partial f(x)\) is nonempty. The function \(f\) is called <it>subdifferentiable</it> if it is subdifferentiable at
+                all points from its domain.
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition.</span> For \(x\in D\), the subdifferential \(\partial f(x)\) contains zero if and only if \(x=\min f(x)\).
+                <br>
+                <span onclick="toggleSubcategories('-1')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Proof.
+                </span>
+                <ul id='-1' class="subcategories" style="color:black;">
+                If \(0\in \partial f(x)\) then, for all \(y\in D\), \(f(y)\geq f(x)+0^{\top}(y-x)=f(x)\) so \(x\) is the global minimizer. Conversely, if \(x=\min f(x)\), then \(f(y)\geq f(x) + 0^{\top}(y-x)\) for all \(y\in D\).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Proposition.</span> If a convex function \(f\) is differentiable at \(x\in D\), then \(\partial f(x)=\{\nabla f(x)\}\).
+                <br>
+                <span onclick="toggleSubcategories('-2')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Proof.
+                </span>
+                <ul id='-2' class="subcategories" style="color:black;">
+                Coming soon.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            </div>
+            <hr style="height:30px; visibility:hidden;"/> 
+            <div class="middle-text" id="duality" style="--d:1;--c:black;display:flex;align-items: center;margin-top:25px;">
+                <div style="flex-grow:0;">Duality</div><!--</div><div class="divider"></div>-->
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
+                Consider a possibly non-convex optimization problem: \[\min f_0(x)\quad \text{subject to } \begin{cases} f_i(x)\leq 0 & \text{ for } i\in[M]\\ h_j(x)=0 &\text{ for } j\in[P],\end{cases}\]
+                with domain \(\mathcal{D}\) and \(\mathcal{X}\subseteq\mathcal{D}\) a nonempty feasible set. Furthermore, let the optimal value
+                of this problem be \(p^{\star}\). Note that \(P\) equality constraints just correspond to \(Ax=b\) for some \(A\in\mathbb{R}^P\times\mathbb{R}^{\text{dim}(\mathcal{D})}\) and \(b\in\mathbb{R}^P\).
+                Now, define a Lagrangian function \(L\colon\mathcal{D}\times\mathbb{R}^{M}\times\mathbb{R}^P\rightarrow\mathbb{R}\)
+                and the Lagrange dual function \(g\colon\mathbb{R}^{M}\times\mathbb{R}^P\rightarrow\mathbb{R}\), resectively, as
+                \[\begin{align}L(x,\lambda,\nu)&=f_0(x)+\sum_{i=1}^M\lambda_if_i(x)+\sum_{j=1}^P\nu_jh_j(x),\\g(\lambda,\nu)&=\inf_{x\in\mathcal{D}}L(x,\lambda,\nu).\end{align}\]
+                First, note that \(g\) is concave as a pointwise infimum of affine functions \(L(\cdot,\lambda,\nu)\).
+                Note that \(g(\lambda,\nu)\leq p^{\star}\) provided that \(\lambda\geq 0\). Indeed, since we assumed \(\mathcal{X}\) to be nonempty, let \(\tilde{x}\in\mathcal{X}\) be a feasible point. Then,
+                \[f_0(x)\geq f_0(\tilde{x})\geq L(\tilde{x},\lambda,\nu)\geq\inf_{x\in\mathcal{D}}L(x,\lambda,\nu)=g(\lambda,\nu).\]
+                Now taking the infimum over the feasible set \(\mathcal{X}\) yields the desired inequality. Hence, we define the <it>dual problem</it> to be
+                \[\max g(\lambda,\nu)\quad\text{subject to }\lambda_i\geq0\text{ for all } i\in[P]\]
+                with the optimal value \(d^{\star}\).
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Example</span> [Standard LP]. Recall the standard formulation of a linear program:
+                \[\min c^{\top}x\quad\text{subject to }\begin{cases} Ax=b\\x\geq 0.\end{cases}\]
+                Based on the definitions above, the corresponding Lagrangian function is
+                \[\begin{align}L(x,\lambda,\nu)&=c^{\top}x-\lambda^{\top}x+\nu^{\top}(Ax-b)\\&=(c+A^{\top}\nu -\lambda)^{\top}x-b^{\top}\nu\end{align}\]
+                The Lagrangian dual function is clearly unbounded below if \(c+A^{\top}\nu-\lambda\ne 0\). Otherwise, \(g(\lambda,\nu) = -b^{\top}\nu\). Overall,
+                the dual problem becomes \[\max -b^{\top}\nu\quad\text{subject to }\begin{cases} c+A^{\top}\nu-\lambda=0\\\lambda\geq 0.\end{cases}\]
+                After some cosmetic substitutions, it is equivalent to 
+                \[\max -b^{\top}\nu\quad\text{subject to   }c+A^{\top}\nu\geq0,\]
+                <i class='bx bx-square' style="float: right;"></i>as expected.
+                <hr style="height:10px; visibility:hidden;"/>
+                <span onclick="toggleSubcategories('-5')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                How does scaling of the primal objective affect the dual?
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='-5' class="subcategories" style="color:black;padding-left:25px">
+                Formally speaking, we have much freedom in choosing a convenient primal objective function without changing the problem (i.e., its solution set).
+                For example, we might prefer \(\lVert x\rVert^2\) to \(\lVert x\rVert\) for ease of manipulation or \(\max(0,x)^2\) to \(\max(0,x)\) because the former is differentiable.
+                However, it is not immediately clear how this change affects the Lagrangian and the dual problem. For example, consider scaling the primal objective
+                by a positive constant \(K\); the new Lagrangian \(L_K\) mixes the objective and the constraints in different proportions:
+                \[\begin{align} L(x,\lambda) &= f_0(x)+\textstyle\sum_{i=1}^K\lambda_i f_i(x),\\L_K(x,\lambda) &= Kf_0(x)+\textstyle\sum_{i=1}^K\lambda_i f_i(x).\end{align}\]
+                What does it mean for the dual problem? Well, conveniently, we have \(g_K(K\lambda) = Kg(\lambda)\), so the optimal dual variables, like the corresponding 
+                dual optimal value just get scaled as well: \(\lambda_K^{\star}=K\lambda^{\star}\) and \(d_K^{\star}=Kd^{\star}\).
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                By focusing on the dual problem we traded our original <it>primal</it> problem to a potentially easier <it>dual problem</it>
+                (the objective function is concave and the constraints are linear) that lower bounds the original optimum: \(d^{\star}\leq p^{\star}\). This
+                relationship is called <it>weak duality</it>, and the difference \(p^{\star}-d^{\star}\) is called <it>duality gap</it>. It turns out that
+                <it>strong duality</it> \(p^{\star}=d^{\star}\) sometimes holds, and especially often for convex problems.
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Theorem</span> [Slater's conditions]. A strictly feasible convex primal problem exhibits strong duality. That is, if the functions \(f_0, f_i,\ldots f_M\) are convex, \(h_1, h_2,\ldots h_P\) are affine,
+                and there exists \(\tilde{x}\in\mathcal{X}\) so that \(f_i(\tilde{x})<0\) for all \(i\in[M]\), the problem is strongly dual.
+                <br>
+                <span onclick="toggleSubcategories('0')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Proof.
+                </span>
+                <ul id='0' class="subcategories" style="color:black;margin-bottom:5px;">
+                See Boyd & Vandenberghe (p.234). <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                Strong duality reveals an interesting property between the primal and the dual constraints called <it>complementary slackness</it>.
+                Assume that strong duality holds and, furthermore, the optimal values are attainable: \(p^{\star} = f_0(x^{\star})=g(\lambda^{\star},\nu^{\star}) = d^{\star}\).
+                Then, \[\begin{align}g(\lambda^{\star},\nu^{\star}) &= \inf_{x\in\mathcal{D}}\left[f_0(x)+\sum_{i=1}^M\lambda_i^{\star}f_i(x)+\sum_{j=1}^P\nu^{\star}h_j(x)\right]\\&\leq f_0(x^{\star})+\sum_{i=1}^M\lambda_i^{\star}f_i(x^{\star})+\sum_{j=1}^P\nu^{\star}h_j(x^{\star})\leq f_0(x^{\star})\end{align}\]
+                where the last inequality follows from the feasibility \(\lambda_i^{\star}\geq 0\) and \(f_i(x^{\star})\leq 0\) for all \(i\in[M]\). By strong duality, all inequalities above
+                must be equalities, which in particular implies \(\lambda_i^{\star}f_{i}(x^{\star})=0\) for all \(i\in[M]\). The term complementary slackness refers to this exact condition:
+                at least one (primal or dual) inequality constraint in each pair of \(M\) inequality constraints must be <it>active</it>.
+                <hr style="height:10px; visibility:hidden;"/>
+                <span style="font-weight: bold;"> Theorem</span> [KKT (Karush-Kuhn-Tucker) conditions]. A triplet \((x,\lambda,\nu)\in\mathbb{R}^{|\mathcal{D}|}\times\mathbb{R}^M\times\mathbb{R}^P\) is primal and dual optimal, \(p^{\star}=f_0(x)\) and \(d^{\star}=g(\lambda,\nu)\), if and only if the following conditions are satisfied:
+                <ol style="margin-left:30px;margin-top:10px;">
+                    <li><it>Primal feasibility: </it>\(f_i(x)\leq 0\) for all \(i\in[M]\) and \(h_j(x)=0\) for all \(j\in[P]\),</li>
+                    <li><it>Dual feasibility: </it>\(\lambda_i\geq 0\) for all \(i\in[M]\),</li>
+                    <li><it>Complementary slackness: </it>\(\lambda_if_i(x)=0\) for all \(i\in[M]\),</li>
+                    <li><it>Stationary point: </it>\(0\in\partial\left[f(x)+\sum_{i=1}^M\lambda_if_i(x)+\sum_{j=1}^P\nu_jh_j(x)\right]\).</li>
+                </ol>
+                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Proof.
+                </span>
+                <ul id='1' class="subcategories" style="color:black;margin-bottom:5px;">
+                Assuming that \(x_0\) and \((\lambda_0,\nu_0)\) are solutions of the primal and the dual problems, respectively,
+                the first three conditons are established. The last property holds by the basic property of subgradients provided that \(x_0\) minimizes the Lagrangian \(L(x, \lambda_0,\nu_0)\), which
+                we demonstrated above. Conversely, let \((x_0,\lambda_0,\nu_0)\) satisfy the KKT conditions.
+                The last condition implies \(g(\lambda_0,\nu_0)=\inf_{x}L(x,\lambda_0,\nu_0)=L(x_0,\lambda_0,\nu_0)\), which equals \(f(x_0)\) by complementary slackness.
+                Hence, our triplet ensures that primal and dual objectives are equal, which can only occur with strong duality: \(g(\lambda_0,\nu_0)\leq d^{\star}\leq p^{\star}\leq f(x_0)\) so all inequalities
+                are in fact equalities.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            </div>
+        </div>
+        <div class="side-panel" style="height:100%;">
+			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
+		</div>
+    </div>
+<script src="/utils.js"></script>
+</body>
+</html>

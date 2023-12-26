@@ -156,6 +156,13 @@ body {
     animation-delay: calc(0.4s + calc(0.1s * var(--d)));
 }
 
+.divider{
+    flex-grow:1;
+    height: 1px;
+    background-color: black;
+    margin-left:20px;
+  }
+
 .paper {
     height: 120px;
     max-width: 100%;
@@ -176,6 +183,7 @@ mjx-container[jax="CHTML"][display="true"] {
     margin: 1em 0;
     overflow-x:scroll;
     overflow-y: hidden;
+    position: relative;
 }
 
 .home-sci {
@@ -229,6 +237,22 @@ mjx-container[jax="CHTML"][display="true"] {
     -webkit-background-clip: text;
 }
 
+.focused {
+    background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+@media (hover: hover) {
+    .focusable:hover {
+        background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+}
+
 .home-sci a:hover::after {
     transform: scale(0);
 }
@@ -258,7 +282,7 @@ mjx-container[jax="CHTML"][display="true"] {
 }
 
 .subcategories.visible {
-    max-height: auto
+    max-height: auto;
 }
 
 .menu-icon {

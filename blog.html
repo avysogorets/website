@@ -42,11 +42,13 @@
         </menu>
     </header>
 	<div class="panel" style="--c:black;">
-		<div class="content" style="--c:black;">
+		<div class="content" style="--c:black;margin-left:1%;margin-right:1%;">
 			<div class="categories">
 				<div class="big-text" style="--c:white;margin-top:3%;">
-					<span onclick="toggleSubcategories('mathematics')" style="--c:white;cursor:pointer;">
-						> Mathematics
+					<span class="focusable" id='H:mathematics'
+							onclick="toggleSubcategories('mathematics');toggleFocusable('H:mathematics')"
+							style="cursor:pointer;">
+						Mathematics
 					</span>
 				</div>
 				<ul id="mathematics" class="subcategories">
@@ -60,16 +62,34 @@
 					<li>
 						<div style="padding-top:1%;;padding-left:0;">
 							<a href="/blog/mathematics/probability.html" style="text-decoration:none;">
-								<span class="middle-text" style="--c:white;--d:1">
+								<span class="middle-text focusable" style="--c:white;--d:1">
 									probability & statistics
 								</span>
 							</a>
 						</div>
 					</li>
 					<li>
-						<div style="padding-top:1%;padding-left:0;">
+						<div style="padding-top:1%;;padding-left:0;">
+							<a href="/blog/mathematics/convex-optimization.html" style="text-decoration:none;">
+								<span class="middle-text focusable" style="--c:white;--d:1">
+									convex optimization
+								</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div style="padding-top:1%;;padding-left:0;">
+							<a href="/blog/mathematics/machine-learning.html" style="text-decoration:none;">
+								<span class="middle-text focusable" style="--c:white;--d:1">
+									machine learning
+								</span>
+							</a>
+						</div>
+					</li>
+					<li>
+						<div style="padding-top:1%;padding-left:0;padding-bottom:1%;">
 							<a href="/blog/mathematics/brainteasers.html" style="text-decoration:none;">
-								<span class="middle-text" style="--c:white;--d:1">
+								<span class="middle-text focusable" style="--c:white;--d:1">
 									brainteasers
 								</span>
 							</a>
@@ -77,9 +97,11 @@
 					</li>
 				</ul>
 
-				<div class="big-text" style="--c:white;margin-top:3%">
-					<span onclick="toggleSubcategories('preferans')" style="--c:white;cursor:pointer">
-						> Preferans
+				<div class="big-text" style="--c:white;">
+					<span class="focusable" id='H:preferans'
+							onclick="toggleSubcategories('preferans');toggleFocusable('H:preferans')"
+							style="cursor:pointer;">
+						Preferans
 					</span>
 				</div>
 				<ul id="preferans" class="subcategories">
@@ -91,16 +113,19 @@
 						</div>
 					</li>
 					<li>
-						<div style="padding-top:1%;">
+						<div style="padding-top:1%;padding-bottom: 5%;">
 							<a href="https://github.com/avysogorets/preferans-solver" style="text-decoration:none;">
-								<span class="middle-text" style="--c:white;--d:1">
+								<span class="middle-text focusable" style="--c:white;--d:1">
 									solver
 								</span>
 							</a>
 						</div>
 					</li>
 				</ul>
-
+			</div>
+			<div class="middle-text" style="--c:white;--d:0;font-weight: 20;margin-top: auto;">
+				<it>These notes are a work in progress. In each subject, they focus on details and aspects
+				that I personally find useful or otherwise worth writing about. They may therefore contain biased and incomplete material although I still hope you will find them useful.</it>
 			</div>
 		</div>
 		<div class="side-panel" style="height:100%;">

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible"
+    	content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link type="text/css" rel="stylesheet" href="/style.css?v22" />
+    	<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async
+				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+		</script>
+        <script>
+            window.MathJax = {
+            chtml: {
+                scale: 0.9
+            },
+            svg: {
+                scale: 0.9
+            }
+            };
+        </script>
+    	<title>AV Blog</title>
+	</head>
+<body>
+    <header class="header">
+        <a href="/index.html" class="logo">
+            <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
+        </a>
+        <nav class="navbar">
+            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
+        </nav>
+        <menu>
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme.html" style="--i:0;" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog.html" style="--i:0;" class="active menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
+    </header>
+	<div class="panel" style="--c:white;">
+		<div class="content" style="--c:white;--j:start;">
+			<div class="big-text" style="--c:black;">
+                Contents
+            </div>
+            <ul style="list-style:none;">
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a href="#intro" style="text-decoration: none;" onclick="jump('#svm')">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                1. Support Vector Machines
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <br>
+            <div class="middle-text" id="svm" style="--d:1;--c:black;display:flex;align-items:center;margin-top:25px;">
+                <div style="flex-grow:0;">Support Vector Machines</div><!--<div class="divider"></div>-->
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
+                <it>This section is largely based on an excellent <a href="https://youtu.be/xpHQ6UhMlx4?si=-6rPoG83xAj22lTs" style="color:black;text-decoration:underline;text-decoration-style:solid;"> lecture by Kilian Weinberger</a>, courtesy of Cornell University.</it>
+                <hr style="height:15px; visibility:hidden;"/>
+                Under the assumption that data \((x_i,y_i)_{i=1}^{N}\) is linearly separable, the perceptron model is 
+                guaranteed to converge to an affine separator \((w_{*},b_{*})\) so that \(y_i({w_{*}}^{\top}x_{i}+b_{*})>0\).
+                However, there are infinitely many such hyperplanes and some are more reasonable and useful from a practical perspective
+                than others. Having a privilege to choose one, we prefer a separating hyperplane that is as remote from all 
+                datapoints as possible. To make our intuition more precise, we wish to maximize the minimum distance to any sample
+                \(\gamma(w,b) = \lVert w\rVert^{-1}\min_{i}|w^{\top}x_i+b|\) while obviously making the correct predicitions, so \(y_i(w^{\top}x_i+b)\geq 0.\) for all \(i\in[n]\).
+                <hr style="height:5px; visibility:hidden;"/>
+                <span onclick="toggleSubcategories('0')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                What is the distance from a point to a hyperplane?
+                </span>
+                <ul id='0' class="subcategories" style="color:black;padding-left:25px">
+                <hr style="height:10px; visibility:hidden;"/>
+                Given a point \(x\) and a hyperplane \(\{y\colon w^{\top}y+b=0\}\), define the orthogonal projection of \(x\) onto the hyperplane by \(x_p\).
+                Then, define the difference \(d=x-x_p\) where \(d=\alpha w\) for some constant \(\alpha\in\mathbb{R}\) (because both \(d\) and \(w\) are orthogonal to a subspace of rank \(n-1\)) and note that \(\lVert d\rVert\) is the distance we are looking for. Since \(x_p\) lies on the hyperplane, we can write 
+                \(0=w^{\top}x_p+b=w^{\top}(x-\alpha w)+b\), so that \(\alpha=\lVert w\rVert^2(w^{\top}x+b)\). It finally follows that \(\lVert d\Vert=|\alpha|\lVert w\rVert=\lVert w\rVert^{-1}|w^{\top}x+b|.\)<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                Above we used geometric intuition to formulate the following optimization problem:
+                \[\max_{w,b}\frac{1}{\lVert w\rVert}\min_i|w^{\top}x_i+b|\quad \text{subject to } y_i(w^{\top}x_i+b)\geq 0.\]
+                Formally speaking, the same hyperplane can be realized by different pairs \((w,b)\) by scaling both \((w,b)\) by the same positive factor. As a sanity check,
+                observe that the above problem is invariant under such scaling, i.e., the objective function has the same value for \((\alpha w,\alpha b)\) for all \(\alpha>0\).
+                This is good news: for each hyperplane \(\{(\alpha w, \alpha b)\colon \alpha>0\}\) we can choose a representative \((w_0, b_0)\) such that the inner minimization is 
+                always \(1\) and narrow down the outer optimization space to these representatives. Formally, we simplify the objective function to just \(\max\lVert w\rVert^{-1}\)
+                at the expense of adding a new constraint \(\min_i|w^{\top}x_i+b|=1\):
+                \[\max\frac{1}{\lVert w\rVert}\quad\text{subject to }\begin{cases}y_i(w^{\top}x_i+b) \geq 0\quad\forall i\in[n],\\\min_i|w^{\top}x_i+b|=1.\end{cases}\]
+                Merging these constraints with the existing ones, it is now 
+                tempting to write \[\max \frac{1}{\lVert w\rVert}\quad\text{ subject to } y_i(w^{\top}x_i+b)\geq 1.\] and claim that this problem is equivalent to the one above.
+                While the statement is true, the justification is a bit more subtle than it seems. In particular, the feasible sets of these two problems are actually different (the new one is larger).
+                Assume that \((w^{\star},b^{\star})\) is an optimal solution to the new problem. The first set of constraints of the old formulation is clearly satisfied, but what if
+                \(\min_i|{w^{\star}}^{\top}x+b^{\star}>1\)? This, however, contradicts optimality because we can scale both \(w^{\star}\) and \(b^{\star}\) down, improve the objective, and still satisfy the constraints of
+                the new problem. Hence, \(w^{\star},b^{\star}\) must satisfy the constraints of the original problem, and they clearly achieve the optimal objective. The forward direction
+                is straightforward now that we proved that optimal values of the two problems agree.
+                <hr style="height:10px; visibility:hidden;"/>
+                This new formulation is exactly the SVM quadratic problem (sometimes written with an equivalent objective \(\min\lVert w\rVert^2\)). The above discussion is rather didactic&#8212;it shows that, for the optimal hyperplane \((w^{\star},b^{\star})\), there must be at least 
+                one datapoint \(x\) with an active constraint \(y({w^{\star}}^{\top}x+b)=1\) for otherwise the margin could be increased. In fact, more is true: both classes must have datapoints with active constraints
+                for the same reason. While the geometric intuition is more obvious, we can show it algebraically just as well. The datapoints with active constraints are called <it>support vectors</it>
+                because they determine the optimal hyperplane. Other datapoints can be just as well removed with no consequences for the optimization result (unless more data is added later). Let \(x\) be a support vector.
+                The distance from \(x\) to the SVM hyperplane \((w^{\star},b^{\star})\). is the then the optimal margin \(\gamma(w^{\star}, b^{\star})\), which is \(\lVert w\rVert^{-1}|{w^{\star}}^{\top}x+b^{\star}|=\lVert w\rVert^{-1}\).
+                <hr style="height:10px; visibility:hidden;"/>
+                The KKT conditions can potentially reveal some insights about the solution to this convex problem. Let the dual variables be \(\{\lambda_i\}_{i=1}^n\). Since the Lagrangian 
+                \(L(w,b,\lambda)=\lVert w\rVert^2+\sum_{i=1}^n\lambda_i(1-y_i(w^{\top}x_i+b)\) is convex and differentiable in \(w,b\), it follows that \(\partial_{w,b}L(w,b,\lambda)=\{\nabla_{w,b}L(w,b,\lambda)\}\) for any feasible \(\lambda\).
+                The stationarity condition, necessarily satisfied at the solution \((w^{\star},b^{\star},\lambda^{\star})\), is then
+                \[\begin{align}0&=\nabla_w L(w,b,\lambda)=2w^{\star}-\sum_{i=1}^n\lambda^{\star}_i y_ix_i,\\0&=\nabla_b L(w,b,\lambda)=-\sum_{i=1}^n\lambda^{\star}_iy_i.\end{align}\]
+                Therefore, the optimal triplet \((w^{\star},b^{\star},\lambda^{\star})\) must satisfy \(w^{\star}=\frac{1}{2}\sum_{i=1}^n\lambda^{\star}_iy_ix_i\). By complementary slackness, \(\lambda^{\star}_i(1-y_i(w^{\top}x_i+b^{\star}))=0\) for all \(i\in[n]\), 
+                so that \(\lambda_i^{\star}>0\) only if \(x_i\) is a support vector. This shows that \(w^{\star}\) is a weighted combinaton of the support vectors, which verifies our geometric intuition that other (<it>nuisance</it>) samples can actually be removed from the dataset
+                with no harm for the algorithm. Under these relations,
+                \[\begin{align}L(w,b,\lambda) &= \underbrace{\frac{1}{4}\sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jy_iy_jx_i^{\top}x_j}_{\lVert w\rVert^2}+\underbrace{\sum_{i=1}^n\lambda_i-b\sum_{i=1}^n\lambda_iy_i-\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^n\lambda_i\lambda_jy_iy_jx_i^{\top}x_j}_{\sum_{i=1}^n1-y_i(w^{\top}x_i+b)}\\&=-\frac{1}{4}\sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jy_iy_jx_i^{\top}x_j+\sum_{i=1}\lambda_i.\end{align}\]
+                We can then equivalently formulate the dual problem as
+                \[\max\left[-\frac{1}{4}\sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jy_iy_jx_i^{\top}x_j+\sum_{i=1}\lambda_i\right]\quad\text{subject to }\begin{cases}\sum_{i=1}^n\lambda_iy_i=0&\forall i\in[n],\\\lambda_i\geq 0&\forall i\in[n].\end{cases}\]
+                <hr style="height:5px; visibility:hidden;"/>
+                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                How important is \(\frac{1}{4}\)?
+                </span>
+                <ul id='1' class="subcategories" style="color:black;padding-left:25px">
+                <hr style="height:5px; visibility:hidden;"/>
+                Different texts will have a different constant in front of the term corresponding to \(\lVert w\rVert^2\) in the new dual formulation.
+                The discrepancy comes from different preferences for the primal objective function: \(\max \lVert w\rVert^{-1}, \min\lVert w\rVert\) or \(\min\lVert w\rVert^2\): all of these objectives are clearly equivalent for the primal problem as they have equal solution sets (although different optimal values).
+                It turns out that the dual problem is also not affected; multiplying the primal objective by a constant \(K>0\) just scales the optimal dual variables with no effect on the primal 
+                solution \(w^{\star}\). Hence, maybe rather counterintuitively, we can safely ignore the factor \(1/4\) in the above problem.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:5px; visibility:hidden;"/>
+                <span onclick="toggleSubcategories('2')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Where did \(b\) go?
+                </span>
+                <ul id='2' class="subcategories" style="color:black;padding-left:25px">
+                <hr style="height:5px; visibility:hidden;"/>
+                The bias term disappeared from the objective because \(\sum_{i=1}^n\lambda_iy_i\) conveniently popped out in the Lagrangian.
+                While it won't be missed during optimization, we still need to compute it for inference. Once the optimal \(\lambda^{\star}\)
+                are found, the corresponding \(w^{\star}=\sum_{i=1}^n\lambda^{\star}_iy_ix_i\). We don't have a similar explicit formula for \(b^{\star}\)
+                but note that, for any support vector \(x_s\), we have \(y_s({w^{\star}}^{\top}x_s+b^{\star})=1\), so that \(b^{\star}=y_s-{w^{\star}}^{\top}x_s\).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:5px; visibility:hidden;"/>
+                With this dual problem we are now in position to introduce the <it>kernel trick</it>&#8212;a feature that makes linear methods extremely expressive.
+                It is often covered together with the SVM algorithm although it more generally applies to any linear learning algorithm with a decision rule \(\text{sgn}(w^{\top}x+b)\).
+                Note that the most recent optimization
+                problem depends not on the individual datapoints \(x_i\) but rather on their dot products \(x_i^{\top}x_j\). For starters, precomputing these dot products
+                will save us quite some runtime. Most importantly, however, we can now choose a different (higher-dimensional or even infinite-dimensional) optimization space where we embed our samples
+                using a potentially non-linear mapping \(\phi\), allowing us to capture non-linear patterns in the data or separate
+                originally linearly inseparable datasets. To this end, we just need to substitute the original \(x_i^{\top}x_j\) by \(\phi(x_i)^{\top}\phi(x_j)\). And there is more! We don't actually need to handcraft the mapping \(\phi\):
+                all we need is a valid <it>kernel function</it> \(K\colon\mathbb{R}^{d}\times\mathbb{R}^d\rightarrow\mathbb{R}\) where \(K(x_i,x_j)=\phi(x_i)^{\top}\phi(x_j)\) for some \(\phi\).
+                <hr style="height:5px; visibility:hidden;"/>
+                <span onclick="toggleSubcategories('3')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                How do we do inference?
+                </span>
+                <ul id='3' class="subcategories" style="color:black;padding-left:25px">
+                <hr style="height:5px; visibility:hidden;"/>
+                Before all this madness we could simply compute \(w^{\star}=\sum_{i=1}^n\lambda^{\star}_iy_ix_i\), \(b^{\star}=y_s-{w^{\star}}^{\top}x_s\).
+                There is no hope we can similarly compute \(\sum_{i=1}^n\lambda_i^{\star}y_i\phi(x_i)\) for an infinite-dimensional \(\phi\) or when
+                \(\phi\) is not explicitly defined. Here is an alternative approach: given a test vector \(x_t\), \[{w^{\star}}^{\top}x_t = \sum_{i=1}^n\lambda_i^{\star}y_i\phi(x_i)^{\top}\phi(x_t)=\sum_{i=1}^n\lambda^{\star}_iy_iK(x_i,x_t),\]
+                so computing \({w^{\star}}^{\top}x_t\) amounts to evaluating the kernel \(K(x_s,x_t)\) for all support vectors \(x_s\).The bias term \(b^{\star}\) can be computed explicitly as before.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+                <hr style="height:10px; visibility:hidden;"/>
+                Kernel SVM allows us to deal with linearly inseparable data by mapping it to a higher dimensional space and separating it there.
+                Often times, however, we actually do not need perfect separation and would tolerate some mistakes for sake of a simpler model, whether in the original or a higher-dimensional space.
+                To this end, we relax the separability constraints in the original primal problem using <it>slack variables</it> and incorporate a penalty for making mistakes 
+                into the objective function: \[\min\left[\lVert w\rVert^2+C\sum_{i=1}^n\xi_i\right]\quad\text{subject to }\begin{cases}\begin{align}y_i(w^{\top}x+b)\geq 1-\xi_i\quad &\forall i\in[n],\\\xi_i\geq 0\quad\quad\quad &\forall i\in[n].\end{align}\end{cases}\]
+                where \(C\) is a hyperparameter and is not optimized. Like in many other machine learning algorithms, this parameter esentially controls the regularization (unlike most algorithms, though,
+                higher values of \(C\) are associated with potentially overfitting solutions). The above optimization problem still remains quadratic with linear constraints and we call it <it>soft-margin SVM</it>
+                (as opposed to the original <it>hard-margin SVM</it>) since we now allow violations of the margin contraints. In soft-margin SVM, we naturally define support vectors to be the offenders of the constraint, i.e.,
+                the datapoints with \(\xi_i>0\). By partitioning all samples into support and nuisance vectors, we can decompose the penalty term in the objective function:
+                \[\sum_{i=1}^n\xi_i = \begin{cases}1-y_i(w^{\top}x_i+b)&\text{if } y_i(w^{\top}x_i+b)<1,\\0&\text{otherwise.}\end{cases}\]
+                Thus, we can rewrite the objective as \[C\sum_{i=1}^{n}\max[0,1-y_i(w^{\top}x_i+b)]+\lVert w\rVert^2.\]
+                The term \(\max[0,1-y(w^{\top}x+b)]\) is called <it> the hinge loss</it> and it majorizes the 0-1 loss. This is now awfully similar to
+                a standard optimization setup with \(\ell_2\) regularization.
+            </div>
+        </div>
+        <div class="side-panel" style="height:100%;">
+			<img src="/imgs/av/vert_ww_logo.png" style="height:100%;display:block;animation:fadeIn 2s ease forwards;">
+		</div>
+    </div>
+<script src="/utils.js"></script>
+</body>
+</html>

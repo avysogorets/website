@@ -17,10 +17,10 @@
         <script>
             window.MathJax = {
             chtml: {
-                scale: 0.85
+                scale: 0.9
             },
             svg: {
-                scale: 0.85
+                scale: 0.9
             }
             };
         </script>
@@ -72,7 +72,7 @@
                 Introduction
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
-                <span style="font-weight: bold;"> Definition</span> [\(\sigma\)-algebra]. A \(\sigma\)-algebra \(\mathcal{A}\) on a set \(\Omega\) is a collection of its subsets such that it contains \(\Omega\) and is closed under complements, countable intersections, and countable unions. We call elements of \(\mathcal{A}\) events.
+                <span style="font-weight: bold;"> Definition</span> [\(\sigma\)-algebra]. A \(\sigma\)-algebra \(\mathcal{A}\) on a set \(\Omega\) is a collection of its subsets such that \(\Omega\in\mathcal{A}\) and \(\mathcal{A}\) is closed under complements and countable unions. We call \((\Omega, \mathcal{A})\) a measurable space, and elements of \(\mathcal{A}\) events. Note that \(\mathcal{A}\) is also closed under countable intersections by the DeMorgan's law.
                 <hr style="height:15px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Definition</span> [probability measure]. A probability measure \(\mathbb{P}\) on \(\sigma\)-algebra \((\Omega,\mathcal{A})\) is a function \(\mathbb{P}\colon\mathcal{A}\rightarrow[0,1]\) satisfying \(\mathbb{P}(\Omega)=1\) and sigma-additivity, i.e., given any
                 countable collection \(\{A_i\}_{i\in I}\) of disjoint subsets \(A_i\in\mathcal{A}\), we have \(\mathbb{P}\left(\bigcup_{i\in I}A_i\right)=\sum_{i\in I}\mathbb{P}(A_i)\). The triplet \((\Omega, \mathcal{A}, \mathbb{P})\) is called a probability space.
@@ -82,7 +82,7 @@
                 <hr style="height:15px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [continuity of probabilities]. Given a monotone increasing sequence \(\{A_i\}_{i=1}^{\infty}\) of events (\(A_i\subseteq A_{i+1}\) for all \(i\)) with a limit \(A=\bigcup_{i=1}^{\infty}\) (often written as \(A_i\uparrow A\)), we have \(\lim_{n\rightarrow\infty}\mathbb{P}(A_n)=\mathbb{P}(A)\).
                 <br>
-                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;font-style:italic;">
+                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
                 Proof.
                 </span>
                 <ul id='1' class="subcategories" style="color:black;">
@@ -99,7 +99,7 @@
                 <hr style="height:15px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Definition</span> [conditional probability]. Given an event \(A\in\mathcal{A}\) of a probability space \((\Omega,\mathcal{A},\mathbb{P})\) with \(\mathbb{P}(A)>0\), we define a conditional probability measure \(\mathbb{P}(\cdot|A)\colon\mathcal{A}\rightarrow[0,1]\) as \(\mathbb{P}(B|A)=\mathbb{P}(A\cap B)/\mathbb{P}(A)\).
                 <br>
-                <span onclick="toggleSubcategories('2')" style="color:black;cursor:pointer;font-style:italic;">
+                <span onclick="toggleSubcategories('2')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
                 Proof.
                 </span>
                 <ul id='2' class="subcategories" style="color:black;">
@@ -112,7 +112,7 @@
                 <hr style="height:10px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [chain rule]. Let \(\{A_i\}_{i=1}^{n}\) be a collection of events such that \(\mathbb{P}\left(\bigcap_{i=1}^{n-1}A_i\right)>0\). Then, \[\mathbb{P}\left(\bigcap_{i=1}^nA_i\right)=\mathbb{P}(A_1)\mathbb{P}(A_2|A_1)\mathbb{P}(A_3|A_1\cap A_2)\ldots\mathbb{P}\left(A_n\Big|\bigcap_{i=1}^{n-1}A_i\right).\]
                 <br>
-                <span onclick="toggleSubcategories('5')" style="color:black;cursor:pointer;font-style:italic;">
+                <span onclick="toggleSubcategories('5')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
                 Proof.
                 </span>
                 <ul id='5' class="subcategories" style="color:black;">
@@ -122,7 +122,7 @@
                 <hr style="height:10px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [total probability]. Given an event \(A\in\mathcal{A}\) and a partition \(\Omega=\bigcup_{i\in I}E_i\) by countably many disjoint events \(E_i\), we have \(\mathbb{P}(A)=\sum_{i\in I}\mathbb{P}(A|E_i)\mathbb{P}(E_i)\). 
                 <br>
-                <span onclick="toggleSubcategories('3')" style="color:black;cursor:pointer;font-style:italic;">
+                <span onclick="toggleSubcategories('3')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
                 Proof.
                 </span>
                 <ul id='3' class="subcategories" style="color:black;">
@@ -131,7 +131,7 @@
                 </ul>
                 <hr style="height:15px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [Bayes theorem]. Given an event \(A\) and a partition \(\Omega=\bigcup_{i\in I}E_i\) by countably many disjoint events with \(\mathbb{P}(E_i)>0\), we have \[\mathbb{P}(E_i|A)=\frac{\mathbb{P}(A|E_i)\mathbb{P}(E_i)}{\sum_{j\in I}\mathbb{P}(A|E_j)\mathbb{P}(E_j)}.\]
-                <span onclick="toggleSubcategories('4')" style="color:black;cursor:pointer;font-style:italic;">
+                <span onclick="toggleSubcategories('4')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
                 Proof.
                 </span>
                 <ul id='4' class="subcategories" style="color:black;">

@@ -1,3 +1,4 @@
+
 const button = document.querySelector('.menu-icon');
 button.addEventListener('click', () => {
     const element = document.querySelector('.menu-dropdown');
@@ -11,16 +12,20 @@ button.addEventListener('click', () => {
     }    
 });
 
-window.addEventListener('click', function(e){
-    const element = document.querySelector('.menu-dropdown')
+function WindowClick(e) {
+    const element = document.querySelector('.menu-dropdown');
     const button = document.querySelector('.menu-icon');
-    if (!document.querySelector('.menu-icon').contains(e.target)){
+    if (!button.contains(e.target) && !element.contains(e.target)) {
         element.style.maxHeight = null;
         if (element.classList.contains('visible')) {
             element.classList.toggle('visible');
-            setTimeout(closeMenu, 500);} 
+            setTimeout(closeMenu, 500);
+        }
     }
-})
+}
+window.addEventListener('click', WindowClick);
+window.addEventListener('touchend', WindowClick);
+
 
 function closeMenu() {
     const button = document.querySelector('.menu-icon');
@@ -43,4 +48,9 @@ function jump(id) {
 
     const c = document.querySelector('.content');
     c.scrollTo({top: t, behavior: "smooth"})
+}
+
+function toggleFocusable(id) {
+    var element = document.getElementById(id);
+    element.classList.toggle("focused");
 }
