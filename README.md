@@ -1,0 +1,1 @@
+Visit artem.vysogorets.org!
