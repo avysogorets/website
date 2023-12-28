@@ -1,1 +1,1 @@
-Visit [artem.vysogorets.org](https://artem.vysogorets.org)!
+Visit [artem.vysogorets.org](https://artem.vysogorets.org)
