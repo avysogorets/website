@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   	<head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S63F1NJWJN"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-S63F1NJWJN');
+        </script>
     	<meta charset="UTF-8">
     	<meta http-equiv="X-UA-Compatible"
     	content="IE=edge">
@@ -28,26 +37,26 @@
 	</head>
 <body>
     <header class="header">
-        <a href="/index.html" class="logo">
+        <a href="/" class="logo">
             <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
         </a>
         <nav class="navbar">
-            <a href="/index.html" style="--i:1;" class="menu-option-horz">Home</a>
-            <a href="/aboutme.html" style="--i:2;" class="menu-option-horz">About me</a>
-            <a href="/publications.html" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications" style="--i:3;" class="menu-option-horz">Publications</a>
             <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
-            <a href="/blog.html" style="--i:5;" class="active menu-option-horz">Blog</a>
+            <a href="/blog" style="--i:5;" class="active menu-option-horz">Blog</a>
         </nav>
         <menu>
             <div class="menu-icon">
-                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:10%;"></i>
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
             </div>
             <ul class="menu-dropdown" style="background:black;">
-                <li><a href="/index.html" style="--i:0" class="menu-option-vert">Home</a></li>
-                <li><a href="/aboutme.html" style="--i:0;" class="menu-option-vert">About me</a></li>
-                <li><a href="/publications.html" style="--i:0;" class="menu-option-vert">Publications</a></li>
+                <li><a href="/" style="--i:0" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme" style="--i:0;" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications" style="--i:0;" class="menu-option-vert">Publications</a></li>
                 <li><a href="/imgs/cv.pdf" style="--i:0;" class="menu-option-vert">CV</a></li>
-                <li><a href="/blog.html" style="--i:0;" class="active menu-option-vert">Blog</a></li>
+                <li><a href="/blog" style="--i:0;" class="active menu-option-vert">Blog</a></li>
             </ul>
         </menu>
     </header>
@@ -162,27 +171,60 @@
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
             <span id="cards">
                 <span style="color:black;font-weight:bold;">1. A deck of cards in a dark room. </span> You are given a deck of \(N\) cards with exactly \(k\) cards oriented face-down and others oriented face-up.
-                The values of both \(N\) and \(k\) are known.
+                The value of \(k\) is known.
                 You are in a completely dark room and there is no way to tell the orientation of any card in the deck. Split the 
                 deck into two not necessarily equal piles so that the number of cards face-down in each pile is the same.
             </span>
+            <br>
+            <span onclick="toggleSubcategories('1-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+            Solution.
+            <hr style="height:5px; visibility:hidden;"/>
+            </span>
+            <ul id='1-S' class="subcategories" style="color:black;margin-bottom:5px;">
+            Take <it>any</it> \(k\) cards from the deck (with an unknown \(x\) of them face-down) and flip them. The remainder of the deck now has \(k-x\) cards dace-down. The other part originally contained \(x\) cards face-down but
+            after the flip it has become \(k-x\) as well. <span style="float:right"><i class='bx bx-square'></i></span>
+            </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="train">
                 <span style="color:black;font-weight:bold;">2. The number of cars in a circular train. </span> You enter one of the cars of a circular train (the first car is chained up with the last car; the number of cars is finite). Each car
                 is equipped with a light switch and a corresponding light bulb. You are allowed to move between cars and interact with the switches, which are initially in arbitrary
                 positions. Develop an algorithm that correctly identifies the total number of cars in the train in finite time.
             </span>
+            <br>
+            <span onclick="toggleSubcategories('2-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+            Solution.
+            </span>
+            <hr style="height:5px; visibility:hidden;"/>
+            <ul id='2-S' class="subcategories" style="color:black;margin-bottom:5px;">
+            Shut the light in the first car. The strategy is to progress in one direction relative to the first car, constantly turning the lights on and coming back to check if the first car still has its light off. More precisely, the algorithm is to (1) walk in one direction until you encounter a
+            car with a light off; assume this happens \(M\) cars down, (2) turn the light in that car on and return to the original car, (3) if the light is still off, continue to step (1). Otherwise, the last car you visited must be the first car; return \(M\). <span style="float:right"><i class='bx bx-square'></i></span>
+            </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="badges">
                 <span style="color:black;font-weight:bold;">3. Identify the hiding employee. </span> Each employee of a large corporation has a badge with a unique integer ID number. Every time an employee enters or leaves the office
                 building, they scan their badge at the gates, which gets registered in the daily logs. One day, exaclty one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
                 extra space where \(N\) is the total number of employees. 
             </span>
+            <br>
+            <span onclick="toggleSubcategories('3-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='3-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                One naive linear-time and linear-space solution would be to use a hash table to store the number of times each ID appears in the logs and then traverse all its key-value pairs to find the one unmatched ID. However, due to the constant-space constraint, we can't use a hash table. In fact, this constraint makes it clear that data structures are useless here, and instead, we should come up with a clever <it>operation</it> to apply to the IDs as we traverse the logs. Ideally, this operation should be commutative (so the order of logs does not matter) and, most importantly, nilpotent of order 2 (so the second appearance of the same ID cancels out with the first). One such function is a bitwise OR. Provided that all IDs come in pairs except for one that appears only once, this ID equals the bitwise OR of all IDs in the logs.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="salary">
                 <span style="color:black;font-weight:bold;">4. Find the average salary. </span> You and all other members of your team decide to figure out the average salary within your team. Suggest a procedure that does not involve any external or non-verbal means of communication 
                 (i.e., no computers, notes, etc.) that will let you collectively figure out the average salary while also not revealing anyone's salary to anyone else.
             </span>
+            <br>
+            <span onclick="toggleSubcategories('4-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <ul id='4-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                Let the size of your team be \(N\). Designate a person \(A_1\) to come up with some number, add their salary to it, and whisper the sum to person \(A_2\). Next, the algorithm proceeds as follows: for all \(i\in\{2,3,\ldots,N\}\), person \(A_i\) adds their salary to the number they received from \(A_{i-1}\) and whispers the sum to person \(A_{i+1}\). Person \(A_N\) would whisper their sum to person \(A_1\), who finally subtracts his original number from the sum and announces the average salary.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="island">
                 <span style="color:black;font-weight:bold;">5. A hundred islanders with blue eyes. </span> All 100 people inhabiting one remote island have blue eyes but neither knows their own eye color. There are no mirrors on the island,
@@ -208,9 +250,24 @@
             </span>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="passengers">
-                <span style="color:black;font-weight:bold;">9. A hundred passengers. </span> A hundred passengers are boarding a fully-booked flight. The first passenger to board the plane chooses a seat at random; each subsequent passenger takes their assigned seat if it's available or a random
-                available seat otherwise. What is the probability that the last passenger will use their assigned seat?   
+                <span style="color:black;font-weight:bold;">9. A hundred passengers. </span> A hundred passengers are boarding a fully-booked flight. The first passenger to board the plane chooses a seat at random; each subsequent passenger takes his assigned seat if it's available or a random
+                available seat otherwise. What is the probability that the last passenger will use his assigned seat?   
             </span> 
+            <br>
+            <span onclick="toggleSubcategories('9-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='9-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                    (50%). There are two solutions that, in my opinion, deserve discussion: one more formal but rather dull, and the other more clever but somewhat speculative.
+                    For the first one, consider a more general problem with \(n\) passengers on a fully-booked plane with \(n\) seats. Denote the probability that the last passenger \(P_{n}\) occupies his assigned seat by \(p(n)\); the original problem asks for \(p(100)\).
+                    To start, note that \(p(2) = 50\%\). Now, let's find a recurrence relation for \(p(n)\). If the first passenger \(P_1\) takes his assigned seat, everything falls into order, and \(P_n\) gets his seat too. Otherwise, assume \(P_1\) takes a seat assigned to \(P_m\) where \(1 < m < n \). Then, passengers \(P_2, P_3, \ldots, P_{m-1}\) will all get their seats, but \(P_m\) will have to choose one at random. His options are the seat of \(P_1\) union all seats that belong to passengers \(P_{m+1}, \ldots, P_{n}\). This scenario corresponds to the same original problem with \(n-m+1\) total seats (where \(P_{m}\) choosing the seat of \(P_1\) corresponds to taking "the right" seat so that all others get their assigned seats thereafter, including \(P_n\)). Since \(P_1\) chooses a seat uniformly at random, we can write a recurrence relation
+                    \[p(n) = \frac{1}{n}\left(2 + \sum_{m=2}^{n-2}{p(n-m+1)}\right)\]
+                    where \(2 = 1 + 1\) comes from \(m=1\) (\(P_1\) takes his own seat) and \(m=n-1\) (\(P_n\) is guaranteed his seat). Assuming that \(p(k)=50\%\), for all \(1 < k < n\) as an induction hypothesis, we compute \(p(n) = \frac{1}{n}(50\%\cdot(n-4) + 2) = 50\%\).<span style="float:right"><i class='bx bx-square'></i></span>
+                    <hr style="height:5px; visibility:hidden;"/>
+                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy the assigned seat and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n\). Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
+
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="geo">
                 <span style="color:black;font-weight:bold;">10. Special locations on the Earth. </span> Assume that the Earth is a perfect sphere. Starting in a certain location, you move 10 miles due North, 10 miles due East, an 10 miles due South, which brings you back to the original point.
@@ -237,7 +294,6 @@
             <span id="level">
                 <span style="color:black;font-weight:bold;">14. The water level.</span> A man with a suitcase is on a boat in the lake. How will the water level in the lake change after the man throws his suitcase overboard?
             </span>
-            <hr style="height:40px; visibility:hidden;"/>
             </div>
         </div>
 		<!--<div class="side-panel" style="height:calc(100vh - 48.5px);position:sticky;top:49px">-->

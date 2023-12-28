@@ -1,24 +1,24 @@
 
 const button = document.querySelector('.menu-icon');
 button.addEventListener('click', () => {
-    const element = document.querySelector('.menu-dropdown');
-    element.classList.toggle('visible');
-    if (element.classList.contains('visible')) {
+    const menu = document.querySelector('.menu-dropdown');
+    menu.classList.toggle('visible');
+    if (menu.classList.contains('visible')) {
         button.style.width = 150 + "px";
-        element.style.maxHeight = element.scrollHeight + "px";
+        menu.style.maxHeight = menu.scrollHeight + "px";
     } else {
-            element.style.maxHeight = null;
-            setTimeout(closeMenu, 500);
-    }    
+        menu.style.maxHeight = null;
+        setTimeout(closeMenu, 500);
+    }
 });
 
 function WindowClick(e) {
-    const element = document.querySelector('.menu-dropdown');
-    const button = document.querySelector('.menu-icon');
-    if (!button.contains(e.target) && !element.contains(e.target)) {
-        element.style.maxHeight = null;
-        if (element.classList.contains('visible')) {
-            element.classList.toggle('visible');
+    const menu = document.querySelector('.menu-dropdown');
+    const icon = document.querySelector('.menu-icon');
+    if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.maxHeight = null;
+        if (menu.classList.contains('visible')) {
+            menu.classList.toggle('visible');
             setTimeout(closeMenu, 500);
         }
     }
@@ -28,8 +28,11 @@ window.addEventListener('touchend', WindowClick);
 
 
 function closeMenu() {
+    const menu = document.querySelector('.menu-dropdown');
     const button = document.querySelector('.menu-icon');
-    button.style.width = 50 + "px";
+    if (!menu.classList.contains('visible')) {
+        button.style.width = 50 + "px";
+    }
 }
 
 function toggleSubcategories(id) {
