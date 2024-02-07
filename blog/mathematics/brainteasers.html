@@ -132,7 +132,7 @@
                 <li>
                     <div style="margin-top:3px;margin-left:10px;">
                         <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#geo')">
-                            10. Special locations on the Earth
+                            10. Special locations on Earth
                         </span>
                     </div>
                 </li>
@@ -237,6 +237,17 @@
                 <span style="color:black;font-weight:bold;">6. Catch the rabbit. </span>A rabbit is initially sitting at some unknown integer \(a\). Then, it starts jumping with fixed step size \(s\) in a fixed direction. After each jump, you are allowed to pick one integer location and check if the rabbit is currently there.
                 Suggest an algorithm that is guaranteed to catch the rabbit in finite time.
             </span>
+            <br>
+            <span onclick="toggleSubcategories('6-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='6-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                <span style="float:left;height:175px;margin:5px;margin-right:15px;"><img src="/blog/imgs/rabbit.png" style="height:100%"></span>
+                Let's factor the direction of the jumps into \(s\) by allowing it to be negative. Then, at any time \(t\), the position of the rabbit is \(p(t)=a+st\), so knowing both \(a\) and \(s\) is sufficient to catch the rabbit.
+                Therefore, we just need to come up with a strategy to identify \((a,s)\), which we can do iteratively starting with \((0,0)\) and progressing away from the origin in the \((a,s)\)-space. One such strategy is shown on the
+                picture (star represents the true values of \(s\) and \(a\)).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="coins">
                 <span style="color:black;font-weight:bold;">7. Gambling on coin flips. </span> You wander around the streets of St. Petersburg and notice a crowd of people watching a gambling game. The gambler pays the player $5 for every \(HT\) (heads, then tails) that comes up in a sequence of coin flips
@@ -270,9 +281,19 @@
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="geo">
-                <span style="color:black;font-weight:bold;">10. Special locations on the Earth. </span> Assume that the Earth is a perfect sphere. Starting in a certain location, you move 10 miles due North, 10 miles due East, an 10 miles due South, which brings you back to the original point.
+                <span style="color:black;font-weight:bold;">10. Special locations on Earth. </span> Assume that the Earth is a perfect sphere. Starting in a certain location, you move 10 miles due North, 10 miles due East, an 10 miles due South, which brings you back to the original point.
                 Describe the collection of <it>all</it> such locations that you could start at.
             </span> 
+            <br>
+            <span onclick="toggleSubcategories('10-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='10-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                One obvious solution is the South pole; but there's more, infinitely many more. The other solutions are in the vicinity of the North pole so that moving 10 miles East comprises a full circle (or multiple circles) around the Earth.  For this to happen, the original starting point should be 10 miles South of one of such concentric circles, so we first move up, make one or more loops (10 miles) around the North pole, and come back down.
+                 Thus, the full solution is the South pole union a countable collection of
+                concentric circles around the North pole<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="traffic">
                 <span style="color:black;font-weight:bold;">11. The expected number of traffic groups. </span> There are \(N\) cars at arbitrary locations on a one-dimensional road (no overtakes allowed). They all start moving at the same time in the same direction but
@@ -287,8 +308,8 @@
             </span> 
             <hr style="height:15px; visibility:hidden;"/>
             <span id="mathematician">
-                <span style="color:black;font-weight:bold;">13. A lonely mathematician.</span> A lonely mathematician plays a drinking game with himself. In this game, every drink contains a random uniform \(U[0,1]\) amount of pure alcohol. Once the total consumed
-                amount of pure alcohol exceeds 1, the mathematician immediately falls asleep. Find the expected number of drinks needed to put the lonely mathematician to sleep.
+                <span style="color:black;font-weight:bold;">13. A lonely mathematician.</span> A lonely mathematician plays a drinking game with himself. In this game, every drink contains a random uniform \(U[0,1]\) amount of moonshine. Once the total consumed
+                amount of moonshine exceeds 1, the mathematician immediately falls asleep. Find the expected number of drinks needed to put the lonely mathematician to sleep.
             </span>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="level">
