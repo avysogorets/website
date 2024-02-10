@@ -65,108 +65,153 @@
 			<div class="big-text" style="--c:black;">
                 Contents
             </div>
-            <ul style="list-style:none;">
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor:pointer;" onclick="jump('#cards')">
-                            1. Split a deck of cards in a dark room
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor:pointer;" onclick="jump('#train')">
-                            2. Number of cars in a circular train
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#badges')">
-                            3. Identify the hiding employee
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#salary')">
-                            4. Find the average salary
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#island')">
-                            5. A hundered islanders with blue eyes
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#rabbit')">
-                            6. Catch the rabbit
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#coins')">
-                            7. Gambling on coin flips
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#eggs')">
-                            8. Two eggs and a high-rise
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#passengers')">
-                            9. A hundred passengers
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#geo')">
-                            10. Special locations on Earth
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#traffic')">
-                            11. The expected number of traffic groups
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#redemption')">
-                            12. The round lake redemption
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#mathematician')">
-                            13. A lonely mathematician
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div style="margin-top:3px;margin-left:10px;">
-                        <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#level')">
-                            14. The water level
-                        </span>
-                    </div>
-                </li>
-            </ul>
+            <div class="categories">
+				<div class="middle-text" style="--c:rgb(88,88,88);padding:0;">
+					<span class="focusable" id='H:General'
+							onclick="toggleSubcategories('general');toggleFocusable('H:General')"
+							style="cursor:pointer;">
+						General Logic
+					</span>
+				</div>
+				<ul id="general" class="subcategories">
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor:pointer;" onclick="jump('#cards')">
+                                1. a deck of cards in a dark room
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor:pointer;" onclick="jump('#train')">
+                                2. number of cars in a circular train
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#salary')">
+                                3. find the average salary
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#island')">
+                                4. a hundered islanders with blue eyes
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#eggs')">
+                                5. two eggs and a high-rise
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#passengers')">
+                                6. a hundred passengers
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#geo')">
+                                7. special locations on Earth
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#redemption')">
+                                8. the round lake redemption
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#level')">
+                                9. the water level
+                            </span>
+                        </div>
+                    </li>
+                    <div style="margin-bottom: 1%;"></div>
+                </ul>
+				<div class="middle-text" style="--c:rgb(88,88,88);padding:0;">
+					<span class="focusable" id='H:Algorithmic'
+							onclick="toggleSubcategories('algorithmic');toggleFocusable('H:Algorithmic')"
+							style="cursor:pointer;">
+						Algorithms
+					</span>
+				</div>
+                <ul id="algorithmic" class="subcategories">
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#badges')">
+                                1. identify the hiding employee
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#rabbit')">
+                                2. catch the rabbit
+                            </span>
+                        </div>
+                    </li>
+                    <div style="margin-bottom: 1%;"></div>
+                </ul>
+				<div class="middle-text" style="--c:rgb(88,88,88);padding: 0;">
+					<span class="focusable" id='H:Probability'
+							onclick="toggleSubcategories('probability');toggleFocusable('H:Probability')"
+							style="cursor:pointer;">
+						Probability & Statistics
+					</span>
+				</div>
+                <ul id="probability" class="subcategories">
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#coins')">
+                                1. gambling on coin flips
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#traffic')">
+                                2. the expected number of traffic groups
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#mathematician')">
+                                3. a lonely mathematician
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#sums-normals')">
+                                4. a sum of normals
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#correlation')">
+                                5. three random variables with equal correlation
+                            </span>
+                        </div>
+                    </li>
+                    <div style="margin-bottom: 1%;"></div>
+                </ul>
+			</div>
+            
             <div class="big-text" style="--c:black;margin-top: 20px;">
-                Problems
+                General Logic
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
             <span id="cards">
@@ -186,7 +231,7 @@
             </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="train">
-                <span style="color:black;font-weight:bold;">2. The number of cars in a circular train. </span> You enter one of the cars of a circular train (the first car is chained up with the last car; the number of cars is finite). Each car
+                <span style="color:black;font-weight:bold;">2. Number of cars in a circular train. </span> You enter one of the cars of a circular train (the first car is chained up with the last car; the number of cars is finite). Each car
                 is equipped with a light switch and a corresponding light bulb. You are allowed to move between cars and interact with the switches, which are initially in arbitrary
                 positions. Develop an algorithm that correctly identifies the total number of cars in the train in finite time.
             </span>
@@ -200,22 +245,8 @@
             car with a light off; assume this happens \(M\) cars down, (2) turn the light in that car on and return to the original car, (3) if the light is still off, continue to step (1). Otherwise, the last car you visited must be the first car; return \(M\). <span style="float:right"><i class='bx bx-square'></i></span>
             </ul>
             <hr style="height:15px; visibility:hidden;"/>
-            <span id="badges">
-                <span style="color:black;font-weight:bold;">3. Identify the hiding employee. </span> Each employee of a large corporation has a badge with a unique integer ID number. Every time an employee enters or leaves the office
-                building, they scan their badge at the gates, which gets registered in the daily logs. One day, exaclty one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
-                extra space where \(N\) is the total number of employees. 
-            </span>
-            <br>
-            <span onclick="toggleSubcategories('3-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
-                Solution.
-                </span>
-                <hr style="height:5px; visibility:hidden;"/>
-                <ul id='3-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                One naive linear-time and linear-space solution would be to use a hash table to store the number of times each ID appears in the logs and then traverse all its key-value pairs to find the one unmatched ID. However, due to the constant-space constraint, we can't use a hash table. In fact, this constraint makes it clear that data structures are useless here, and instead, we should come up with a clever <it>operation</it> to apply to the IDs as we traverse the logs. Ideally, this operation should be commutative (so the order of logs does not matter) and, most importantly, nilpotent of order 2 (so the second appearance of the same ID cancels out with the first). One such function is a bitwise OR. Provided that all IDs come in pairs except for one that appears only once, this ID equals the bitwise OR of all IDs in the logs.<span style="float:right"><i class='bx bx-square'></i></span>
-                </ul>
-            <hr style="height:15px; visibility:hidden;"/>
             <span id="salary">
-                <span style="color:black;font-weight:bold;">4. Find the average salary. </span> You and all other members of your team decide to figure out the average salary within your team. Suggest a procedure that does not involve any external or non-verbal means of communication 
+                <span style="color:black;font-weight:bold;">3. Find the average salary. </span> You and all other members of your team decide to figure out the average salary within your team. Suggest a procedure that does not involve any external or non-verbal means of communication 
                 (i.e., no computers, notes, etc.) that will let you collectively figure out the average salary while also not revealing anyone's salary to anyone else.
             </span>
             <br>
@@ -227,41 +258,19 @@
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="island">
-                <span style="color:black;font-weight:bold;">5. A hundred islanders with blue eyes. </span> All 100 people inhabiting one remote island have blue eyes but neither knows their own eye color. There are no mirrors on the island,
+                <span style="color:black;font-weight:bold;">4. A hundred islanders with blue eyes. </span> All 100 people inhabiting one remote island have blue eyes but neither knows their own eye color. There are no mirrors on the island,
                 and the inhabitants have no means of learning about their eye color except by using logic. Every evening all 100 people come together for a daily gathering where everyone can see everyone else but no communication
                 is allowed. The tradition dictates that once a person learns about his eye color, he is required to leave the island right after the gathering on the same day. No one had left the island for decades until a foreigner visited 
                 the island, sneaked into the daily gathering and said: "At least one of you has blue eyes" and left the island immediately. What will happen to the population of the island?
             </span>
             <hr style="height:15px; visibility:hidden;"/>
-            <span id="rabbit">
-                <span style="color:black;font-weight:bold;">6. Catch the rabbit. </span>A rabbit is initially sitting at some unknown integer \(a\). Then, it starts jumping with fixed step size \(s\) in a fixed direction. After each jump, you are allowed to pick one integer location and check if the rabbit is currently there.
-                Suggest an algorithm that is guaranteed to catch the rabbit in finite time.
-            </span>
-            <br>
-            <span onclick="toggleSubcategories('6-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
-                Solution.
-                </span>
-                <hr style="height:5px; visibility:hidden;"/>
-                <ul id='6-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                <span style="float:left;height:175px;margin:5px;margin-right:15px;"><img src="/blog/imgs/rabbit.png" style="height:100%"></span>
-                Let's factor the direction of the jumps into \(s\) by allowing it to be negative. Then, at any time \(t\), the position of the rabbit is \(p(t)=a+st\), so knowing both \(a\) and \(s\) is sufficient to catch the rabbit.
-                Therefore, we just need to come up with a strategy to identify \((a,s)\), which we can do iteratively starting with \((0,0)\) and progressing away from the origin in the \((a,s)\)-space. One such strategy is shown on the
-                picture (star represents the true values of \(s\) and \(a\)).<span style="float:right"><i class='bx bx-square'></i></span>
-                </ul>
-            <hr style="height:15px; visibility:hidden;"/>
-            <span id="coins">
-                <span style="color:black;font-weight:bold;">7. Gambling on coin flips. </span> You wander around the streets of St. Petersburg and notice a crowd of people watching a gambling game. The gambler pays the player $5 for every \(HT\) (heads, then tails) that comes up in a sequence of coin flips
-                that each costs $1. You observe the game long enough and find out that the game is, on average, profitable for the player. Inspired by his success, you dare to play yourself but the gambler suddenly wants to change the rules and pay you $5 for every \(HH\) (heads, then heads again) you throw. Note that 
-                a sequence of three heads earns you only $5 unless followed by another heads. Would you agree to play the game on these terms?
-            </span>
-            <hr style="height:15px; visibility:hidden;"/>
             <span id="eggs">
-                <span style="color:black;font-weight:bold;">8. Two eggs and a high-rise. </span> A building has 100 floors. The \(k\)-th floor is the highest floor an egg can be dropped from without breaking.
+                <span style="color:black;font-weight:bold;">5. Two eggs and a high-rise. </span> A building has 100 floors. The \(k\)-th floor is the highest floor an egg can be dropped from without breaking.
                 If an egg is dropped from above that floor, it will break. If it is dropped from that floor or below, it will be completely undamaged and you can drop the egg again. What is the minimum number of throws needed to find \(k\) using only two eggs?
             </span>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="passengers">
-                <span style="color:black;font-weight:bold;">9. A hundred passengers. </span> A hundred passengers are boarding a fully-booked flight. The first passenger to board the plane chooses a seat at random; each subsequent passenger takes his assigned seat if it's available or a random
+                <span style="color:black;font-weight:bold;">6. A hundred passengers. </span> A hundred passengers are boarding a fully-booked flight. The first passenger to board the plane chooses a seat at random; each subsequent passenger takes his assigned seat if it's available or a random
                 available seat otherwise. What is the probability that the last passenger will use his assigned seat?   
             </span> 
             <br>
@@ -276,12 +285,11 @@
                     \[p(n) = \frac{1}{n}\left(2 + \sum_{m=2}^{n-2}{p(n-m+1)}\right)\]
                     where \(2 = 1 + 1\) comes from \(m=1\) (\(P_1\) takes his own seat) and \(m=n-1\) (\(P_n\) is guaranteed his seat). Assuming that \(p(k)=50\%\), for all \(1 < k < n\) as an induction hypothesis, we compute \(p(n) = \frac{1}{n}(50\%\cdot(n-4) + 2) = 50\%\).<span style="float:right"><i class='bx bx-square'></i></span>
                     <hr style="height:5px; visibility:hidden;"/>
-                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy the assigned seat and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n\). Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
-
+                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy their assigned seats and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n\). Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="geo">
-                <span style="color:black;font-weight:bold;">10. Special locations on Earth. </span> Assume that the Earth is a perfect sphere. Starting in a certain location, you move 10 miles due North, 10 miles due East, an 10 miles due South, which brings you back to the original point.
+                <span style="color:black;font-weight:bold;">7. Special locations on Earth. </span> Assume that the Earth is a perfect sphere. Starting in a certain location, you move 10 miles due North, 10 miles due East, an 10 miles due South, which brings you back to the original point.
                 Describe the collection of <it>all</it> such locations that you could start at.
             </span> 
             <br>
@@ -291,29 +299,115 @@
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='10-S' class="subcategories" style="color:black;margin-bottom:5px;">
                 One obvious solution is the South pole; but there's more, infinitely many more. The other solutions are in the vicinity of the North pole so that moving 10 miles East comprises a full circle (or multiple circles) around the Earth.  For this to happen, the original starting point should be 10 miles South of one of such concentric circles, so we first move up, make one or more loops (10 miles) around the North pole, and come back down.
-                 Thus, the full solution is the South pole union a countable collection of
-                concentric circles around the North pole<span style="float:right"><i class='bx bx-square'></i></span>
+                Thus, the full solution is the South pole union a countable collection of
+                concentric circles around the North pole.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
+            <span id="redemption">
+                <span style="color:black;font-weight:bold;">8. The round lake redemption.</span> A prisoner is swimming in a perfectly round lake of radius \(R\) and is trying to escape into the woods. However, a guard by the lake spotted the prisoner.
+                The guard runs 4 times faster than the prisoner swims. The guard cannot swim and should therefore keep out of the lake. Will the prisoner be able to escape into the woods?
+            </span> 
+            <br>
+            <span onclick="toggleSubcategories('GL8')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='GL8' class="subcategories" style="color:black;margin-bottom:5px;">
+                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/gl-lake.png" style="height:100%"></span>
+                Since the ratio of their speeds is \(4\), the angular velocity of the prisoner is larger than the angular velocity of the guard provided that the prisoner stays within the circle of radius \(R/4\). It then follows that he can eventually get to be opposite to the guard on that circle (see the picture).
+                When this happens, the prisoner needs to smiw \(\frac{3R}{4}\) to the nearest point on the ground whereas the guard must cover \(\pi R\) to get there. Therefore, the prisoner will be able to escape. <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="level">
+                <span style="color:black;font-weight:bold;">9. The water level.</span> A man with a suitcase is on a boat in the lake. How will the water level in the lake change after the man throws his suitcase overboard?
+            </span>
+
+            <div class="big-text" style="--c:black;margin-top: 20px;">
+                Algorithms
+            </div>
+            <span id="badges">
+                <span style="color:black;font-weight:bold;">1. Identify the hiding employee. </span> Each employee of a large corporation has a badge with a unique integer ID number. Every time an employee enters or leaves the office
+                building, they scan their badge at the gates, which gets registered in the daily logs. One day, exaclty one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
+                extra space where \(N\) is the total number of employees. 
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('3-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='3-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                One naive linear-time and linear-space solution would be to use a hash table to store the number of times each ID appears in the logs and then traverse all its key-value pairs to find the one unmatched ID. However, due to the constant-space constraint, we can't use a hash table. In fact, this constraint makes it clear that data structures are useless here, and instead, we should come up with a clever <it>operation</it> to apply to the IDs as we traverse the logs. Ideally, this operation should be commutative (so the order of logs does not matter) and, most importantly, nilpotent of order 2 (so the second appearance of the same ID cancels out with the first). One such function is a bitwise OR. Provided that all IDs come in pairs except for one that appears only once, this ID equals the bitwise OR of all IDs in the logs.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="rabbit">
+                <span style="color:black;font-weight:bold;">2. Catch the rabbit. </span>A rabbit is initially sitting at some unknown integer \(a\). Then, it starts jumping with fixed step size \(s\) in a fixed direction. After each jump, you are allowed to pick one integer location and check if the rabbit is currently there.
+                Suggest an algorithm that is guaranteed to catch the rabbit in finite time.
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('6-S')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='6-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/rabbit.png" style="height:100%"></span>
+                Let's factor the direction of the jumps into \(s\) by allowing it to be negative. Then, at any time \(t\), the position of the rabbit is \(p(t)=a+st\), so knowing both \(a\) and \(s\) is sufficient to catch the rabbit.
+                Therefore, we just need to come up with a strategy to identify \((a,s)\), which we can do iteratively starting with \((0,0)\) and progressing away from the origin in the \((a,s)\)-space. One such strategy is shown on the
+                picture (star represents the true values of \(s\) and \(a\)).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+
+            <div class="big-text" style="--c:black;margin-top: 20px;">
+                Probability & Statistics
+            </div>
+            <span id="coins">
+                <span style="color:black;font-weight:bold;">1. Gambling on coin flips. </span> You wander around the streets of St. Petersburg and notice a crowd of people watching a gambling game. The gambler pays the player $5 for every \(HT\) (heads, then tails) that comes up in a sequence of coin flips
+                that each costs $1. You observe the game long enough and find out that the game is, on average, profitable for the player. Inspired by his success, you dare to play yourself but the gambler suddenly wants to change the rules and pay you $5 for every \(HH\) (heads, then heads again) you throw. Note that 
+                a sequence of three heads earns you only $5 unless followed by another heads. Would you agree to play the game on these terms?
+            </span>
+            <hr style="height:15px; visibility:hidden;"/>
             <span id="traffic">
-                <span style="color:black;font-weight:bold;">11. The expected number of traffic groups. </span> There are \(N\) cars at arbitrary locations on a one-dimensional road (no overtakes allowed). They all start moving at the same time in the same direction but
+                <span style="color:black;font-weight:bold;">2. The expected number of traffic groups. </span> There are \(N\) cars at arbitrary locations on a one-dimensional road (no overtakes allowed). They all start moving at the same time in the same direction but
                 with different constant velocities that are independently drawn from a uniform distribution \(U[0,1]\). Once a faster car catches up with a slower car in front of it, it starts moving with that slower speed, and we say that these two cars
                 are now in the same traffic group (note that a single car following no other car and having no cars immediately behind it forms one traffic group). After some finite time,
                 this system reaches the limiting state where all potential traffic groups have been formed; denote this number of traffic groups by a random variable \(X\). Find \(\mathbb{E}X\).
             </span> 
             <hr style="height:15px; visibility:hidden;"/>
-            <span id="redemption">
-                <span style="color:black;font-weight:bold;">12. The round lake redemption.</span> A prisoner is swimming around in a perfectly round lake and is trying to escape into the woods. However, a guard by the lake spotted the prisoner.
-                The guard runs 4 times faster than the prisoner swims. The guard cannot swim and should therefore keep out of the lake. Will the prisoner be able to escape into the woods?
-            </span> 
-            <hr style="height:15px; visibility:hidden;"/>
             <span id="mathematician">
-                <span style="color:black;font-weight:bold;">13. A lonely mathematician.</span> A lonely mathematician plays a drinking game with himself. In this game, every drink contains a random uniform \(U[0,1]\) amount of moonshine. Once the total consumed
+                <span style="color:black;font-weight:bold;">3. A lonely mathematician.</span> A lonely mathematician plays a drinking game with himself. In this game, every drink contains a random uniform \(U[0,1]\) amount of moonshine. Once the total consumed
                 amount of moonshine exceeds 1, the mathematician immediately falls asleep. Find the expected number of drinks needed to put the lonely mathematician to sleep.
             </span>
+            <br>
+            <span onclick="toggleSubcategories('PS3')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='PS3' class="subcategories" style="color:black;margin-bottom:5px;">
+                The best motivation to read through the solution is to know the final answer: it is the number \(e\). We start by writing out the definition of expectation. Let \(X_i\sim\text{Unif}(0,1)\), then
+                \[\begin{align}\mathbb{E}(\text{number of drinks to sleep}) &= \sum_{n=2}^{\infty}n\mathbb{P}(\text{the critical drink is } X_{n}) = \sum_{n=2}^{\infty}n\mathbb{P}\left(\sum_{i=1}^{n-1}X_i<1, \sum_{i=1}^nX_i\geq 1\right)\\
+                &=\sum_{n=2}^{\infty}n\left[\mathbb{P}\left(\sum_{i=1}^{n-1}X_i<1\right)-\mathbb{P}\left(\sum_{i=1}^nX_i<1\right)\right]=\sum_{n=1}^{\infty}\mathbb{P}\left(\sum_{i=1}^nX_i<1\right).\end{align}\] Above we first used the fact
+                that events \(\{\sum_{i=1}^{n-1}X_i<1, \sum_{i=1}^{n}X_i\geq 1\}\) and \(\{\sum_{i=1}^nX_i<1\}\) are disjoint and their union is \(\{\sum_{i=1}^{n-1}X_i\}\), and then noticed that the resulting series is telescopic. Now, we find the
+                required probabilities via iterated integration: \[\mathbb{P}\left(\sum_{i=1}^nX_i<1\right)=\int_{0}^{1}\int_{0}^{1-x_1}\ldots\int_{0}^{1-\sum_{i=1}^{n-2}x_i}\int_{0}^{1-\sum_{i=1}^{n-1}x_i}dx_n\ldots dx_1=\int_{\Delta_n}dx_1\ldots dx_n\]
+                where we noted that this expression computes the volume of a \(n\)-dimensional simplex \(\Delta_n\). A few low dimensional examples can give the right intuition. For \(n=2\), \(\mathbb{P}(X_1+X_2<1)\) is the volume (area) of \(\Delta_2\)&mdash;a triangle with vertices \(\{(0,0), (0,1), (1,0)\}\), so \(\mathbb{P}(X_1+X_2<1) = 1/2\). Likewise, \(\mathbb{P}(X_1+X_2+X_3<1) = \text{Vol}(\Delta_3) = 1/6\) as the volume of a tetrahedron.
+                In fact, induction shows that \(\text{Vol}(\Delta_n) = \frac{1}{n!}\). Plugging this back into our series gives \(\sum_{n=1}^{\infty}\frac{1}{n!}=e\).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
-            <span id="level">
-                <span style="color:black;font-weight:bold;">14. The water level.</span> A man with a suitcase is on a boat in the lake. How will the water level in the lake change after the man throws his suitcase overboard?
+            <span id="sums-normals">
+                <span style="color:black;font-weight:bold;">4. A sum of normals.</span> Let \(X_1, X_2\sim\mathcal{N}(0,1)\) be independent normal variables, and let \(S=X_1+X_2\). Assume we observe \(s = x_1+x_2 = 1\). What can you say about the values \(x_1\) and \(x_2\)?
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('PS4')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='PS4' class="subcategories" style="color:black;margin-bottom:5px;">
+                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/gaussian.png" style="height:100%"></span>
+                I don't particularly like the wording of this question (it sounds intentionally informal) but this is how it was asked during an interview. Once you know the answer it is easy to reformulate the problem more rigorously, which takes some of its charm away.
+                The informal language of the question hints towards a geometric argument. By visualizing the joint probability density function of two independent standard Gaussians and adding a linear constraint of \(x_2 = 1-x_1\), we can see that \((0.5,0.5)\) is a reasonable estimate
+                for \((x_1,x_2\)) because it has the largest value of the PDF among all points on the line. That is, we just found the mode of a conditional distribution \((X_1,X_2)|S=1\).<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="correlation">
+                <span style="color:black;font-weight:bold;">5. Three random variables with equal correlation.</span> Three random variables have the same pairwise correlation \(\rho\). What are the possible values of \(\rho\)?
             </span>
             </div>
         </div>
