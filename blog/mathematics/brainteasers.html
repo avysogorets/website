@@ -137,6 +137,13 @@
                             </span>
                         </div>
                     </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#sheep')">
+                                10. lions and a sheep
+                            </span>
+                        </div>
+                    </li>
                     <div style="margin-bottom: 1%;"></div>
                 </ul>
 				<div class="middle-text" style="--c:rgb(88,88,88);padding:0;">
@@ -203,6 +210,20 @@
                         <div style="margin-top:3px;margin-left:10px;">
                             <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#correlation')">
                                 5. three random variables with equal correlation
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#replacement')">
+                                6. sampling with replacement
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#colors')">
+                                7. color changes
                             </span>
                         </div>
                     </li>
@@ -321,7 +342,19 @@
             <span id="level">
                 <span style="color:black;font-weight:bold;">9. The water level.</span> A man with a suitcase is on a boat in the lake. How will the water level in the lake change after the man throws his suitcase overboard?
             </span>
-
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="sheep">
+                <span style="color:black;font-weight:bold;">10. Lions and a sheep.</span> There are \(N\) lions and one sheep. Once a lion eats a sheep, it turns into one itself. No lion will eat a sheep if it thinks that it will be later eaten by a different lion. At all times, all lions know exactly how many other lions are remaining. Will the [original] sheep survive?
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('GL10')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='GL10' class="subcategories" style="color:black;margin-bottom:5px;">
+                If \(N=1\), the lion eats the sheep. If \(N=2\), the lion to eat the sheep first can be eaten by the other lion, which will certainly happen as there is no risk associated with it. Thus, no lion will eat the sheep if and only if \(N\) is even.<span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
             <div class="big-text" style="--c:black;margin-top: 20px;">
                 Algorithms
             </div>
@@ -409,6 +442,32 @@
             <span id="correlation">
                 <span style="color:black;font-weight:bold;">5. Three random variables with equal correlation.</span> Three random variables have the same pairwise correlation \(\rho\). What are the possible values of \(\rho\)?
             </span>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="replacement">
+                <span style="color:black;font-weight:bold;">6. Sampling with replacement.</span> There are \(N\) distinct objects that you sample \(k\) times with replacement. Let \(X\) be the number of distinct objects in your sample. Find \(\mathbb{E}X\).
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('PS5')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='PS5' class="subcategories" style="color:black;margin-bottom:5px;">
+                Let \(Y_i\) (for \(i\in[N]\)) be an indicator variable indicating that the \(i\)-th object does not appear in the sample, and \(Y\) be the number of objects that do not appear in the sample, so \(X=N-Y\) and \(Y=\sum_{i=1}^NY_i\). By linearity of expectation, \[\mathbb{E}X=N-\sum_{i=1}^N\mathbb{E}Y_i=N-\sum_{i=1}^N\mathbb{P}(Y_i=1)=N-N(1-\frac{1}{N})^k\] since \(\mathbb{E}Y_i=(1-\frac{1}{N})^k\). Hence, \(\mathbb{E}X=N-N(1-\frac{1}{N})^k\). Note that when \(k=N\rightarrow\infty\), the proportion of unique objects in the sample is \(\lim_{N\rightarrow\infty}\left[1-(1-\frac{1}{N})^N\right]=1-\frac{1}{e}\approx 63\%\). <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="colors">
+                <span style="color:black;font-weight:bold;">7. Color changes.</span> There are \(m\) red and \(n\) blue balls in a jar, and you take them out one by one. A color change occurs if you draw a blue and a red ball consecutively, or a red and a blue ball consecutively. Find the expected number of color changes as you draw all balls from the jar.
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('PS6')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='PS6' class="subcategories" style="color:black;margin-bottom:5px;">
+                In this problem, we need to find the expected number (count) of some events. These types of problems can often be solved by defining indicator random variables for these simpler events and then using linearity of expectation to find the final answer. For this problem, we let \(X_i\) be the indicator variable with \(X_i = 1\) if the \(i\)-th drawn ball yields a color change (i.e., the \((i-1)\)-st ball is of the opposite color). 
+                Then, we are interested in \(\mathbb{E}\left[\sum_{i=1}^{m+n}X_i\right] = \sum_{i=1}^{m+n}\mathbb{E}X_i\) while \(\mathbb{E}X_i = \mathbb{P}X_i\). Thus, we just need to find the probability that the \(i\)-th drawn ball yields a color change. Intuitively, it should be equally likely to encounter a color change at any position \(i>1\). To make it more rigorous, enumerate all balls in the jar and consider the space of all permutations \(S_{m+n}\). For any pair of balls, there is the same number of permutations
+                with these balls at position \((1,2)\) and at position \((i-1,i)\). Thus, \(\mathbb{P}(X_i) = \mathbb{P}(X_2) = \frac{2mn}{(m+n)(m+n-1)}.\) Hence, the expected number of color changes is \(\frac{2mn}{m+n}.\) <span style="float:right"><i class='bx bx-square'></i></span>
+                </ul>
             </div>
         </div>
 		<!--<div class="side-panel" style="height:calc(100vh - 48.5px);position:sticky;top:49px">-->
