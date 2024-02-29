@@ -262,7 +262,8 @@ mjx-container[jax="CHTML"][display="true"] {
 }
 
 .paper-icon {
-    height:100%;
+    height:87px;
+    width:67px;
     background:black;
 }
 
