@@ -263,7 +263,7 @@
             <hr style="height:5px; visibility:hidden;"/>
             <ul id='2-S' class="subcategories" style="color:black;margin-bottom:5px;">
             Shut the light in the first car. The strategy is to progress in one direction relative to the first car, constantly turning the lights on and coming back to check if the first car still has its light off. More precisely, the algorithm is to (1) walk in one direction until you encounter a
-            car with a light off; assume this happens \(M\) cars down, (2) turn the light in that car on and return to the original car, (3) if the light is still off, continue to step (1). Otherwise, the last car you visited must be the first car; return \(M\). <span style="float:right"><i class='bx bx-square'></i></span>
+            car with a light off; assume this happens \(M\) cars down, (2) turn the light in that car on and return to the original car, (3) if the light is still off, continue to step (1). Otherwise, the last car you visited must be the first car; return \(M.\) <span style="float:right"><i class='bx bx-square'></i></span>
             </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="salary">
@@ -275,7 +275,7 @@
                 Solution.
                 </span>
                 <ul id='4-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                Let the size of your team be \(N\). Designate a person \(A_1\) to come up with some number, add their salary to it, and whisper the sum to person \(A_2\). Next, the algorithm proceeds as follows: for all \(i\in\{2,3,\ldots,N\}\), person \(A_i\) adds their salary to the number they received from \(A_{i-1}\) and whispers the sum to person \(A_{i+1}\). Person \(A_N\) would whisper their sum to person \(A_1\), who finally subtracts his original number from the sum and announces the average salary.<span style="float:right"><i class='bx bx-square'></i></span>
+                Let the size of your team be \(N.\) Designate a person \(A_1\) to come up with some number, add their salary to it, and whisper the sum to person \(A_2.\) Next, the algorithm proceeds as follows: for all \(i\in\{2,3,\ldots,N\},\) person \(A_i\) adds their salary to the number they received from \(A_{i-1}\) and whispers the sum to person \(A_{i+1}.\) Person \(A_N\) would whisper their sum to person \(A_1,\) who finally subtracts his original number from the sum and announces the average salary.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="island">
@@ -301,12 +301,12 @@
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='9-S' class="subcategories" style="color:black;margin-bottom:5px;">
                     (50%). There are two solutions that, in my opinion, deserve discussion: one more formal but rather dull, and the other more clever but somewhat speculative.
-                    For the first one, consider a more general problem with \(n\) passengers on a fully-booked plane with \(n\) seats. Denote the probability that the last passenger \(P_{n}\) occupies his assigned seat by \(p(n)\); the original problem asks for \(p(100)\).
-                    To start, note that \(p(2) = 50\%\). Now, let's find a recurrence relation for \(p(n)\). If the first passenger \(P_1\) takes his assigned seat, everything falls into order, and \(P_n\) gets his seat too. Otherwise, assume \(P_1\) takes a seat assigned to \(P_m\) where \(1 < m < n \). Then, passengers \(P_2, P_3, \ldots, P_{m-1}\) will all get their seats, but \(P_m\) will have to choose one at random. His options are the seat of \(P_1\) union all seats that belong to passengers \(P_{m+1}, \ldots, P_{n}\). This scenario corresponds to the same original problem with \(n-m+1\) total seats (where \(P_{m}\) choosing the seat of \(P_1\) corresponds to taking "the right" seat so that all others get their assigned seats thereafter, including \(P_n\)). Since \(P_1\) chooses a seat uniformly at random, we can write a recurrence relation
+                    For the first one, consider a more general problem with \(n\) passengers on a fully-booked plane with \(n\) seats. Denote the probability that the last passenger \(P_{n}\) occupies his assigned seat by \(p(n)\); the original problem asks for \(p(100).\)
+                    To start, note that \(p(2) = 50\%.\) Now, let's find a recurrence relation for \(p(n).\) If the first passenger \(P_1\) takes his assigned seat, everything falls into order, and \(P_n\) gets his seat too. Otherwise, assume \(P_1\) takes a seat assigned to \(P_m\) where \(1 < m < n .\) Then, passengers \(P_2, P_3, \ldots, P_{m-1}\) will all get their seats, but \(P_m\) will have to choose one at random. His options are the seat of \(P_1\) union all seats that belong to passengers \(P_{m+1}, \ldots, P_{n}.\) This scenario corresponds to the same original problem with \(n-m+1\) total seats (where \(P_{m}\) choosing the seat of \(P_1\) corresponds to taking "the right" seat so that all others get their assigned seats thereafter, including \(P_n\)). Since \(P_1\) chooses a seat uniformly at random, we can write a recurrence relation
                     \[p(n) = \frac{1}{n}\left(2 + \sum_{m=2}^{n-2}{p(n-m+1)}\right)\]
-                    where \(2 = 1 + 1\) comes from \(m=1\) (\(P_1\) takes his own seat) and \(m=n-1\) (\(P_n\) is guaranteed his seat). Assuming that \(p(k)=50\%\), for all \(1 < k < n\) as an induction hypothesis, we compute \(p(n) = \frac{1}{n}(50\%\cdot(n-4) + 2) = 50\%\).<span style="float:right"><i class='bx bx-square'></i></span>
+                    where \(2 = 1 + 1\) comes from \(m=1\) (\(P_1\) takes his own seat) and \(m=n-1\) (\(P_n\) is guaranteed his seat). Assuming that \(p(k)=50\%,\) for all \(1 < k < n\) as an induction hypothesis, we compute \(p(n) = \frac{1}{n}(50\%\cdot(n-4) + 2) = 50\%.\)<span style="float:right"><i class='bx bx-square'></i></span>
                     <hr style="height:5px; visibility:hidden;"/>
-                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy their assigned seats and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n\). Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
+                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy their assigned seats and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n.\) Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="geo">
@@ -334,8 +334,8 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='GL8' class="subcategories" style="color:black;margin-bottom:5px;">
-                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/gl-lake.png" style="height:100%"></span>
-                Since the ratio of their speeds is \(4\), the angular velocity of the prisoner is larger than the angular velocity of the guard provided that the prisoner stays within the circle of radius \(R/4\). It then follows that he can eventually get to be opposite to the guard on that circle (see the picture).
+                <span class="math-float" style="--s:left"><img src="/blog/imgs/gl-lake.png" style="height:100%"></span>
+                Since the ratio of their speeds is \(4,\) the angular velocity of the prisoner is larger than the angular velocity of the guard provided that the prisoner stays within the circle of radius \(R/4.\) It then follows that he can eventually get to be opposite to the guard on that circle (see the picture).
                 When this happens, the prisoner needs to smiw \(\frac{3R}{4}\) to the nearest point on the ground whereas the guard must cover \(\pi R\) to get there. Therefore, the prisoner will be able to escape. <span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
@@ -352,7 +352,7 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='GL10' class="subcategories" style="color:black;margin-bottom:5px;">
-                If \(N=1\), the lion eats the sheep. If \(N=2\), the lion to eat the sheep first can be eaten by the other lion, which will certainly happen as there is no risk associated with it. Thus, no lion will eat the sheep if and only if \(N\) is even.<span style="float:right"><i class='bx bx-square'></i></span>
+                If \(N=1,\) the lion eats the sheep. If \(N=2,\) the lion to eat the sheep first can be eaten by the other lion, which will certainly happen as there is no risk associated with it. Thus, no lion will eat the sheep if and only if \(N\) is even.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <div class="big-text" style="--c:black;margin-top: 20px;">
@@ -373,7 +373,7 @@
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="rabbit">
-                <span style="color:black;font-weight:bold;">2. Catch the rabbit. </span>A rabbit is initially sitting at some unknown integer \(a\). Then, it starts jumping with fixed step size \(s\) in a fixed direction. After each jump, you are allowed to pick one integer location and check if the rabbit is currently there.
+                <span style="color:black;font-weight:bold;">2. Catch the rabbit. </span>A rabbit is initially sitting at some unknown integer \(a.\) Then, it starts jumping with fixed step size \(s\) in a fixed direction. After each jump, you are allowed to pick one integer location and check if the rabbit is currently there.
                 Suggest an algorithm that is guaranteed to catch the rabbit in finite time.
             </span>
             <br>
@@ -382,9 +382,9 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='6-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/rabbit.png" style="height:100%"></span>
-                Let's factor the direction of the jumps into \(s\) by allowing it to be negative. Then, at any time \(t\), the position of the rabbit is \(p(t)=a+st\), so knowing both \(a\) and \(s\) is sufficient to catch the rabbit.
-                Therefore, we just need to come up with a strategy to identify \((a,s)\), which we can do iteratively starting with \((0,0)\) and progressing away from the origin in the \((a,s)\)-space. One such strategy is shown on the
+                <span class="math-float" style="--s:left"><img src="/blog/imgs/rabbit.png" style="height:100%"></span>
+                Let's factor the direction of the jumps into \(s\) by allowing it to be negative. Then, at any time \(t,\) the position of the rabbit is \(p(t)=a+st,\) so knowing both \(a\) and \(s\) is sufficient to catch the rabbit.
+                Therefore, we just need to come up with a strategy to identify \((a,s),\) which we can do iteratively starting with \((0,0)\) and progressing away from the origin in the \((a,s)\)-space. One such strategy is shown on the
                 picture (star represents the true values of \(s\) and \(a\)).<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
@@ -400,9 +400,9 @@
             <hr style="height:15px; visibility:hidden;"/>
             <span id="traffic">
                 <span style="color:black;font-weight:bold;">2. The expected number of traffic groups. </span> There are \(N\) cars at arbitrary locations on a one-dimensional road (no overtakes allowed). They all start moving at the same time in the same direction but
-                with different constant velocities that are independently drawn from a uniform distribution \(U[0,1]\). Once a faster car catches up with a slower car in front of it, it starts moving with that slower speed, and we say that these two cars
+                with different constant velocities that are independently drawn from a uniform distribution \(U[0,1].\) Once a faster car catches up with a slower car in front of it, it starts moving with that slower speed, and we say that these two cars
                 are now in the same traffic group (note that a single car following no other car and having no cars immediately behind it forms one traffic group). After some finite time,
-                this system reaches the limiting state where all potential traffic groups have been formed; denote this number of traffic groups by a random variable \(X\). Find \(\mathbb{E}X\).
+                this system reaches the limiting state where all potential traffic groups have been formed; denote this number of traffic groups by a random variable \(X.\) Find \(\mathbb{E}X.\)
             </span> 
             <hr style="height:15px; visibility:hidden;"/>
             <span id="mathematician">
@@ -415,17 +415,17 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='PS3' class="subcategories" style="color:black;margin-bottom:5px;">
-                The best motivation to read through the solution is to know the final answer: it is the number \(e\). We start by writing out the definition of expectation. Let \(X_i\sim\text{Unif}(0,1)\), then
+                The best motivation to read through the solution is to know the final answer: it is the number \(e.\) We start by writing out the definition of expectation. Let \(X_i\sim\text{Unif}(0,1),\) then
                 \[\begin{align}\mathbb{E}(\text{number of drinks to sleep}) &= \sum_{n=2}^{\infty}n\mathbb{P}(\text{the critical drink is } X_{n}) = \sum_{n=2}^{\infty}n\mathbb{P}\left(\sum_{i=1}^{n-1}X_i<1, \sum_{i=1}^nX_i\geq 1\right)\\
                 &=\sum_{n=2}^{\infty}n\left[\mathbb{P}\left(\sum_{i=1}^{n-1}X_i<1\right)-\mathbb{P}\left(\sum_{i=1}^nX_i<1\right)\right]=\sum_{n=1}^{\infty}\mathbb{P}\left(\sum_{i=1}^nX_i<1\right).\end{align}\] Above we first used the fact
-                that events \(\{\sum_{i=1}^{n-1}X_i<1, \sum_{i=1}^{n}X_i\geq 1\}\) and \(\{\sum_{i=1}^nX_i<1\}\) are disjoint and their union is \(\{\sum_{i=1}^{n-1}X_i\}\), and then noticed that the resulting series is telescopic. Now, we find the
+                that events \(\{\sum_{i=1}^{n-1}X_i<1, \sum_{i=1}^{n}X_i\geq 1\}\) and \(\{\sum_{i=1}^nX_i<1\}\) are disjoint and their union is \(\{\sum_{i=1}^{n-1}X_i\},\) and then noticed that the resulting series is telescopic. Now, we find the
                 required probabilities via iterated integration: \[\mathbb{P}\left(\sum_{i=1}^nX_i<1\right)=\int_{0}^{1}\int_{0}^{1-x_1}\ldots\int_{0}^{1-\sum_{i=1}^{n-2}x_i}\int_{0}^{1-\sum_{i=1}^{n-1}x_i}dx_n\ldots dx_1=\int_{\Delta_n}dx_1\ldots dx_n\]
-                where we noted that this expression computes the volume of a \(n\)-dimensional simplex \(\Delta_n\). A few low dimensional examples can give the right intuition. For \(n=2\), \(\mathbb{P}(X_1+X_2<1)\) is the volume (area) of \(\Delta_2\)&mdash;a triangle with vertices \(\{(0,0), (0,1), (1,0)\}\), so \(\mathbb{P}(X_1+X_2<1) = 1/2\). Likewise, \(\mathbb{P}(X_1+X_2+X_3<1) = \text{Vol}(\Delta_3) = 1/6\) as the volume of a tetrahedron.
-                In fact, induction shows that \(\text{Vol}(\Delta_n) = \frac{1}{n!}\). Plugging this back into our series gives \(\sum_{n=1}^{\infty}\frac{1}{n!}=e\).<span style="float:right"><i class='bx bx-square'></i></span>
+                where we noted that this expression computes the volume of a \(n\)-dimensional simplex \(\Delta_n.\) A few low dimensional examples can give the right intuition. For \(n=2,\) \(\mathbb{P}(X_1+X_2<1)\) is the volume (area) of \(\Delta_2\)&mdash;a triangle with vertices \(\{(0,0), (0,1), (1,0)\},\) so \(\mathbb{P}(X_1+X_2<1) = 1/2.\) Likewise, \(\mathbb{P}(X_1+X_2+X_3<1) = \text{Vol}(\Delta_3) = 1/6\) as the volume of a tetrahedron.
+                In fact, induction shows that \(\text{Vol}(\Delta_n) = \frac{1}{n!}.\) Plugging this back into our series gives \(\sum_{n=1}^{\infty}\frac{1}{n!}=e.\)<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="sums-normals">
-                <span style="color:black;font-weight:bold;">4. A sum of normals.</span> Let \(X_1, X_2\sim\mathcal{N}(0,1)\) be independent normal variables, and let \(S=X_1+X_2\). Assume we observe \(s = x_1+x_2 = 1\). What can you say about the values \(x_1\) and \(x_2\)?
+                <span style="color:black;font-weight:bold;">4. A sum of normals.</span> Let \(X_1, X_2\sim\mathcal{N}(0,1)\) be independent normal variables, and let \(S=X_1+X_2.\) Assume we observe \(s = x_1+x_2 = 1.\) What can you say about the values \(x_1\) and \(x_2\)?
             </span>
             <br>
             <span onclick="toggleSubcategories('PS4')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
@@ -433,18 +433,18 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='PS4' class="subcategories" style="color:black;margin-bottom:5px;">
-                <span style="float:left;height:175px;margin:5px;margin-right:30px;"><img src="/blog/imgs/gaussian.png" style="height:100%"></span>
+                <span class="math-float" style="--s:left"><img src="/blog/imgs/gaussian.png" style="height:100%"></span>
                 I don't particularly like the wording of this question (it sounds intentionally informal) but this is how it was asked during an interview. Once you know the answer it is easy to reformulate the problem more rigorously, which takes some of its charm away.
-                The informal language of the question hints towards a geometric argument. By visualizing the joint probability density function of two independent standard Gaussians and adding a linear constraint of \(x_2 = 1-x_1\), we can see that \((0.5,0.5)\) is a reasonable estimate
-                for \((x_1,x_2\)) because it has the largest value of the PDF among all points on the line. That is, we just found the mode of a conditional distribution \((X_1,X_2)|S=1\).<span style="float:right"><i class='bx bx-square'></i></span>
+                The informal language of the question hints towards a geometric argument. By visualizing the joint probability density function of two independent standard Gaussians and adding a linear constraint of \(x_2 = 1-x_1,\) we can see that \((0.5,0.5)\) is a reasonable estimate
+                for \((x_1,x_2\)) because it has the largest value of the PDF among all points on the line. That is, we just found the mode of a conditional distribution \((X_1,X_2)|S=1.\)<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="correlation">
-                <span style="color:black;font-weight:bold;">5. Three random variables with equal correlation.</span> Three random variables have the same pairwise correlation \(\rho\). What are the possible values of \(\rho\)?
+                <span style="color:black;font-weight:bold;">5. Three random variables with equal correlation.</span> Three random variables have the same pairwise correlation \(\rho.\) What are the possible values of \(\rho\)?
             </span>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="replacement">
-                <span style="color:black;font-weight:bold;">6. Sampling with replacement.</span> There are \(N\) distinct objects that you sample \(k\) times with replacement. Let \(X\) be the number of distinct objects in your sample. Find \(\mathbb{E}X\).
+                <span style="color:black;font-weight:bold;">6. Sampling with replacement.</span> There are \(N\) distinct objects that you sample \(k\) times with replacement. Let \(X\) be the number of distinct objects in your sample. Find \(\mathbb{E}X.\)
             </span>
             <br>
             <span onclick="toggleSubcategories('PS5')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
@@ -452,7 +452,7 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='PS5' class="subcategories" style="color:black;margin-bottom:5px;">
-                Let \(Y_i\) (for \(i\in[N]\)) be an indicator variable indicating that the \(i\)-th object does not appear in the sample, and \(Y\) be the number of objects that do not appear in the sample, so \(X=N-Y\) and \(Y=\sum_{i=1}^NY_i\). By linearity of expectation, \[\mathbb{E}X=N-\sum_{i=1}^N\mathbb{E}Y_i=N-\sum_{i=1}^N\mathbb{P}(Y_i=1)=N-N(1-\frac{1}{N})^k\] since \(\mathbb{E}Y_i=(1-\frac{1}{N})^k\). Hence, \(\mathbb{E}X=N-N(1-\frac{1}{N})^k\). Note that when \(k=N\rightarrow\infty\), the proportion of unique objects in the sample is \(\lim_{N\rightarrow\infty}\left[1-(1-\frac{1}{N})^N\right]=1-\frac{1}{e}\approx 63\%\). <span style="float:right"><i class='bx bx-square'></i></span>
+                Let \(Y_i\) (for \(i\in[N]\)) be an indicator variable indicating that the \(i\)-th object does not appear in the sample, and \(Y\) be the number of objects that do not appear in the sample, so \(X=N-Y\) and \(Y=\sum_{i=1}^NY_i.\) By linearity of expectation, \[\mathbb{E}X=N-\sum_{i=1}^N\mathbb{E}Y_i=N-\sum_{i=1}^N\mathbb{P}(Y_i=1)=N-N(1-\frac{1}{N})^k\] since \(\mathbb{E}Y_i=(1-\frac{1}{N})^k.\) Hence, \(\mathbb{E}X=N-N(1-\frac{1}{N})^k.\) Note that when \(k=N\rightarrow\infty,\) the proportion of unique objects in the sample is \(\lim_{N\rightarrow\infty}\left[1-(1-\frac{1}{N})^N\right]=1-\frac{1}{e}\approx 63\%.\) <span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="colors">
@@ -465,8 +465,8 @@
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='PS6' class="subcategories" style="color:black;margin-bottom:5px;">
                 In this problem, we need to find the expected number (count) of some events. These types of problems can often be solved by defining indicator random variables for these simpler events and then using linearity of expectation to find the final answer. For this problem, we let \(X_i\) be the indicator variable with \(X_i = 1\) if the \(i\)-th drawn ball yields a color change (i.e., the \((i-1)\)-st ball is of the opposite color). 
-                Then, we are interested in \(\mathbb{E}\left[\sum_{i=1}^{m+n}X_i\right] = \sum_{i=1}^{m+n}\mathbb{E}X_i\) while \(\mathbb{E}X_i = \mathbb{P}X_i\). Thus, we just need to find the probability that the \(i\)-th drawn ball yields a color change. Intuitively, it should be equally likely to encounter a color change at any position \(i>1\). To make it more rigorous, enumerate all balls in the jar and consider the space of all permutations \(S_{m+n}\). For any pair of balls, there is the same number of permutations
-                with these balls at position \((1,2)\) and at position \((i-1,i)\). Thus, \(\mathbb{P}(X_i) = \mathbb{P}(X_2) = \frac{2mn}{(m+n)(m+n-1)}.\) Hence, the expected number of color changes is \(\frac{2mn}{m+n}.\) <span style="float:right"><i class='bx bx-square'></i></span>
+                Then, we are interested in \(\mathbb{E}\left[\sum_{i=1}^{m+n}X_i\right] = \sum_{i=1}^{m+n}\mathbb{E}X_i\) while \(\mathbb{E}X_i = \mathbb{P}X_i.\) Thus, we just need to find the probability that the \(i\)-th drawn ball yields a color change. Intuitively, it should be equally likely to encounter a color change at any position \(i>1.\) To make it more rigorous, enumerate all balls in the jar and consider the space of all permutations \(S_{m+n}.\) For any pair of balls, there is the same number of permutations
+                with these balls at position \((1,2)\) and at position \((i-1,i).\) Thus, \(\mathbb{P}(X_i) = \mathbb{P}(X_2) = \frac{2mn}{(m+n)(m+n-1)}.\) Hence, the expected number of color changes is \(\frac{2mn}{m+n}.\) <span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             </div>
         </div>

@@ -237,6 +237,13 @@ mjx-container[jax="CHTML"][display="true"] {
     -webkit-background-clip: text;
 }
 
+.math-float {
+    float: var(--s);
+    height:175px;
+    margin: 5px;
+    margin-right:30px;
+}
+
 @media (hover: hover) {
     .focusable:hover {
         background: linear-gradient(45deg, violet, rgb(93, 184, 249));
@@ -391,4 +398,5 @@ header menu {
     .paper {max-width: 100%;
         margin-top:1%;}
     .paper-icon {height: 85%;}
+    .math-float {height: 100px;}
 }
