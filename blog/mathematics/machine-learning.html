@@ -80,7 +80,7 @@
                 <div style="flex-grow:0;">Support Vector Machines</div><!--<div class="divider"></div>-->
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
-                <it>This section is largely based on an excellent <a href="https://youtu.be/xpHQ6UhMlx4?si=-6rPoG83xAj22lTs" style="color:black;text-decoration:underline;text-decoration-style:solid;"> lecture by Kilian Weinberger</a>, courtesy of Cornell University.</it>
+                <it>This section is largely based on an excellent <a href="https://youtu.be/xpHQ6UhMlx4?si=-6rPoG83xAj22lTs" class="text-link"> lecture by Kilian Weinberger</a>, courtesy of Cornell University.</it>
                 <hr style="height:15px; visibility:hidden;"/>
                 Under the assumption that data \((x_i,y_i)_{i=1}^{N}\) is linearly separable, the perceptron model is 
                 guaranteed to converge to an affine separator \((w_{*},b_{*})\) so that \(y_i({w_{*}}^{\top}x_{i}+b_{*})>0\).
@@ -89,7 +89,7 @@
                 datapoints as possible. To make our intuition more precise, we wish to maximize the minimum distance to any sample
                 \(\gamma(w,b) = \lVert w\rVert^{-1}\min_{i}|w^{\top}x_i+b|\) while obviously making the correct predicitions, so \(y_i(w^{\top}x_i+b)\geq 0.\) for all \(i\in[n]\).
                 <hr style="height:5px; visibility:hidden;"/>
-                <span onclick="toggleSubcategories('0')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                <span onclick="toggleSubcategories('0')" class="text-link">
                 What is the distance from a point to a hyperplane?
                 </span>
                 <ul id='0' class="subcategories" style="color:black;padding-left:25px">
@@ -132,7 +132,7 @@
                 We can then equivalently formulate the dual problem as
                 \[\max\left[-\frac{1}{4}\sum_{i=1}^n\sum_{j=1}^n\lambda_i\lambda_jy_iy_jx_i^{\top}x_j+\sum_{i=1}\lambda_i\right]\quad\text{subject to }\begin{cases}\sum_{i=1}^n\lambda_iy_i=0&\forall i\in[n],\\\lambda_i\geq 0&\forall i\in[n].\end{cases}\]
                 <hr style="height:5px; visibility:hidden;"/>
-                <span onclick="toggleSubcategories('1')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                <span onclick="toggleSubcategories('1')" class="text-link">
                 How important is \(\frac{1}{4}\)?
                 </span>
                 <ul id='1' class="subcategories" style="color:black;padding-left:25px">
@@ -143,7 +143,7 @@
                 solution \(w^{\star}\). Hence, maybe rather counterintuitively, we can safely ignore the factor \(1/4\) in the above problem.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
                 <hr style="height:5px; visibility:hidden;"/>
-                <span onclick="toggleSubcategories('2')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                <span onclick="toggleSubcategories('2')" class="text-link">
                 Where did \(b\) go?
                 </span>
                 <ul id='2' class="subcategories" style="color:black;padding-left:25px">
@@ -163,7 +163,7 @@
                 originally linearly inseparable datasets. To this end, we just need to substitute the original \(x_i^{\top}x_j\) by \(\phi(x_i)^{\top}\phi(x_j)\). And there is more! We don't actually need to handcraft the mapping \(\phi\):
                 all we need is a valid <it>kernel function</it> \(K\colon\mathbb{R}^{d}\times\mathbb{R}^d\rightarrow\mathbb{R}\) where \(K(x_i,x_j)=\phi(x_i)^{\top}\phi(x_j)\) for some \(\phi\).
                 <hr style="height:5px; visibility:hidden;"/>
-                <span onclick="toggleSubcategories('3')" style="color:black;cursor:pointer;text-decoration:underline;text-decoration-style:solid;">
+                <span onclick="toggleSubcategories('3')" class="text-link">
                 How do we do inference?
                 </span>
                 <ul id='3' class="subcategories" style="color:black;padding-left:25px">
