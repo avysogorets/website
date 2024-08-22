@@ -19,7 +19,7 @@
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
 		<script id="MathJax-script" async
 				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 		</script>
@@ -227,6 +227,20 @@
                             </span>
                         </div>
                     </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#cycles')">
+                                8. large-cycle permutations
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="margin-top:3px;margin-left:10px;">
+                            <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#prisoners')">
+                                9. prisoners
+                            </span>
+                        </div>
+                    </li>
                     <div style="margin-bottom: 1%;"></div>
                 </ul>
 			</div>
@@ -344,7 +358,7 @@
             </span>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="sheep">
-                <span style="color:black;font-weight:bold;">10. Lions and a sheep.</span> There are \(N\) lions and one sheep. Once a lion eats a sheep, it turns into one itself. No lion will eat a sheep if it thinks that it will be later eaten by a different lion. At all times, all lions know exactly how many other lions are remaining. Will the [original] sheep survive?
+                <span style="color:black;font-weight:bold;">10. Lions and a sheep.</span> There are \(N\) lions and one sheep. Once a lion eats a sheep, it turns into one itself. No lion will eat a sheep if it thinks that it  be later eaten by some other lion. At all times, all lions know exactly how many other lions are remaining. Will the [original] sheep survive?
             </span>
             <br>
             <span onclick="toggleSubcategories('GL10')" class="text-link">
@@ -468,6 +482,39 @@
                 Then, we are interested in \(\mathbb{E}\left[\sum_{i=1}^{m+n}X_i\right] = \sum_{i=1}^{m+n}\mathbb{E}X_i\) while \(\mathbb{E}X_i = \mathbb{P}X_i.\) Thus, we just need to find the probability that the \(i\)-th drawn ball yields a color change. Intuitively, it should be equally likely to encounter a color change at any position \(i>1.\) To make it more rigorous, enumerate all balls in the jar and consider the space of all permutations \(S_{m+n}.\) For any pair of balls, there is the same number of permutations
                 with these balls at position \((1,2)\) and at position \((i-1,i).\) Thus, \(\mathbb{P}(X_i) = \mathbb{P}(X_2) = \frac{2mn}{(m+n)(m+n-1)}.\) Hence, the expected number of color changes is \(\frac{2mn}{m+n}.\) <span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
+
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="cycles">
+                <span style="color:black;font-weight:bold;">7. Large-cycle permutations.</span> Find the number of permutations in \(S_n\) that have a cycle of length larger than \(n/2\). What's the probability that a random permutation in \(S_n\) has such cycle as \(n\rightarrow\infty\)?
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('PS8')" class="text-link">
+                Solution.
+            </span>
+            <hr style="height:5px; visibility:hidden;"/>
+            <ul id='PS8' class="subcategories" style="color:black;margin-bottom:5px;">
+            Clearly, there can only be one cycle of length larger that \(n/2\). Then, we can partition the collection of such permutations by the length \(k\) of their largest cycle, \(n/2 < k \leq n\).
+            There are \(\binom{n}{n-k}\) ways to select elements for that cycle, \((n-k-1)!\) ways to arrange them within the cycle, and \(k!\) ways to permute the remaining elements. This gives us \[\frac{n!}{(n-k)!k!}(n-k-1)!k!=\frac{n!}{n-k}\] permutations with a cycle of length \(k\).
+            Hence, there are \(n!\sum_{k=n/2}^{n} \frac{1}{n-k} = n!(H_n-H_{n/2})\) such permutations in total where \(H_n\) denotes the \(n\)-th Harmonic number. For the second part, we need to evaluate \(\lim_{n\rightarrow\infty}(H_n-H_{n/2})\).
+            Intuitively, this can be represented as the difference in the areas under hyperbola \(1/x\) when \(x=n\) and \(x=n/2\), respectively. To show this formally, we take a step back and rewrite \[H_n-H_{n/2} = \sum_{k=1}^{n}\frac{1}{k}-\sum_{k=1}^{n/2}\frac{1}{k}=\sum_{k=n/2}^{n}\frac{1}{k}=\sum_{k=n/2}^{n}\frac{2}{n}\frac{n}{2k}.\]
+            The factorization in the last step is needed to interpret the sum as a Darboux sum for the graph of \(f(x)=1/x\) over the interval \([1,2]\) partitioned into \(n/2\) chunks (width of each chunk is \(\frac{1}{n/2}\) and height of the \(i\)-th chunk is \(\frac{1}{1+\frac{i}{n/2}}\)). Clearly, this integral is \(\ln 2-\ln 1 = \ln 2.\)
+            <span style="float:right"><i class='bx bx-square'></i></span>
+            </ul>
+            <hr style="height:15px; visibility:hidden;"/>
+            <span id="prisoners">
+                <span style="color:black;font-weight:bold;">8. A hundred prisoners.</span> There are a hundred prisoners with unique identifiers from \(1\) to \(100\) in one room. A second room has \(100\) identical boxes each with unique identifier from \(1\) to \(100\) hidden inside. One by one, the prisoners enter the second room and may check up to \(50\) boxes to find their identifier. If all prisoners succeed, they are set free; otherwise, they all die. Suggest a strategy that will maximize the odds of survival.
+            </span>
+            <br>
+            <span onclick="toggleSubcategories('PS9')" class="text-link">
+                Solution.
+            </span>
+            <hr style="height:5px; visibility:hidden;"/>
+            <ul id='PS9' class="subcategories" style="color:black;margin-bottom:5px;">
+            As a first baseline, let's compute the odds of survival when each prisoner checks half of the boxes randomly. Clearly, the probability that all \(100\) prisoners succeed is just \(\left(\frac{1}{2}\right)^{100}\). However, we can do better, considerably better. One slight improvement that most easily comes to mind is to partition boxes into two subsets of \(50\) and ask prisoners to choose either subset alternatingly. In this case, provided that all previous prisoners succeed, the subsequent prisoner will find his box with probability \(\frac{50}{99}\), bumping the overall
+            success probability to \(\frac{1}{2}\left(\frac{50}{99}\right)^{99}\). This might already be a significant improvement, but it's still vanishingly small. The key to a much better solution is to focus on the emergent structures of the random box arrangement itself. If a prisoner with identifier \(i\) starts with the \(i\)-th box and then sequentially checks the boxes in positions indicated by the number found inside of the previously opened one, the prisoner will effectively traverse the cycle containing his own box and, hence, will succeed if that cycle has length \(50\) or less.
+            If all prisoners use this strategy, they will all succed if and only if the box arrangement has no cycle longer than \(50,\) which happens with probability \(1-H_{100}+H_{50}\approx 1-\ln 2 \approx 0.31\) according to the <span onclick="jump('#cycles')" style="text-decoration:underline;cursor: pointer;"><it>large-cycle</it></span> problem.
+            <span style="float:right"><i class='bx bx-square'></i></span>
+            </ul>
             </div>
         </div>
 		<!--<div class="side-panel" style="height:calc(100vh - 48.5px);position:sticky;top:49px">-->

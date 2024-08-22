@@ -1,0 +1,247 @@
+:root {
+    --card-height: 90px;
+    --card-width: 64px;
+    --info-font-size: 24px;
+    --info-font-size-pad: 5px;
+    --border-width: 2px;
+    --card-border: 0.5px;
+    --transition-time: 0.1s;
+    --font-size: 18px;
+    --font-familiy: Arial, Helvetica, sans-serif;
+}
+
+
+.main {
+    height: 90%;
+    width: 100%;
+    margin:12%;
+    margin-bottom: 15%;
+    display: flex;
+    flex-direction: column;
+    background-color: yellow;
+    font-size: var(--info-font-size);
+    font-family: var(--font-familiy);
+}
+
+.message {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    background-color: greenyellow;
+    user-select: none;
+    z-index: 1;
+}
+
+.master-middle {
+    width: 100%;
+    height: calc(3*var(--card-height));
+    overflow-y: visible;
+    display: flex;
+}
+
+.middle-main {
+    width: auto;
+    background-color: bisque;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.middle-phase-1 {
+    height: 100%;
+    width: 100%;
+    background-color: bisque;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.middle-phase-2 {
+    margin-top: calc(var(--card-height)/4);
+    margin-bottom: calc(var(--card-height)/6);
+    margin-left: calc(var(--card-width)/4);
+    margin-right: calc(var(--card-width)/4);
+    height: 100%;
+    width: 90%;
+    row-gap: 1%;
+    column-gap: 2%;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 
+        max(var(--font-size), min(16%, calc(4 * var(--font-size))))
+        max(var(--font-size), min(16%, calc(4 * var(--font-size))))
+        max(var(--font-size), min(16%, calc(4 * var(--font-size))))
+        max(var(--font-size), min(16%, calc(4 * var(--font-size))))
+        max(var(--font-size), min(16%, calc(4 * var(--font-size)))) 
+        max(var(--font-size), min(16%, calc(4 * var(--font-size))));
+    grid-template-rows: auto;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    align-content: flex-start;
+    background-color: aquamarine;
+}
+
+
+.middle-phase-3 {
+    height: 100%;
+    width: 100%;
+}
+
+
+.parameter-text {
+    height: auto;
+    width: 100%;
+    position: relative;
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+}
+
+.parameter-button {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    background-color: white;
+    border: var(--border-width) solid black;
+    border-radius: calc(var(--card-height)/18);
+    cursor: pointer;
+    font-size: var(--font-size);
+    font-family: var(--font-family);
+}
+
+.hand-container-vert {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: calc(var(--card-width) + var(--info-font-size) + var(--info-font-size-pad));
+    background-color: transparent
+}
+
+.hand-vert-named {
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: var(--card-width);
+}
+
+.hand-vert {
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+    width: calc(var(--card-width) + 2*var(--border-width));
+    position: relative;
+    border-radius: calc(var(--card-height)/18);
+    border: var(--border-width) solid black;
+    background-color: pink;
+}
+
+.hand-info-vert {
+    font-size: var(--info-font-size);
+    font-family: var(--font-familiy);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    background-color: #adff2f;
+    user-select: none;
+}
+
+.hand-container-horz {
+    display: flex;
+    flex-direction: column;
+    width: 94%;
+    padding-left: 3%;
+    padding-right: 3%;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent
+}
+
+.hand-horz {
+    height: calc(var(--card-height) + 2*var(--border-width));
+    width: min(100%, calc(7*var(--card-width)));
+    position: relative;
+    background-color: pink;
+    border: var(--border-width) solid black;
+    border-radius: calc(var(--card-height)/18);
+}
+
+.hand-info-horz {
+    font-size: var(--info-font-size);
+    font-family: var(--font-familiy);
+    text-align: center;
+    margin-top: 5px;
+    height: auto;
+    align-items: center;
+    background-color: greenyellow;
+    user-select: none;
+}
+
+.card-container {
+    padding: 5%;
+    height: 100%;
+    width: 100%; 
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: var(--card-height) var(--card-height);
+    justify-content: center;
+    align-items: center;
+    row-gap: 4%;
+    column-gap: 2%;
+    background-color: aquamarine;
+}
+
+.suit-container {
+    height: calc(100% + 2*var(--border-width));
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: var(--border-width) solid black;
+    border-radius: calc(var(--card-height)/18);
+    background-color: cadetblue;
+}
+
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    cursor: pointer;
+    position: absolute;
+    user-select: none;
+    transition: transform var(--transition-time) ease-in-out;
+    border: var(--card-border) solid black;
+    border-radius: calc(var(--card-height)/18);
+}
+
+.suit-img {
+    height: 1rem;
+    width: 1.1rem;
+}
+
+.random-deal {
+    width: auto;
+    border-radius: calc(var(--card-height)/18);
+    border: var(--border-width) solid black;
+    align-items: center;
+    cursor: pointer;
+    font-size: calc(var(--font-size)*0.75);
+    font-family: var(--font-familiy);
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    background-color: lavender;
+}
+
+

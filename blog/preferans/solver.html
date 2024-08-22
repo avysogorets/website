@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-S63F1NJWJN"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+	
+		gtag('config', 'G-S63F1NJWJN');
+		</script>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible"
+    	content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link type="text/css" rel="stylesheet" href="/style.css?v25" />
+        <link type="text/css" rel="stylesheet" href="/blog/preferans/solver.css?v1" />
+    	<link rel="preconnect" href="https://fonts.googleapis.com">
+    	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
+		<script id="MathJax-script" async
+				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+		</script>
+    	<title>Preferans Solver</title>
+	</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
+        </a>
+        <nav class="navbar">
+            <a href="/" style="--i:1;" class="menu-option-horz">Home</a>
+            <a href="/aboutme" style="--i:2;" class="menu-option-horz">About me</a>
+            <a href="/publications" style="--i:3;" class="menu-option-horz">Publications</a>
+            <a href="/imgs/cv.pdf" style="--i:4;" class="menu-option-horz">CV </a>
+            <a href="/blog" style="--i:5;" class="active menu-option-horz">Blog</a>
+        </nav>
+        <menu style="z-index: 5000;">
+            <div class="menu-icon">
+                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px"></i>
+            </div>
+            <ul class="menu-dropdown" style="background:black;">
+                <li><a href="/" style="--i:0;color:white" class="menu-option-vert">Home</a></li>
+                <li><a href="/aboutme" style="--i:0;color:white" class="menu-option-vert">About me</a></li>
+                <li><a href="/publications" style="--i:0;color:white" class="menu-option-vert">Publications</a></li>
+                <li><a href="/imgs/cv.pdf" style="--i:0;color:white" class="menu-option-vert">CV</a></li>
+                <li><a href="/blog" style="--i:0;color:white" class="active menu-option-vert">Blog</a></li>
+            </ul>
+        </menu>
+    </header>
+	<div class="panel" style="--c:white;">
+		<div class="main">
+            <div class="message" id="message-container">
+            </div>
+            <div style="display:flex; flex-direction:row; height:100%; width:100%; align-items: center;">
+                <div class="hand-container-vert">
+                    <div class="hand-vert-named">
+                        <div class="hand-vert" id="hand-1"></div>
+                        <div class="hand-info-horz"> WEST </div>
+                    </div>
+                    <div class="hand-info-vert" id="info-1">&nbsp</div>
+                </div>
+                <div class="middle-main", id="middle-main">
+                    <div class="master-middle", id="master-middle">
+                        <!-- ... -->
+                    </div>
+                    <div class="hand-container-horz">
+                        <div class="hand-info-horz">&nbsp</div>
+                        <div class="hand-horz" id="hand-0"></div>
+                        <div class="hand-info-horz" id="info-0"> SOUTH </div>
+                    </div>
+                </div>
+                <div class="hand-container-vert">
+                    <div class="hand-info-vert">&nbsp</div>
+                    <div class="hand-vert-named">
+                        <div class="hand-vert" id="hand-2"></div>
+                        <div class="hand-info-horz" id="info-2"> EAST </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+<script type="module" src="/blog/preferans/solver-js/frontend/frontend.js"></script>
+</body>
+</html>

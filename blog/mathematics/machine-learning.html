@@ -18,7 +18,7 @@
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
 		<script id="MathJax-script" async
 				src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 		</script>
@@ -67,7 +67,16 @@
             <ul style="list-style:none;">
                 <li>
                     <div style="padding-top:3px;;">
-                        <a href="#intro" style="text-decoration: none;" onclick="jump('#svm')">
+                        <a href="#INTRO" style="text-decoration: none;" onclick="jump('#intro')">
+                            <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
+                                1. Introduction: Models
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div style="padding-top:3px;;">
+                        <a href="#SVM" style="text-decoration: none;" onclick="jump('#svm')">
                             <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
                                 1. Support Vector Machines
                             </span>
@@ -75,6 +84,23 @@
                     </div>
                 </li>
             </ul>
+            <br>
+            <div class="middle-text" id="intro" style="--d:1;--c:black;display:flex;align-items:center;margin-top:25px;">
+                <div style="flex-grow:0;">Introduction: Modeling</div><!--<div class="divider"></div>-->
+            </div>
+            <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
+                Three years into my pure math studies at UMass Amherst, I had my first exprience in machine learning modeling at a summer research program at SDSU. The program was in mathematics, although ML frenzy had already started spreading across adjacent industries without mercy, and I was paired with more senior statisticians to work out a model to predict location of zeros of a Riemann Zeta function on the critical line. To start, an undereducated pure math geek, I instinctively wanted to first understand
+                what a "model" is in the most general sense, give it a rigorous definiton for my own peace of mind. Of course, this is a rather philoshopical feat, which was hard to understand for me back then since in my world everything must have had precise definition. This search for a formal framework of a "model" at the beginning of this supposedly practical and fun project wasted quite a bit of my time and also didn't lead to a satisfactory answer. Most explanations spoke of models as "sets of equations", "rules",
+                "relationships between quantities", etc. While conceptually all this makes sense and is true in some approximation, it just wasn't what I was looking for, and eventually I just moved on. Believe it or not, it took me 4 years, three courses in probability and statistics, and half of a PhD to formulate an answer to that question that I think is reasonably valid, general, and mathematically sound. And it's not even a product of my philosophical contemplations&mdash;I just randomly found it in the first pages
+                of an introductory textbook on statistics. the simplicity of it left me wishing that all statistics textbooks start with it rather than with repeatedly tossing fair coins or rolling dice.
+                <br/><br/>
+                A <it>statistical</it> model is a collection of distributions. A parametric model \(\mathcal{P}\) is a collection of distributions \(\mathcal{P}=\{P_{\theta}\colon \theta\in\Theta\}\) parameterized by a finite number of parameters \(\theta\in\Theta\subseteq\mathbb{R}^d\). A Bayesian model is described by two collections&mdash;posteriors and priors. This may seem like a facier way of saying that a model "describes relationships between variables" but I find it way more satisfying
+                and telling and, looking back at my experiences with ML models, it definitely helps me understand what they are and how they are different. For example, linear regression corresponds to a set of conditional distributions \(Y|X=x\in\{\mathcal{N}(w^{\top}x, \sigma^2)\colon w\in\mathcal{R}^d, \sigma>0\}\) (not how the homoscedascity assumption is engraved in this), logistic regression corresponds to \(Y|X=x\in\{\text{Bern}([1+e^{-w^{\top}x}]^{-1})\}\). Neural
+                networks are also parametric models with associated distributions dependent on architecture. Now, not all models 
+                \(Y\)
+
+
+            </div>
             <br>
             <div class="middle-text" id="svm" style="--d:1;--c:black;display:flex;align-items:center;margin-top:25px;">
                 <div style="flex-grow:0;">Support Vector Machines</div><!--<div class="divider"></div>-->
