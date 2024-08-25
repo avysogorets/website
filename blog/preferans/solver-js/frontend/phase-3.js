@@ -1,8 +1,6 @@
 import * as globals from '../globals.js'
 import { Game } from '../backend/game.js'
 import { Hand } from '../backend/hand.js'
-import { Solver } from '../backend/solver.js';
-
 
 export class Phase_3 {  
     constructor(dispatcher) {
@@ -40,8 +38,15 @@ export class Phase_3 {
     };
 
     solve() {
-        this.solver = new Solver(this.game, this.phase_middle);
-        this.solver.solve()
-        console.log(this.solver._dp_keys.size)
+        const worker = new Worker('./worker.js'); // TODO: make sure path is correct
+        const progressEl = document.getElementById('progress'); // TODO: implement in DOM
+
+        // This handles message that arrives from worker (main thread context).
+        worker.onmessage = function (e) {
+            const dpKeysSize = e.data;
+            progressEl.innerText = `Progress: ${dpKeysSize}`;
+        };
+        // This will kick off the worker processing handled in `self.onmessage` of `worker.js` (worker context)
+        worker.postMessage({game: this.game});
     };
 };

@@ -4,10 +4,11 @@ import { get_options } from './utils.js'
 
 export class Solver {
     
-    constructor(game) {
+    constructor(game, workerSelf) {
         this.dp = {}
         this._dp_keys = new Set()
         this.game = game
+        this.workerSelf = workerSelf;
     };
     
     solve() {
@@ -15,6 +16,9 @@ export class Solver {
     };
     
     _solve(game_str) {
+        // Report progress to main thread.
+        this.workerSelf.postMessage(this._dp_keys.size);
+
         if (game_str.length <= 9) {
             this.dp[game_str] = [0, 0, 0]
             this._dp_keys.add(game_str)
