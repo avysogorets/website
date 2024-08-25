@@ -8,15 +8,10 @@ export class Solver {
         this.dp = {}
         this._dp_keys = new Set()
         this.game = game
-        this.solved = false
     };
     
     solve() {
-        this._solve(this.game.to_string())
-        let solution = {
-            "subgames": this.dp.length};
-        this.solved = true
-        return solution
+        this._solve(this.game.to_string());
     };
     
     _solve(game_str) {

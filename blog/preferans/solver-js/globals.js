@@ -43,7 +43,6 @@ class Card {
 
 function createCards() {
     const cards = [];
-    console.log(SUITS)
     SUITS.forEach(suit => {
         KINDS.forEach(kind => {
             let card = new Card(suit, kind)

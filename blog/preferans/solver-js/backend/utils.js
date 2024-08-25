@@ -9,13 +9,13 @@ function compareCards(card_1, card_2, trumps=globals.NO_TRUMP_ID) {
         if (card_1.suit !== trumps && card_2.suit === trumps) {
             return false;
         }
-    }
+    };
     if (card_1.kind < card_2.kind) {
         return false;
-    }
+    };
     if (card_1.kind > card_2.kind) {
         return true;
-    }
+    };
     return true
 };
 
@@ -72,7 +72,7 @@ export function get_options(game_str) {
     let turn_str = components[1]
     let type_str = components[2]
     let trump_str = components[3]
-    trumps = parseInt(trump_str)
+    let trumps = parseInt(trump_str)
     let suit_strs = suits_str.split(" ");
     var trick_1_suit = -1
     var trick_2_suit = -1
@@ -119,6 +119,7 @@ export function get_options(game_str) {
                 let new_suit_str = new_suit_str_.join('')
                 var new_suit_strs = suits_str.split(' ')
                 new_suit_strs[suit] = new_suit_str
+                let new_turn = NaN;
                 if (next_trick_id == globals.TRICK_3) {
                     let winner = settle_trick_(
                         new_suit_strs,
@@ -132,7 +133,7 @@ export function get_options(game_str) {
                     new_suit_strs[trick_1_suit] = new_suit_strs[trick_1_suit].replace(regexp_1, '');
                     let regexp_2 = new RegExp(globals.TRICK_2, 'g');
                     new_suit_strs[trick_2_suit] = new_suit_strs[trick_2_suit].replace(regexp_2, '');
-                    var regexp_3 = new RegExp(globals.TRICK_3, 'g');
+                    let regexp_3 = new RegExp(globals.TRICK_3, 'g');
                     new_suit_strs[suit] = new_suit_strs[suit].replace(regexp_3, '');
                 }
                 else {

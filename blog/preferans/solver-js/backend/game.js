@@ -88,7 +88,7 @@ export class Game {
         suit_map_vals.forEach(suit => {
             suit_strs[suit] = "";
         });
-        CARDS.forEach(card => {
+        globals.CARDS.forEach(card => {
             for (let i=0; i<3; i++) {
                 let player = this.player_map[i]
                 if (this.hands[player].cards.includes(card)) {
@@ -116,6 +116,7 @@ export class Game {
         suits_str_items.sort((a, b) => a[0]<b[0]);
         let suits_str_vals = suits_str_items.map(item => item[1]);
         let suits_str = suits_str_vals.join(" ");
+        let trumps_id = NaN
         if (this.params["trumps"] != globals.NO_TRUMP_ID) {
             trumps_id = 0;
         }
