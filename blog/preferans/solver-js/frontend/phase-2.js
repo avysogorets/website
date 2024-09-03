@@ -4,7 +4,7 @@ import * as globals from '../globals.js'
 export class Phase_2 {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
-        this.master_middle = document.getElementById("master-middle");
+        this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
         this.parameters = {
             "contract type": NaN,
             "playing hand": NaN,
@@ -47,7 +47,7 @@ export class Phase_2 {
         Object.keys(parameter_vals).forEach(key => {
             let buttons = []
             let span = Math.floor(6 / parameter_vals[key].length);
-            phase_middle.appendChild(this._createParameterText(key));
+            phase_middle.appendChild(this._createParameterText(key.toUpperCase()));
             parameter_vals[key].forEach(val => {
                 const parameter_button = document.createElement('button')
                 parameter_button.className = 'parameter-button';

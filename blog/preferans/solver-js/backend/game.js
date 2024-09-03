@@ -4,13 +4,16 @@ import { Hand } from './hand.js'
 
 
 export class Game {
-
     constructor(hands, type, turn_id, player_id, trumps_id) {
         this.past_tricks = [0, 0, 0];
         this.future_tricks = [0, 0, 0];
-        this.hands = hands;
-        let trick = new Hand([], true, false);
-        hands.push(trick);
+        this.hands = [];
+        hands.forEach(hand => {
+            this.hands.push(hand.deepcopy());
+        });
+        if (hands.length == globals.PLAYER_NAMES.length) {
+            this.hands.push(new Hand([], true, false));
+        };
         this.suit_map = {};
         this.player_map = {};
         if (trumps_id != globals.NO_TRUMP_ID) {
@@ -34,24 +37,17 @@ export class Game {
     };
 
     deepcopy() {
-        let new_hands = [];
-        this.hands.forEach(hand => {
-            let new_hand = new Hand(hand.cards);
-            new_hands.push(new_hand);
-        });
-        let trick = new Hand([], true, false);
-        new_hands.push(trick);
-        let new_type = this.params["type"];
-        let new_turn = this.params["turn"];
-        let new_player = this.params["player"];
-        let new_trumps = this.params["trumps"]
-        let new_game = new Game(new_hands, new_type, new_turn, new_player, new_trumps);
-        return new_game
+        return new Game(
+            this.hands,
+            this.params["type"],
+            this.params["turn"],
+            this.params["player"],
+            this.params["trumps"]);
     };
 
     play_card(card) {
         assert(this.hands[globals.TRICK].cards.length < 3);
-        assert(this.hands[this.params["turn"].cards.includes(card)]);
+        assert(this.hands[this.params["turn"]].cards.includes(card));
         let result = this.hands[this.params["turn"]].play_card(
             card,
             this.params["turn"],
@@ -70,9 +66,9 @@ export class Game {
             mod((this.params["turn"]-2), 3),
             mod((this.params["turn"]-1), 3),
             mod((this.params["turn"]-0), 3)];
-        let winner = trick_order[settle_trick(
+        let winner = settle_trick(
             this.hands[globals.TRICK].cards,
-            this.params["trumps"])];
+            this.params["trumps"]);
         winner = trick_order[winner];
         num_tricks[winner] += 1;
         this.params["turn"] = winner;
@@ -97,20 +93,29 @@ export class Game {
             };
             if (this.hands[globals.TRICK].cards.includes(card)) {
                 if (this.hands[globals.TRICK].cards[0] == card) {
-                    suit_strs[this.suit_map[card.suit]] += `${TRICK_1}`;
+                    suit_strs[this.suit_map[card.suit]] += `${globals.TRICK_1}`;
                 }
                 else {
-                    suit_strs[this.suit_map[card.suit]] += `${TRICK_2}`;
+                    suit_strs[this.suit_map[card.suit]] += `${globals.TRICK_2}`;
                 }
             }
         });
         let turn = this.params["turn"];
         if (this.hands[globals.TRICK].cards.length == 2) {
-            adjust_left(suit_strs, globals.TRICK_1, mod((this.player_map[turn]-2), 3));
-            adjust_left(suit_strs, globals.TRICK_2, mod((this.player_map[turn]-1), 3));
+            suit_strs = adjust_left(
+                    suit_strs,
+                    globals.TRICK_1,
+                    mod((this.player_map[turn]-2), 3));
+            suit_strs = adjust_left(
+                    suit_strs,
+                    globals.TRICK_2,
+                    mod((this.player_map[turn]-1), 3));
         }
         else if (this.hands[globals.TRICK].cards.length == 1) {
-            adjust_left(suit_strs, globals.TRICK_2, mod((self.player_map[turn]-1), 3));
+            suit_strs = adjust_left(
+                    suit_strs,
+                    globals.TRICK_1,
+                    mod((this.player_map[turn]-1), 3));
         };
         let suits_str_items = Object.entries(suit_strs);
         suits_str_items.sort((a, b) => a[0]<b[0]);
@@ -134,8 +139,8 @@ export class Game {
 }
 
 function adjust_left(suit_strs, to_adjust, player) {
-    for (let i=0; i<suit_strs.length; i++) {
-        if (suit_strs[i].includes(to_adjust)) {
+    for (let i=0; i<4; i++) {
+        if (suit_strs[i].indexOf(to_adjust)>0) {
             let suit_str_arr = suit_strs[i].split("");
             let idx = suit_str_arr.indexOf(`${to_adjust}`);
             while (idx>0 && suit_str_arr[idx-1] == player) {
@@ -146,4 +151,5 @@ function adjust_left(suit_strs, to_adjust, player) {
             suit_strs[i] = suit_str_arr.join("");
         };
     };
+    return suit_strs
 };

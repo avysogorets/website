@@ -4,6 +4,7 @@ import * as globals from '../globals.js'
 export function drawCard(card_id) {
     const [vstep, hstep, cstep] = calculateSteps();
     const cardElement = document.getElementById(card_id);
+    const card = globals.CARDS[card_id];
     if (!cardElement) {
         return;
     }
@@ -11,11 +12,23 @@ export function drawCard(card_id) {
         cardElement.style.left = `${parseInt(globals.CARDS[card_id].kind)*cstep}px`;
     };
     if (cardElement.parentElement.classList.contains("hand-vert")) {
-        let idx = Array.from(cardElement.parentElement.childNodes).indexOf(cardElement);
+        let idx = NaN;
+        if (card.card_idx) {
+            idx = card.card_idx;
+        }
+        else {
+            idx = Array.from(cardElement.parentElement.childNodes).indexOf(cardElement);
+        };
         cardElement.style.top = `${idx*vstep}px`;
     };
     if (cardElement.parentElement.classList.contains("hand-horz")) {
-        let idx = Array.from(cardElement.parentElement.childNodes).indexOf(cardElement);
+        let idx = NaN;
+        if (card.card_idx) {
+            idx = card.card_idx;
+        }
+        else {
+            idx = Array.from(cardElement.parentElement.childNodes).indexOf(cardElement);
+        };
         cardElement.style.left = `${idx*hstep}px`;
     };
 };

@@ -1,14 +1,15 @@
 import * as globals from '../globals.js'
 import { drawCard, calculateSteps, randomChoice } from './utils.js';
+import { IMAGES } from './frontend.js'
 
 
 export class Phase_1 {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
-        this.master_middle = document.getElementById("master-middle");
+        this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
     };
 
-    init() {
+    async init() {
         const phase_middle = document.createElement('div');
         const card_container = document.createElement('div');
         phase_middle.className = 'middle-phase-1';
@@ -22,9 +23,9 @@ export class Phase_1 {
             suit_containers[i].className = 'suit-container'
             suit_containers[i].id = `container-${i}`
         };
-        const randomDealButton = document.createElement('div');
-        randomDealButton.className = 'random-deal'
-        randomDealButton.innerHTML = 'random deal'
+        const randomDealButton = document.createElement('button');
+        randomDealButton.className = 'standard-button';
+        randomDealButton.innerHTML = 'random deal';
         this.master_middle.appendChild(phase_middle)
         phase_middle.appendChild(card_container)
         suit_containers.forEach(suit_container => {
@@ -34,13 +35,15 @@ export class Phase_1 {
         randomDealButton.addEventListener(
             'click',
             () => this._randomDeal(suit_containers, this.dispatcher.hands));
-        Object.keys(globals.CARDS).forEach(
-            card_id => this._createCard(card_id, suit_containers, this.dispatcher.hands));
+        this._updateMessage();
+        const promises = []
+        for (const card_id of Object.keys(globals.CARDS)) {
+            promises.push(this._createCard(card_id, suit_containers, this.dispatcher.hands))};
+        await Promise.all(promises)
         window.addEventListener(
             'resize', 
             () => {Object.keys(globals.CARDS).forEach(
                 card_id => drawCard(card_id))});
-        this._updateMessage();
     };
 
     dispatch() {
@@ -53,6 +56,12 @@ export class Phase_1 {
             this.master_middle.removeChild(this.master_middle.firstChild)
         };
         this._updateMessage()
+        for (let i=0; i<3; i++) {
+            const hand_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
+            if (hand_name.classList.contains('hand-focused')) {
+                hand_name.classList.remove('hand-focused');
+            };
+        };
         this.dispatcher.dispatch()
     };
 
@@ -68,28 +77,28 @@ export class Phase_1 {
         };
     };
 
-
     _createCard(card_id, containers) {
-        const cardElement = document.createElement('img');
-        cardElement.src = globals.CARDS[card_id].image["normal"];
-        cardElement.classList.add('card');
-        cardElement.id = `${card_id}`;
-        cardElement.style.animation = `fadeIn ${0.1+0.1*globals.CARDS[card_id].kind}s ease forwards`;
-        cardElement.style.animationDelay = '0.1s';
-        cardElement.style.opacity = 0;
-        cardElement.style.zIndex = 10 + card_id;
-        containers[parseInt(globals.CARDS[card_id].suit)].appendChild(cardElement);
-        cardElement.onclick = () => {
-            this._selectCard(card_id)
-        };
-        const [, , cstep] = calculateSteps();
-        cardElement.style.left = `${globals.CARDS[card_id].kind*cstep}px`;
-        cardElement.style.top = `0px`;
-        setTimeout(() => {
-            cardElement.style.animation = '';
-            cardElement.style.animationDelay = '';
-            cardElement.style.opacity = 1;
-        }, 100 + 100 + 100*7);
+        return new Promise(resolve => {
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+            cardElement.appendChild(IMAGES["normal"][card_id])
+            cardElement.id = `${card_id}`;
+            cardElement.style.animation = `fadeIn ${0.1+0.1*globals.CARDS[card_id].kind}s ease forwards`;
+            cardElement.style.animationDelay = '0.1s';
+            cardElement.style.opacity = 0;
+            cardElement.style.zIndex = 10 + parseInt(card_id);
+            containers[parseInt(globals.CARDS[card_id].suit)].appendChild(cardElement);
+            cardElement.onclick = () => this._selectCard(card_id)
+            const [, , cstep] = calculateSteps();
+            cardElement.style.left = `${globals.CARDS[card_id].kind*cstep}px`;
+            cardElement.style.top = `0px`;
+            setTimeout(() => {
+                cardElement.style.animation = '';
+                cardElement.style.animationDelay = '';
+                cardElement.style.opacity = 1;
+                resolve();
+            }, 100 + 100 + 100*7);
+        });
     };
 
     _sortHand(hand) {
@@ -217,18 +226,18 @@ export class Phase_1 {
         setTimeout(() => {
             for (let i = delete_idx+1; i < hand.childNodes.length; i++) {
                 if (hand.classList.contains("hand-horz")) {
-                    hand.childNodes[i].style.transition = 'none';
+                    /*hand.childNodes[i].style.transition = 'none';*/
                     hand.childNodes[i].style.left = `${hstep*(i-1)}px`;
                     hand.childNodes[i].style.transform = '';
                     hand.childNodes[i].offsetWidth;
-                    hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out`;
+                    /*hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}`;*/
                 }
                 if (hand.classList.contains("hand-vert")) {
-                    hand.childNodes[i].style.transition = 'none';
+                    /*hand.childNodes[i].style.transition = 'none';*/
                     hand.childNodes[i].style.top = `${vstep*(i-1)}px`;
                     hand.childNodes[i].style.transform = '';
                     hand.childNodes[i].offsetHeight;
-                    hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out`;
+                    /*hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}`;*/
                 };
             };
             container.appendChild(cardElement);
@@ -279,7 +288,7 @@ export class Phase_1 {
                 }
                 selected[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
                 setTimeout(() => {
-                    selected[i].style.transition = 'none';
+                    /*selected[i].style.transition = 'none';*/
                     if (this.dispatcher.hands[hand_id].classList.contains("hand-horz")) {
                         selected[i].style.left = `${hstep * i}px`;
                         selected[i].style.top = `0px`;
@@ -291,7 +300,7 @@ export class Phase_1 {
                     selected[i].offsetWidth;
                     selected[i].offsetHeight;
                     selected[i].style.transform = '';
-                    selected[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out`;
+                    /*selected[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}s`;*/
                     this.dispatcher.hands[hand_id].appendChild(selected[i]);
                     this._check()
                 }, 1000*globals.TRANSITION_TIME);
@@ -300,10 +309,21 @@ export class Phase_1 {
     };
 
     _updateMessage() {
-        const messageBox = document.getElementById('message-container');
+        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
         for (let i=0; i<this.dispatcher.hands.length; i++) {
             if (this.dispatcher.hands[i].childNodes.length < 10) {
                 messageBox.innerHTML = "SELECT CARDS FOR " + globals.PLAYER_NAMES[i];
+                for (let j=0; j<3; j++) {
+                    const hand_name = document.getElementById(`${globals.PLAYER_NAMES[j]}`)
+                    if (i == j) {
+                        hand_name.classList.add('hand-focused')
+                    }
+                    else {
+                        if (hand_name.classList.contains('hand-focused')) {
+                            hand_name.classList.remove('hand-focused')
+                        };
+                    };
+                };
                 return;
             };
         };

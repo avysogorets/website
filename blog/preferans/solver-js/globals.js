@@ -2,13 +2,16 @@ export const IMG_PATH = "/blog/preferans/imgs/"
 export const PLAYER_NAMES = ["SOUTH", "WEST", "EAST"]
 export const SUIT_NAMES = ["SPADES", "DIAMONDS", "CLUBS", "HEARTS"]
 export const GAME_NAMES = ["PLAY", "MISERE"]
-export const ROOT_STYLES = getComputedStyle(document.documentElement);
-export const CARD_HEIGHT = parseInt(ROOT_STYLES.getPropertyValue('--card-height').trim().replace("px", ""))
-export const CARD_WIDTH = parseInt(ROOT_STYLES.getPropertyValue('--card-width').trim().replace("px", ""))
-export const BORDER_WIDTH = parseInt(ROOT_STYLES.getPropertyValue('--border-width').trim().replace("px", ""))
-export const CARD_BORDER = parseInt(ROOT_STYLES.getPropertyValue('--card-border').trim().replace("px", ""))
-export const TRANSITION_TIME= parseFloat(ROOT_STYLES.getPropertyValue('--transition-time').trim().replace("s", ""))
+export const CARD_HEIGHT = 90;
+export const CARD_WIDTH = 64
+export const BORDER_WIDTH = 2;
+export const CARD_BORDER = 0.5;
+export const TRANSITION_TIME = 0.2;
 export const SELECTED_COLOR = "lightskyblue"
+export const MESSAGE_CONTAINER = "message-container"
+export const MASTER_MIDDLE = "master-middle"
+export const INFO_FONT_SIZE = 24;
+export const FONT_SIZE = 20;
 
 export const SUITS = ["0", "1", "2", "3"]
 export const KINDS = ["0", "1", "2", "3", "4", "5", "6", "7"]
@@ -33,15 +36,10 @@ class Card {
         this.suit = suit
         this.kind = kind
         this.id = suit + kind
-        this.image = {
-            'disabled': IMG_PATH + "card_imgs_disabled/" + this.suit + "_" + this.kind + '.png',
-            'normal': IMG_PATH + "card_imgs_normal/" + this.suit + "_" + this.kind + '.png',
-            'optimal': IMG_PATH + "card_imgs_optimal/" + this.suit + "_" + this.kind + '.png',
-        }
     };
 };
 
-function createCards() {
+export function createCards() {
     const cards = [];
     SUITS.forEach(suit => {
         KINDS.forEach(kind => {
@@ -53,3 +51,22 @@ function createCards() {
 };
 
 export const CARDS = createCards();
+
+export function preloadImages() {
+    const images = {
+        "disabled": [],
+        "normal": [],
+        "optimal": []};
+
+    Object.keys(images).forEach(key => {
+        Object.keys(CARDS).forEach(card_id => {
+            const img = new Image();
+            const card_key = `${CARDS[card_id].suit}_${CARDS[card_id].kind}`;
+            img.src = IMG_PATH + `card_imgs_${key}/${card_key}.png`;
+            images[key].push(img)
+        });
+    });
+    return images
+};
+
+

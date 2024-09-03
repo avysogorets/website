@@ -1,17 +1,20 @@
-import * as globals from '../globals.js'
-import { get_options } from './utils.js'
+import { get_options } from './utils.js';
+import { PLAY, MISERE } from '../globals.js';
 
 
-export class Solver {
-    
-    constructor(game) {
+class Solver {
+    constructor() {
         this.dp = {}
         this._dp_keys = new Set()
-        this.game = game
     };
     
+    init(game_str) {
+        this.game_str = game_str
+    };
+
     solve() {
-        this._solve(this.game.to_string());
+        this.last_update = Date.now();
+        this._solve(this.game_str);
     };
     
     _solve(game_str) {
@@ -35,10 +38,10 @@ export class Solver {
                 new_game_res[0] += this.dp[new_game_strs[i]][0];
                 new_game_res[1] += this.dp[new_game_strs[i]][1];
                 new_game_res[2] += this.dp[new_game_strs[i]][2];
-                let isPandTurn = (turn_str == "0" && type_str == `${globals.PLAY}`)
-                let isMandTurn = (turn_str == "0" && type_str == `${globals.MISERE}`)
-                let isPnotTurn = (turn_str != "0" && type_str == `${globals.PLAY}`)
-                let isMnotTurn = (turn_str != "0" && type_str == `${globals.MISERE}`)
+                let isPandTurn = (turn_str == "0" && type_str == `${PLAY}`)
+                let isMandTurn = (turn_str == "0" && type_str == `${MISERE}`)
+                let isPnotTurn = (turn_str != "0" && type_str == `${PLAY}`)
+                let isMnotTurn = (turn_str != "0" && type_str == `${MISERE}`)
                 let maximize_obj = isPandTurn || isMnotTurn;
                 let minimize_obj = isMandTurn || isPnotTurn;
                 if (maximize_obj == true && current_obj <= new_game_res[0]) {
@@ -53,5 +56,23 @@ export class Solver {
                 };
             };
         };
+        if (Date.now() - this.last_update > 10) {
+            self.postMessage({type: 'progress', size: this._dp_keys.size});
+            this.last_update = Date.now();
+        };
     };
 };
+
+const solver = new Solver()
+
+self.onmessage = (event) => {
+    if (event.data.type === 'solve') {
+        solver.init(event.data.game_str)
+        solver.solve()
+        self.postMessage({type: 'solution', dp: NaN})
+    };
+    if (event.data.type === 'transport') {
+        self.postMessage({type: 'solution', dp: solver.dp});
+    };
+};
+

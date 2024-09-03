@@ -3,17 +3,17 @@ import * as globals from '../globals.js'
 
 function compareCards(card_1, card_2, trumps=globals.NO_TRUMP_ID) {
     if (trumps !== globals.NO_TRUMP_ID) {
-        if (card_1.suit === trumps && card_2.suit !== trumps) {
+        if (parseInt(card_1.suit) == trumps && parseInt(card_2.suit) != trumps) {
             return true;
         }
-        if (card_1.suit !== trumps && card_2.suit === trumps) {
+        if (parseInt(card_1.suit) != trumps && parseInt(card_2.suit) == trumps) {
             return false;
         }
     };
-    if (card_1.kind < card_2.kind) {
+    if (parseInt(card_1.kind) < parseInt(card_2.kind)) {
         return false;
     };
-    if (card_1.kind > card_2.kind) {
+    if (parseInt(card_1.kind) > parseInt(card_2.kind)) {
         return true;
     };
     return true
@@ -40,12 +40,12 @@ export function settle_trick_(suit_strs, trick_1_suit, trick_2_suit, trick_3_sui
 export function settle_trick(cards, trumps) {
     var is_trump = false
     cards.forEach(card => {
-        if (card.suit == trumps) {
+        if (parseInt(card.suit) == trumps) {
             is_trump = true
         }
     });
     if (!is_trump) {
-        trumps = cards[0].suit
+        trumps = parseInt(cards[0].suit)
     };
     if (compareCards(cards[0], cards[1], trumps)) {
         if (compareCards(cards[0], cards[2], trumps)) {

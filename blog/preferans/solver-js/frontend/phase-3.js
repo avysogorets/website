@@ -1,13 +1,11 @@
 import * as globals from '../globals.js'
 import { Game } from '../backend/game.js'
 import { Hand } from '../backend/hand.js'
-import { Solver } from '../backend/solver.js';
-
 
 export class Phase_3 {  
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
-        this.master_middle = document.getElementById("master-middle");
+        this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
     };
 
     init() {
@@ -39,9 +37,44 @@ export class Phase_3 {
         this.solve();
     };
 
+    dispatch() {
+        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER)
+        messageBox.innerHTML = "&nbsp;";
+        while (this.master_middle.firstChild) {
+            this.master_middle.removeChild(this.master_middle.firstChild);
+        };
+        this.dispatcher.dispatch()
+    }
+
     solve() {
-        this.solver = new Solver(this.game, this.phase_middle);
-        this.solver.solve()
-        console.log(this.solver._dp_keys.size)
+        const worker = new Worker(
+            new URL('../backend/solver.js', import.meta.url),
+            { type: 'module' });
+        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
+        worker.postMessage({ type: 'solve', game_str: this.game.to_string() });
+        worker.onmessage = (event) => {
+            if (event.data.type === 'progress') {
+                let size_str = `${event.data.size}`
+                size_str = size_str + ' '.repeat(7-size_str.length);
+                messageBox.innerHTML = `SUBGAMES SOLVED: <div class="counter">${size_str}</div>`;
+            };
+            if (event.data.type === 'solution') {
+                if (!event.data.dp) {
+                    this.startButton = document.createElement('button')
+                    this.startButton.className = 'standard-button'
+                    this.startButton.innerText = 'START'
+                    this.phase_middle.appendChild(this.startButton);
+                    worker.postMessage({ type: 'transport' });
+                }
+                else {
+                    this.dp = event.data.dp
+                    this.startButton.onclick = () => {
+                        if (this.dp) {
+                            this.dispatch();
+                        };
+                    };
+                };
+            };
+        };
     };
 };

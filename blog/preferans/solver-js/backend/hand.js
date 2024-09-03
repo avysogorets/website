@@ -2,12 +2,16 @@ import {mod, assert, settle_trick } from './utils.js'
 
 
 export class Hand {
-    
     constructor(cards, trick_flag=false, auto_flush=true) {
 
         this.cards = Array.from(cards);
         this.trick_flag = trick_flag
         this.auto_flush = auto_flush
+    };
+
+    deepcopy() {
+        const new_cards = Array.from(this.cards);
+        return new Hand(new_cards, this.trick_flag, this.auto_flush)
     };
     
     add(card) {
