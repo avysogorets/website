@@ -21,7 +21,7 @@
     margin-right: 5%;
     display: flex;
     flex-direction: column;
-    background-color: yellow;
+    background-color: white;
     font-size: var(--font-size);
     font-family: var(--font-familiy);
 }
@@ -39,7 +39,7 @@ button:disabled {
     font-variant-numeric: tabular-nums;
     height: auto;
     align-items: center;
-    background-color: greenyellow;
+    background-color: white;
     user-select: none;
     white-space: pre;
     z-index: 2000;
@@ -60,7 +60,7 @@ button:disabled {
 
 .middle-main {
     width: auto;
-    background-color: bisque;
+    background-color: white;
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -71,7 +71,7 @@ button:disabled {
 .middle-phase-1 {
     height: 100%;
     width: 100%;
-    background-color: bisque;
+    background-color: white;
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -102,7 +102,7 @@ button:disabled {
     align-items: center;
     z-index: 2000;
     align-content: flex-start;
-    background-color: aquamarine;
+    background-color: white;
 }
 
 
@@ -140,7 +140,7 @@ button:disabled {
     z-index: 2000;
     white-space: pre;
     align-content: flex-start;
-    background-color: aquamarine;
+    background-color: white;
 }
 
 .trick-strip {
@@ -227,7 +227,7 @@ button:disabled {
     position: relative;
     border-radius: calc(var(--card-height)/18);
     border: var(--border-width) solid black;
-    background-color: pink;
+    background-color: #eee;
 }
 
 .flush {
@@ -239,7 +239,7 @@ button:disabled {
 }
 
 .hand-info-vert-east {
-    background-color: #adff2f;
+    background-color: white;
     user-select: none;
     text-orientation: upright;
     height: 100%;
@@ -254,7 +254,7 @@ button:disabled {
 
 
 .hand-info-vert-west {
-    background-color: #adff2f;
+    background-color: white;
     user-select: none;
     text-orientation: upright;
     height: 100%;
@@ -276,7 +276,7 @@ button:disabled {
     width: 100%;
     text-align: center;
     justify-content: center;
-    background-color: #adff2f;
+    background-color: white;
     user-select: none;
     visibility: hidden;
 }
@@ -299,9 +299,20 @@ button:disabled {
     height: calc(var(--card-height) + 2*var(--border-width));
     width: min(100%, calc(7*var(--card-width)));
     position: relative;
-    background-color: pink;
+    background-color: #eee;
     border: var(--border-width) solid black;
     border-radius: calc(var(--card-height)/18);
+}
+
+.background-focused {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.3), rgba(93, 184, 249, 0.3));
+}
+
+.text-focused {
+    background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hand-info-horz {
@@ -309,18 +320,12 @@ button:disabled {
     height: auto;
     z-index: 100;
     text-align: center;
-    background-color: greenyellow;
+    background-color: white;
     user-select: none;
     overflow: visible;
     font-weight: bold;
 }
 
-.hand-focused {
-    background: linear-gradient(45deg, violet, rgb(93, 184, 249));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
 .num-tricks-curr {
     font-size: var(--info-font-size);
@@ -356,7 +361,7 @@ button:disabled {
     align-items: center;
     row-gap: 4%;
     column-gap: 2%;
-    background-color: aquamarine;
+    background-color: white;
 }
 
 .suit-container {
@@ -368,7 +373,7 @@ button:disabled {
     justify-content: flex-start;
     border: var(--border-width) solid black;
     border-radius: calc(var(--card-height)/18);
-    background-color: cadetblue;
+    background-color: #eee;
 }
 
 .card {
@@ -397,6 +402,7 @@ button:disabled {
 
 .standard-button {
     width: auto;
+    user-select: none;
     height: auto;
     font-size: var(--button-font-size);
     font-family: var(--font-familiy);

@@ -1,5 +1,6 @@
 import * as globals from '../globals.js'
 import { drawCard, calculateSteps, randomChoice } from './utils.js';
+import { mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 
 
@@ -34,16 +35,20 @@ export class Phase_1 {
         phase_middle.appendChild(randomDealButton)
         randomDealButton.addEventListener(
             'click',
-            () => this._randomDeal(suit_containers, this.dispatcher.hands));
-        this._updateMessage();
+            () => this.randomDeal(suit_containers, this.dispatcher.hands));
+        this.updateMessage();
         const promises = []
         for (const card_id of Object.keys(globals.CARDS)) {
-            promises.push(this._createCard(card_id, suit_containers, this.dispatcher.hands))};
+            promises.push(this.createCard(card_id, suit_containers, this.dispatcher.hands))};
         await Promise.all(promises)
         window.addEventListener(
             'resize', 
             () => {Object.keys(globals.CARDS).forEach(
                 card_id => drawCard(card_id))});
+    };
+
+    onMouseUpLogic(cardElement, targetElement) {
+        return this.handleCard(cardElement, targetElement)
     };
 
     dispatch() {
@@ -55,17 +60,19 @@ export class Phase_1 {
         while (this.master_middle.firstChild) {
             this.master_middle.removeChild(this.master_middle.firstChild)
         };
-        this._updateMessage()
+        this.updateMessage()
         for (let i=0; i<3; i++) {
-            const hand_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
-            if (hand_name.classList.contains('hand-focused')) {
-                hand_name.classList.remove('hand-focused');
+            const hand_info_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
+            const hand_name = document.getElementById(`hand-${i}`)
+            if (hand_info_name.classList.contains('text-focused')) {
+                hand_info_name.classList.remove('text-focused');
+                hand_name.classList.remove('background-focused')
             };
         };
         this.dispatcher.dispatch()
     };
 
-    _check() {
+    check() {
         let to_exit = true
         this.dispatcher.hands.forEach(hand => {
             if (hand.childNodes.length < 10) {
@@ -77,7 +84,174 @@ export class Phase_1 {
         };
     };
 
-    _createCard(card_id, containers) {
+    activeHand() {
+        for (let i=0; i<3; i++) {
+            if (this.dispatcher.hands[i].childNodes.length < 10) {
+                const handElement = document.getElementById(`hand-${i}`)
+                return handElement;
+            };
+        };
+        return NaN
+    };
+
+    highlightContainer(container, options) {
+        for (const element of options) {
+            if (element.id == container.id) {
+                this.highlightElement(element)
+            }
+            else {
+                this.deHighlightElement(element)
+            };
+        };
+    };
+
+    highlightElement(element) {
+        element.classList.add('background-focused')
+        if (element.id.includes('hand')) {
+            const idx = element.id.split('-')[1]
+            const handName = document.getElementById(`${globals.PLAYER_NAMES[idx]}`)
+            handName.classList.add('text-focused')
+        };
+    }
+
+    deHighlightElement(element) {
+        if (element.classList.contains('background-focused')) {
+            element.classList.remove('background-focused')
+            if (element.id.includes('hand')) {
+                const idx = element.id.split('-')[1]
+                const handName = document.getElementById(`${globals.PLAYER_NAMES[idx]}`)
+                handName.classList.remove('text-focused')
+            };
+        };
+    };
+
+    handleCard(cardElement, targetElement) {
+        return new Promise((resolve) => {
+            const [vstep, hstep, cstep] = calculateSteps();
+            const card_id = parseInt(cardElement.id)
+            const targetRect = targetElement.getBoundingClientRect()
+            const cardRect = cardElement.getBoundingClientRect()
+            let deltaX = targetRect.left - cardRect.left + globals.BORDER_WIDTH;
+            let deltaY = targetRect.top - cardRect.top + globals.BORDER_WIDTH;
+            let zIndex = 10;
+            const isParentHandHorz = cardElement.parentElement.classList.contains('hand-horz')
+            const isParentHandVert = cardElement.parentElement.classList.contains('hand-vert')
+            const isTargetHandHorz = targetElement.classList.contains('hand-horz')
+            const isTargetHandVert = targetElement.classList.contains('hand-vert')
+            const isTargetHand = isTargetHandHorz || isTargetHandVert
+            const isParentHand = isParentHandHorz || isParentHandVert
+            const isParentTargetSameHand = cardElement.parentElement.id == targetElement.id
+            const parentElement = cardElement.parentElement
+            let X = 0;
+            let Y = 0;
+            let DeltaX = 0;
+            let DeltaY = 0;
+            let card_idx = 0;
+            if (isTargetHand) {
+                cardElement.style.zIndex = card_id + 1010;
+                zIndex += card_id + 1000;
+                for (let i=0; i<targetElement.childNodes.length; i++) {
+                    if (parseInt(targetElement.childNodes[i].id) < card_id) {
+                        card_idx += 1;
+                    }
+                    else {
+                        break;
+                    };
+                };
+                if (isTargetHandHorz) {
+                    X += hstep*card_idx
+                    deltaX += hstep*card_idx
+                    DeltaX = hstep
+                };
+                if (isTargetHandVert) {
+                    Y += vstep*card_idx
+                    deltaY += vstep*card_idx
+                    DeltaY = vstep
+                };
+                if (!isParentTargetSameHand) {
+                    for (let i=card_idx; i<targetElement.childNodes.length; i++) {
+                        targetElement.childNodes[i].style.transform = `translate(${DeltaX}px, ${DeltaY}px)`;
+                    };
+                };
+            };
+            let target_card_idx = card_idx;
+            card_idx = 0;
+            DeltaX = 0;
+            DeltaY = 0;
+            if (isParentHand) {
+                for (let i=0; i<parentElement.childNodes.length; i++) {
+                    if (parseInt(parentElement.childNodes[i].id) < card_id) {
+                        card_idx += 1;
+                    }
+                    else {
+                        break;
+                    };
+                };
+                if (isParentHandHorz) {
+                    DeltaX = -hstep
+                };
+                if (isParentHandVert) {
+                    DeltaY = -vstep
+                };
+                if (!isParentTargetSameHand) {
+                    for (let i=card_idx+1; i<parentElement.childNodes.length; i++) {
+                        parentElement.childNodes[i].style.transform = `translate(${DeltaX}px, ${DeltaY}px)`;
+                    };
+                };
+            };
+            let parent_card_idx = card_idx;
+            if (!isTargetHand) {
+                X += cstep*mod(card_id, 8)
+                deltaX += cstep*mod(card_id, 8)
+                zIndex += card_id;
+            };
+            cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`; 
+            cardElement.style.offsetHeight;    
+            setTimeout(() => {
+                cardElement.style.zIndex = zIndex;
+                if (isTargetHand && !isParentTargetSameHand) {
+                    for (let i=target_card_idx; i<targetElement.childNodes.length; i++) {
+                        targetElement.childNodes[i].style.transform = '';
+                        if (isTargetHandHorz) {
+                            targetElement.childNodes[i].style.left = `${(i+1)*hstep}px`
+                            targetElement.childNodes[i].offsetWidth;
+                        }
+                        if (isTargetHandVert) {
+                            targetElement.childNodes[i].style.top = `${(i+1)*vstep}px`
+                            targetElement.childNodes[i].offsetHeight;
+                        }
+                    };
+                } 
+                if (isParentHand && !isParentTargetSameHand) {
+                    for (let i=parent_card_idx+1; i<parentElement.childNodes.length; i++) {
+                        parentElement.childNodes[i].style.transform = '';
+                        if (isParentHandHorz) {
+                            parentElement.childNodes[i].style.left = `${(i-1)*hstep}px`
+                            parentElement.childNodes[i].offsetWidth;
+                        }
+                        if (isParentHandVert) {
+                            parentElement.childNodes[i].style.top = `${(i-1)*vstep}px`
+                            parentElement.childNodes[i].offsetHeight;
+                        }
+                    };
+                }
+                if (!isTargetHand) {
+                    this.deHighlightElement(targetElement)
+                }
+                cardElement.parentElement.removeChild(cardElement)
+                targetElement.appendChild(cardElement);
+                cardElement.style.transform = '';
+                cardElement.style.top = `${Y}px`;
+                cardElement.style.left = `${X}px`;
+                this.sortHands();
+                this.updateMessage();
+                this.check();  
+                resolve();                                
+            }, 1000*globals.TRANSITION_TIME)
+        });
+    };
+
+    createCard(card_id, containers) {
         return new Promise(resolve => {
             const cardElement = document.createElement('div');
             cardElement.classList.add('card');
@@ -88,7 +262,20 @@ export class Phase_1 {
             cardElement.style.opacity = 0;
             cardElement.style.zIndex = 10 + parseInt(card_id);
             containers[parseInt(globals.CARDS[card_id].suit)].appendChild(cardElement);
-            cardElement.onclick = () => this._selectCard(card_id)
+            cardElement.onclick = async () => {
+                if (!this.dispatcher.drag_dispatcher.isActiveDragging) {
+                    let targetElement = NaN;
+                    if (!cardElement.parentElement.id.includes('container')) {
+                        const suit = globals.CARDS[parseInt(cardElement.id)].suit
+                        const container = document.getElementById(`container-${suit}`)
+                        targetElement = container
+                    }
+                    else {
+                        targetElement = this.activeHand();
+                    }
+                    await this.handleCard(cardElement, targetElement)
+                }
+            };
             const [, , cstep] = calculateSteps();
             cardElement.style.left = `${globals.CARDS[card_id].kind*cstep}px`;
             cardElement.style.top = `0px`;
@@ -101,159 +288,19 @@ export class Phase_1 {
         });
     };
 
-    _sortHand(hand) {
-        const childrenArray = Array.from(hand.childNodes);
-        childrenArray.sort((a, b) => {
-            return parseInt(a.id) - parseInt(b.id);
+    sortHands() {
+        this.dispatcher.hands.forEach(hand => {
+            const childrenArray = Array.from(hand.childNodes);
+            childrenArray.sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id);
+            });
+            childrenArray.forEach(child => {
+                hand.appendChild(child);
+            });
         });
-        childrenArray.forEach(child => {
-            hand.appendChild(child);
-        });
     };
 
-    _selectCard(card_id) {
-        var curr_hand = 0;
-        if (this.dispatcher.hands[curr_hand].childNodes.length == 10) {
-            curr_hand += 1;
-        };
-        if (this.dispatcher.hands[curr_hand].childNodes.length == 10) {
-            curr_hand += 1;
-        };
-        this._performSelection(card_id, curr_hand);
-    };
-
-    _performSelection(card_id, hand_id) {
-        const hand = this.dispatcher.hands[hand_id];
-        const [vstep, hstep, _] = calculateSteps();
-        const cardElement = document.getElementById(card_id);
-        cardElement.style.zIndex = parseInt(cardElement.style.zIndex) + 1000;
-        const handRect = hand.getBoundingClientRect();
-        const cardRect = cardElement.getBoundingClientRect();
-        let insert_idx = 0;
-        for (let i = 0; i < hand.childNodes.length; i++) {
-            if (parseInt(hand.childNodes[i].id) < parseInt(card_id)) {
-                insert_idx += 1;
-            }
-            else {
-                break;
-            };
-        };
-        var deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
-        var deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
-        let X = 0;
-        let Y = 0;
-        if (hand.classList.contains("hand-horz")) {
-            deltaX += hstep*insert_idx;
-            X = hstep*insert_idx;
-            Y = 0;
-        }
-        if (hand.classList.contains("hand-vert")) {
-            deltaY += vstep*insert_idx;
-            X = 0;
-            Y = vstep*insert_idx;
-        }
-        cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        for (let i = insert_idx; i < hand.childNodes.length; i++) {
-            if (hand.classList.contains("hand-horz")) {
-                deltaX = hstep;
-                deltaY = 0;
-            }
-            if (hand.classList.contains("hand-vert")) {
-                deltaX = 0;
-                deltaY = vstep;
-            };
-            hand.childNodes[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        };
-        setTimeout(() => {
-            for (let i = 0; i < hand.childNodes.length; i++) {
-                if (i >= insert_idx) {
-                    if (hand.classList.contains("hand-horz")) {
-                        hand.childNodes[i].style.left = `${hstep*(i+1)}px`;
-                    }
-                    if (hand.classList.contains("hand-vert")) {
-                        hand.childNodes[i].style.top = `${vstep*(i+1)}px`;
-                    };  
-                    hand.childNodes[i].style.transform = '';
-                };
-            };
-            const container = cardElement.parentElement;
-            hand.appendChild(cardElement);
-            cardElement.style.transform = '';
-            cardElement.style.top = `${Y}px`;
-            cardElement.style.left = `${X}px`;
-            cardElement.onclick = () => {
-                this._performDeSelection(card_id, hand_id, container);
-            };
-            this._sortHand(hand);
-            this._updateMessage();
-            this._check();
-        }, 1000*globals.TRANSITION_TIME);
-    };
-
-    _performDeSelection(card_id, hand_id, container) {
-        const hand = this.dispatcher.hands[hand_id];
-        const [vstep, hstep, cstep] = calculateSteps();
-        const cardElement = document.getElementById(card_id);
-        const cardRect = cardElement.getBoundingClientRect();
-        const contRect = container.getBoundingClientRect();
-        let delete_idx = 0;
-        for (let i = 0; i < hand.childNodes.length; i++) {
-            if (parseInt(hand.childNodes[i].id) < parseInt(card_id)) {
-                delete_idx += 1;
-            }
-            else {
-                break;
-            };
-        };
-        let deltaX = contRect.left - cardRect.left + globals.BORDER_WIDTH;
-        let deltaY = contRect.top - cardRect.top + globals.BORDER_WIDTH;
-        deltaX += cstep*parseInt(globals.CARDS[card_id].kind);
-        cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        let X = cstep*parseInt(globals.CARDS[card_id].kind);
-        let Y = 0;
-        for (let i = delete_idx + 1; i < hand.childNodes.length; i++) {
-            if (hand.classList.contains("hand-horz")) {
-                deltaX = -hstep;
-                deltaY = 0;
-            }
-            if (hand.classList.contains("hand-vert")) {
-                deltaX = 0;
-                deltaY = -vstep;
-            };
-            hand.childNodes[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-            };
-
-        setTimeout(() => {
-            for (let i = delete_idx+1; i < hand.childNodes.length; i++) {
-                if (hand.classList.contains("hand-horz")) {
-                    /*hand.childNodes[i].style.transition = 'none';*/
-                    hand.childNodes[i].style.left = `${hstep*(i-1)}px`;
-                    hand.childNodes[i].style.transform = '';
-                    hand.childNodes[i].offsetWidth;
-                    /*hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}`;*/
-                }
-                if (hand.classList.contains("hand-vert")) {
-                    /*hand.childNodes[i].style.transition = 'none';*/
-                    hand.childNodes[i].style.top = `${vstep*(i-1)}px`;
-                    hand.childNodes[i].style.transform = '';
-                    hand.childNodes[i].offsetHeight;
-                    /*hand.childNodes[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}`;*/
-                };
-            };
-            container.appendChild(cardElement);
-            cardElement.style.transform = '';
-            cardElement.style.top = `${Y}px`;
-            cardElement.style.left = `${X}px`;
-            cardElement.style.zIndex = parseInt(cardElement.style.zIndex) - 1000;
-            cardElement.onclick = () => {
-                this._selectCard(card_id);
-            };
-            this._sortHand(hand)
-            this._updateMessage();
-        }, 1000*globals.TRANSITION_TIME);
-    };
-
-    _randomDeal(containers) {
+    randomDeal(containers) {
         var freeElements = [];
         containers.forEach(container => {
             for (let i = 0; i < container.childNodes.length; i++) {
@@ -288,7 +335,6 @@ export class Phase_1 {
                 }
                 selected[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
                 setTimeout(() => {
-                    /*selected[i].style.transition = 'none';*/
                     if (this.dispatcher.hands[hand_id].classList.contains("hand-horz")) {
                         selected[i].style.left = `${hstep * i}px`;
                         selected[i].style.top = `0px`;
@@ -300,33 +346,22 @@ export class Phase_1 {
                     selected[i].offsetWidth;
                     selected[i].offsetHeight;
                     selected[i].style.transform = '';
-                    /*selected[i].style.transition = `transform ${globals.TRANSITION_TIME}s ease-in-out, opacity ${globals.TRANSITION_TIME}s`;*/
                     this.dispatcher.hands[hand_id].appendChild(selected[i]);
-                    this._check()
+                    this.check()
                 }, 1000*globals.TRANSITION_TIME);
             };
         };
     };
 
-    _updateMessage() {
-        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
-        for (let i=0; i<this.dispatcher.hands.length; i++) {
-            if (this.dispatcher.hands[i].childNodes.length < 10) {
-                messageBox.innerHTML = "SELECT CARDS FOR " + globals.PLAYER_NAMES[i];
-                for (let j=0; j<3; j++) {
-                    const hand_name = document.getElementById(`${globals.PLAYER_NAMES[j]}`)
-                    if (i == j) {
-                        hand_name.classList.add('hand-focused')
-                    }
-                    else {
-                        if (hand_name.classList.contains('hand-focused')) {
-                            hand_name.classList.remove('hand-focused')
-                        };
-                    };
-                };
-                return;
-            };
+    updateMessage() {
+        const activeHand = this.activeHand();
+        for (const handElement of this.dispatcher.hands) {
+            if (handElement.id == activeHand.id) {
+                this.highlightElement(handElement)
+            }
+            else {
+                this.deHighlightElement(handElement)
+            }
         };
-        messageBox.innerHTML = "&nbsp;";
     };
 };

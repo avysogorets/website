@@ -4,6 +4,7 @@ import { Phase_2 } from './phase-2.js'
 import { Phase_3 } from './phase-3.js'
 import { Phase_4 } from './phase-4.js'
 import { Phase_5 } from './phase-5.js'
+import { dragDispatcher } from './utils.js'
 
 
 export const IMAGES = globals.preloadImages();
@@ -23,6 +24,7 @@ document.documentElement.style.setProperty(
 
 class FrontendDispatcher {
     constructor() {
+        this.drag_dispatcher = new dragDispatcher(this)
         this.init()
     };
 
@@ -53,5 +55,8 @@ class FrontendDispatcher {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('dragover', (event) => {
+        event.preventDefault();
+    });
     const dispatcher = new FrontendDispatcher();
 });

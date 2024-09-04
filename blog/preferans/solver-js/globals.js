@@ -12,6 +12,7 @@ export const MESSAGE_CONTAINER = "message-container"
 export const MASTER_MIDDLE = "master-middle"
 export const INFO_FONT_SIZE = 24;
 export const FONT_SIZE = 20;
+export const DRAG_THRESHOLD = CARD_HEIGHT / 12;
 
 export const SUITS = ["0", "1", "2", "3"]
 export const KINDS = ["0", "1", "2", "3", "4", "5", "6", "7"]

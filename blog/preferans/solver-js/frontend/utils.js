@@ -34,6 +34,23 @@ export function drawCard(card_id) {
 };
 
 
+export function getContainerOptions(phase_id, cardElement) {
+    const container_options = []
+    if (phase_id == 0) {
+        for (let i=0; i<3; i++) {
+            const hand = document.getElementById(`hand-${i}`);
+            if (hand.childNodes.length < 10 || cardElement.parentElement.id == hand.id) {
+                container_options.push(hand);
+            };
+        };
+        const suit = globals.CARDS[parseInt(cardElement.id)].suit
+        const card_container = document.getElementById(`container-${suit}`)
+        container_options.push(card_container)
+    };
+    return container_options;
+};
+
+
 export function calculateSteps() {
     var vert_hand_height = document.getElementById('hand-' + globals.WEST).offsetHeight;
     var horz_hand_width = document.getElementById('hand-' + globals.SOUTH).offsetWidth;
@@ -63,3 +80,116 @@ export function randomChoice(array, size) {
     }
     return result;
 };
+
+export class dragDispatcher {
+    constructor(dispatcher) {
+        this.threshold = globals.DRAG_THRESHOLD;
+        this.currentDraggable = NaN;
+        this.isActiveDragging = false;
+        this.offsetX = NaN;
+        this.offsetY = NaN;
+        this.initialX = NaN;
+        this.initialY = NaN;
+        this.dispatcher = dispatcher;
+        this.mouseDownConfig();
+        this.mouseMoveConfig();
+        this.mouseUpConfig();
+    };
+
+    mouseDownConfig() {
+        document.addEventListener('mousedown', (event) => {
+            event.preventDefault();
+            let candidateDraggable = event.target
+            let max_depth = 1
+            while (!candidateDraggable.classList.contains("card")) {
+                candidateDraggable = candidateDraggable.parentElement;
+                max_depth -= 1;
+                if (max_depth < 0) {
+                    return;
+                };
+            };
+            if (candidateDraggable.style.cursor == 'default') {
+                return;
+            }
+            this.currentDraggable = candidateDraggable;
+            this.currentDraggable.style.position = 'absolute';
+            this.currentDraggable.style.zIndex = parseInt(this.currentDraggable.style.zIndex) + 1000;
+            const draggableRect = this.currentDraggable.getBoundingClientRect();
+            const parentRect = this.currentDraggable.parentElement.getBoundingClientRect();
+            this.offsetX = event.clientX - draggableRect.left + parentRect.left;
+            this.offsetY = event.clientY - draggableRect.top +  parentRect.top;
+            this.initialX = event.clientX;
+            this.initialY = event.clientY;
+        });
+    }
+
+    mouseMoveConfig() {
+        document.addEventListener('mousemove', (event) => {
+            if (this.currentDraggable) {
+                const left = event.clientX - this.offsetX;
+                const top = event.clientY - this.offsetY;
+                const DX2 = Math.pow(event.clientX-this.initialX,2)
+                const DY2 = Math.pow(event.clientY-this.initialY,2)
+                if (DX2 + DY2 > Math.pow(this.threshold,2)) {
+                    this.isActiveDragging = true;
+                    this.currentDraggable.style.transform = 'none'
+                };
+                if (this.isActiveDragging) {
+                    this.currentDraggable.style.left = `${left}px`;
+                    this.currentDraggable.style.top = `${top}px`;
+                    const closestTargetElement = getClosestContainer(
+                            this.dispatcher.phase_id,
+                            this.currentDraggable)
+                    const options = getContainerOptions(
+                        this.dispatcher.phase_id,
+                        this.currentDraggable);
+                    if (this.dispatcher.phase_id == 0) {
+                        const phase = this.dispatcher.phases[this.dispatcher.phase_id]
+                        phase.highlightContainer(closestTargetElement, options)
+                    };
+                };
+            };
+        });
+    }
+
+    mouseUpConfig() {
+        document.addEventListener('mouseup', async () => {
+            if (this.isActiveDragging && this.currentDraggable) {
+                this.currentDraggable.style.zIndex = parseInt(this.currentDraggable.style.zIndex)-1000;
+                const closestTargetElement = getClosestContainer(
+                        this.dispatcher.phase_id,
+                        this.currentDraggable)
+                const phase = this.dispatcher.phases[this.dispatcher.phase_id]
+                const currentDraggable =  this.currentDraggable;
+                this.currentDraggable = NaN;
+                await phase.onMouseUpLogic(currentDraggable, closestTargetElement)
+            }
+            this.currentDraggable = NaN;
+            this.isActiveDragging = false;
+            this.offsetX = NaN;
+            this.offsetY = NaN;
+            this.initialX = NaN;
+            this.initialY = NaN;
+        });
+    };
+};
+
+function getClosestContainer(phase_id, currElement) {
+    const options = getContainerOptions(phase_id, currElement);
+    let closestTargetElement = NaN;
+    let closestDistance = Number.MAX_SAFE_INTEGER;
+    for (const targetElement of options) {
+        const targetRect = targetElement.getBoundingClientRect();
+        const targetX = (targetRect.left + targetRect.right)/2
+        const targetY = (targetRect.top + targetRect.bottom)/2
+        const draggableRect = currElement.getBoundingClientRect();
+        const draggableX = (draggableRect.left + draggableRect.right)/2
+        const draggableY = (draggableRect.top + draggableRect.bottom)/2
+        const distance = Math.pow(targetX-draggableX, 2) + Math.pow(targetY-draggableY, 2)
+        if (!closestDistance || distance<closestDistance) {
+            closestDistance = distance;
+            closestTargetElement = targetElement;
+        };
+    };
+    return closestTargetElement
+}
