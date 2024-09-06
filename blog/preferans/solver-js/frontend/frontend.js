@@ -19,7 +19,7 @@ document.documentElement.style.setProperty(
 document.documentElement.style.setProperty(
         '--border-width', `${globals.BORDER_WIDTH}px`);
 document.documentElement.style.setProperty(
-        '--transition_time', `${globals.TRANSITION_TIME}s`);
+        '--transition-time', `${globals.TRANSITION_TIME}s`);
 
 
 class FrontendDispatcher {

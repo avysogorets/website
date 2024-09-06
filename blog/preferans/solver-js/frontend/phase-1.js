@@ -37,8 +37,11 @@ export class Phase_1 {
             card_container.appendChild(suit_container)
         });
         phase_middle.appendChild(randomDealButton)
-        randomDealButton.addEventListener('click',
-            async () => await this.randomDeal(suit_containers, this.dispatcher.hands));
+        randomDealButton.onclick = async () => {
+            await Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
+            globals.setTransitionLock(false);
+            this.check();
+        };
         this.updateMessage();
         const promises = []
         for (const card_id of Object.keys(globals.CARDS)) {
@@ -275,59 +278,68 @@ export class Phase_1 {
     };
 
     randomDeal(containers) {
-        return new Promise ((resolve) => {
-            var freeElements = [];
-            containers.forEach(container => {
-                for (let i = 0; i < container.childNodes.length; i++) {
-                    freeElements.push(container.childNodes[i]);
-                }
-            });
-            for (let hand_id = 0; hand_id < this.dispatcher.hands.length; hand_id++) {
-                const to_select = 10 - this.dispatcher.hands[hand_id].childNodes.length;
-                let selected = randomChoice(freeElements, to_select);
-                for (let i = 0; i < selected.length; i++) {
-                    freeElements = freeElements.filter(el => el !== selected[i]);
-                }
-                for (let i = 0; i < this.dispatcher.hands[hand_id].childNodes.length; i++) {
-                    selected.push(this.dispatcher.hands[hand_id].childNodes[i]);
-                }
-                selected.sort((a, b) => {
-                    return parseInt(a.id) - parseInt(b.id);
-                });
-                for (let i = 0; i < 10; i++) {
-                    selected[i].style.zIndex = 1000 + parseInt(selected[i].id);
-                    const cardRect = selected[i].getBoundingClientRect();
-                    const handRect = this.dispatcher.hands[hand_id].getBoundingClientRect();
-                    const [vstep, hstep, _] = calculateSteps();
-                    let deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
-                    let deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
-
-                    if (this.dispatcher.hands[hand_id].classList.contains('hand-horz')) {
-                        deltaX += i * hstep;
-                    }
-                    if (this.dispatcher.hands[hand_id].classList.contains('hand-vert')) {
-                        deltaY += i * vstep;
-                    }
-                    selected[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-                    setTimeout(() => {
-                        if (this.dispatcher.hands[hand_id].classList.contains("hand-horz")) {
-                            selected[i].style.left = `${hstep * i}px`;
-                            selected[i].style.top = `0px`;
-                        }
-                        if (this.dispatcher.hands[hand_id].classList.contains("hand-vert")) {
-                            selected[i].style.top = `${vstep * i}px`;
-                            selected[i].style.left = `0px`;
-                        }
-                        selected[i].offsetWidth;
-                        selected[i].offsetHeight;
-                        selected[i].style.transform = '';
-                        this.dispatcher.hands[hand_id].appendChild(selected[i]);
-                        this.check()
-                        resolve();
-                    }, 1000*globals.TRANSITION_TIME);
-                };
-            };
+        globals.setTransitionLock(true)
+        const promises = []
+        var freeElements = [];
+        containers.forEach(container => {
+            for (let i = 0; i < container.childNodes.length; i++) {
+                freeElements.push(container.childNodes[i]);
+            }
         });
+        let transitionOrder = 0
+        for (let hand_id = 0; hand_id<3; hand_id++) {
+            const to_select = 10 - this.dispatcher.hands[hand_id].childNodes.length;
+            let selected = randomChoice(freeElements, to_select);
+            for (let i=0; i<selected.length; i++) {
+                freeElements = freeElements.filter(el => el !== selected[i]);
+            }
+            for (let i=0; i<this.dispatcher.hands[hand_id].childNodes.length; i++) {
+                selected.push(this.dispatcher.hands[hand_id].childNodes[i]);
+            }
+            selected.sort((a, b) => {
+                return parseInt(a.id) - parseInt(b.id);
+            });
+            let currTimeout = 0;
+            for (let i=0; i<10; i++) {
+                promises.push(new Promise((resolve) => {
+                    if (selected[i].parentElement.id.includes('container')) {
+                        currTimeout = transitionOrder*30;
+                        transitionOrder += 1;
+                    };
+                    setTimeout(() => {
+                        selected[i].style.zIndex = 1000 + parseInt(selected[i].id);
+                        const cardRect = selected[i].getBoundingClientRect();
+                        const handRect = this.dispatcher.hands[hand_id].getBoundingClientRect();
+                        const [vstep, hstep, _] = calculateSteps();
+                        let deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
+                        let deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
+                        if (this.dispatcher.hands[hand_id].classList.contains('hand-horz')) {
+                            deltaX += i * hstep;
+                        }
+                        if (this.dispatcher.hands[hand_id].classList.contains('hand-vert')) {
+                            deltaY += i * vstep;
+                        }
+                        selected[i].style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                        setTimeout(() => {
+                            if (this.dispatcher.hands[hand_id].classList.contains("hand-horz")) {
+                                selected[i].style.left = `${hstep*i}px`;
+                                selected[i].style.top = `0px`;
+                            }
+                            if (this.dispatcher.hands[hand_id].classList.contains("hand-vert")) {
+                                selected[i].style.top = `${vstep*i}px`;
+                                selected[i].style.left = `0px`;
+                            }
+                            selected[i].offsetWidth;
+                            selected[i].offsetHeight;
+                            selected[i].style.transform = '';
+                            this.dispatcher.hands[hand_id].appendChild(selected[i]);
+                            resolve();
+                        }, 1000*globals.TRANSITION_TIME);
+                    }, currTimeout);
+                }));
+            };
+        };
+        return promises
     };
 
     updateMessage() {

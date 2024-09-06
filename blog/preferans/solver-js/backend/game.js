@@ -77,26 +77,20 @@ export class Game {
     };
 
     to_string() {
-        let suit_strs = {};
-        let suit_map_items = Object.entries(this.suit_map);
-        suit_map_items.sort((a, b) => a[0]<b[0]);
-        let suit_map_vals = suit_map_items.map(item => item[1]);
-        suit_map_vals.forEach(suit => {
-            suit_strs[suit] = "";
-        });
+        let suit_strs = ["", "", "", ""];
         globals.CARDS.forEach(card => {
             for (let i=0; i<3; i++) {
                 let player = this.player_map[i]
                 if (this.hands[i].cards.includes(card)) {
-                    suit_strs[this.suit_map[card.suit]] += `${player}`;
+                    suit_strs[this.suit_map[parseInt(card.suit)]] += `${player}`;
                 };
             };
             if (this.hands[globals.TRICK].cards.includes(card)) {
                 if (this.hands[globals.TRICK].cards[0] == card) {
-                    suit_strs[this.suit_map[card.suit]] += `${globals.TRICK_1}`;
+                    suit_strs[this.suit_map[parseInt(card.suit)]] += `${globals.TRICK_1}`;
                 }
                 else {
-                    suit_strs[this.suit_map[card.suit]] += `${globals.TRICK_2}`;
+                    suit_strs[this.suit_map[parseInt(card.suit)]] += `${globals.TRICK_2}`;
                 }
             }
         });
@@ -117,10 +111,7 @@ export class Game {
                     globals.TRICK_1,
                     mod((this.player_map[turn]-1), 3));
         };
-        let suits_str_items = Object.entries(suit_strs);
-        suits_str_items.sort((a, b) => a[0]<b[0]);
-        let suits_str_vals = suits_str_items.map(item => item[1]);
-        let suits_str = suits_str_vals.join(" ");
+        let suits_str = suit_strs.join(" ");
         let trumps_id = NaN
         if (this.params["trumps"] != globals.NO_TRUMP_ID) {
             trumps_id = 0;

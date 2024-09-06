@@ -91,6 +91,10 @@ export class Phase_4  {
     };
 
     dispatch() {
+        for (let i=0; i<3; i++) {
+            const handElement = document.getElementById(`hand-${i}`)
+            deHighlightElement(handElement)
+        }
         while (this.master_middle.firstChild) {
             this.master_middle.removeChild(this.master_middle.firstChild);
         };
@@ -128,15 +132,29 @@ export class Phase_4  {
         const player_name = globals.PLAYER_NAMES[game.params["player"]]
         const info_proj = document.getElementById(`num-tricks-proj-${player_name}`)
         let to_blink = false;
-        if (currents[game.params["player"]]+projects[game.params["player"]] != parseInt(info_proj.innerText)) {
+        let player_proj = NaN
+        if (currents[game.params["player"]]+projects[game.params["player"]] == 10) {
+            player_proj = 'X';
+        }
+        else {
+            player_proj = `${currents[game.params["player"]]+projects[game.params["player"]]}`;
+        }
+        if (`${player_proj}` != info_proj.innerText) {
             to_blink = true;
         }
         for (let i=0; i<3; i++) {
             const player_name = globals.PLAYER_NAMES[i]
             const info_curr = document.getElementById(`num-tricks-curr-${player_name}`)
             const info_proj = document.getElementById(`num-tricks-proj-${player_name}`)
+            let proj = NaN
+            if (currents[i]+projects[i] == 10) {
+                proj = 'X';
+            }
+            else {
+                proj = `${currents[i]+projects[i]}`;
+            }
             info_curr.innerText = `${currents[i]}`;
-            info_proj.innerText = `${currents[i]+projects[i]}`;
+            info_proj.innerText = proj;
             if (to_blink) {
                 info_proj.classList.add('blink');
                 setTimeout(() => {
@@ -310,7 +328,7 @@ export class Phase_4  {
                 cardElement.style.top = `${Y}px`;
                 cardElement.style.left = `${X}px`;
                 /*cardElement.onclick = () => {
-                    console.log(this.dispatcher.drag_dispatcher.isActiveDragging)
+                    .log(this.dispatcher.drag_dispatcher.isActiveDragging)
                     if (!this.dispatcher.drag_dispatcher.isActiveDragging) {
                         this.playCard(cardElement)
                     };

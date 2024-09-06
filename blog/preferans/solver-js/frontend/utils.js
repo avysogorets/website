@@ -138,6 +138,7 @@ export class dragDispatcher {
                 const DY2 = Math.pow(event.clientY-this.initialY,2)
                 if (DX2 + DY2 > Math.pow(this.threshold,2)) {
                     this.isActiveDragging = true;
+                    console.log('here')
                     this.currentDraggable.style.transform = 'none'
                     this.currentDraggable.style.pointerEvents = 'none'
                 };
