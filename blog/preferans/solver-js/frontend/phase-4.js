@@ -3,7 +3,8 @@ import { assert, settle_trick } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 import { calculateSteps,
     highlightElement,
-    deHighlightElement } from './utils.js';
+    deHighlightElement, 
+    fadeCleaInsideElement} from './utils.js';
 
 
 export class Phase_4  {
@@ -20,6 +21,7 @@ export class Phase_4  {
         this.phase_middle.className = "middle-phase-4";
         this.phase_middle.id = "middle-phase-4";
         this.master_middle.appendChild(this.phase_middle);
+        this.createInfoToolTip()
         this.tricks = [];
         for (let i=0; i<3; i++) {
             const trick_i = document.createElement("div");
@@ -86,24 +88,19 @@ export class Phase_4  {
         };
         this.optimal = this.dp[this.games[this.game_idx]["game"].to_string()]
         this.optimal = this.permutePlayers(this.optimal)
-        this.createInfoToolTip()
         this.drawGame();
     };
 
-    dispatch() {
+    async dispatch() {
         for (let i=0; i<3; i++) {
             const handElement = document.getElementById(`hand-${i}`)
             deHighlightElement(handElement)
         }
-        while (this.master_middle.firstChild) {
-            this.master_middle.removeChild(this.master_middle.firstChild);
-        };
+        await fadeCleaInsideElement(this.master_middle)
         for (const player_name of globals.PLAYER_NAMES) {
             const info_name = document.getElementById(`info-${player_name}`);
             info_name.style.visibility = 'hidden'
         };
-        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
-        messageBox.innerHTML = "&nbsp;";
         this.dispatcher.dispatch();
     };
 
@@ -175,8 +172,6 @@ export class Phase_4  {
     };
 
     createInfoToolTip() {
-        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
-        messageBox.innerText = ""
         const infoToolTip = document.createElement('div')
         infoToolTip.className = 'tooltip-container'
         infoToolTip.innerHTML = "<i class='bx bx-info-circle'></i>"
@@ -217,7 +212,7 @@ export class Phase_4  {
         textLine.style.marginBottom = `${globals.BORDER_WIDTH}px`;
         toolTipText.appendChild(textLine);
         infoToolTip.appendChild(toolTipText);
-        messageBox.appendChild(infoToolTip);
+        this.phase_middle.appendChild(infoToolTip);
     };
 
     pushGame(new_game_item) {

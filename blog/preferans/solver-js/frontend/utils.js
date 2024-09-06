@@ -138,7 +138,6 @@ export class dragDispatcher {
                 const DY2 = Math.pow(event.clientY-this.initialY,2)
                 if (DX2 + DY2 > Math.pow(this.threshold,2)) {
                     this.isActiveDragging = true;
-                    console.log('here')
                     this.currentDraggable.style.transform = 'none'
                     this.currentDraggable.style.pointerEvents = 'none'
                 };
@@ -233,3 +232,19 @@ export function deHighlightElement(element) {
         };
     };
 };
+
+
+export function fadeCleaInsideElement(element) {
+    return new Promise((resolve) => {
+        for (const child of element.children) {
+            child.style.transition = `opacity ${globals.TRANSITION_TIME}s ease-out`;
+            child.style.opacity = '0';
+        };
+        setTimeout(() => {
+            while (element.firstChild) {
+                element.removeChild(element.firstChild)
+            };
+            resolve();
+        }, 1000*globals.TRANSITION_TIME);
+    });
+}

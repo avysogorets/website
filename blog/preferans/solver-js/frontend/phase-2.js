@@ -1,4 +1,5 @@
 import * as globals from '../globals.js'
+import { fadeCleaInsideElement } from './utils.js';
 
 
 export class Phase_2 {
@@ -20,10 +21,8 @@ export class Phase_2 {
         this._selectParameters();
     };
 
-    dispatch() {
-        while (this.master_middle.firstChild) {
-            this.master_middle.removeChild(this.master_middle.firstChild);
-        };
+    async dispatch() {
+        await fadeCleaInsideElement(this.master_middle)
         this.dispatcher.dispatch()
     };
 

@@ -32,23 +32,22 @@ button:disabled {
     cursor: default;
 }
 
-.message {
+.message-container {
+    display: flex;
+    flex-direction: column;
     text-align: center;
-    font-size: var(--info-font-size);
-    width: 100%;
-    font-variant-numeric: tabular-nums;
-    height: auto;
     align-items: center;
-    background-color: white;
-    user-select: none;
-    white-space: pre;
-    z-index: 2000;
+    justify-content: center;
+    font-weight: bold;
 }
 
 .counter {
-    display: inline-block;
-    width: calc(4*var(--info-font-size));
-    text-align: left;
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: calc(3*var(--info-font-size));
+    font-weight: bold;
   }
 
 .master-middle {

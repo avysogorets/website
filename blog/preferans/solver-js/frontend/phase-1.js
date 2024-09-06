@@ -3,7 +3,8 @@ import { drawCard,
     calculateSteps,
     randomChoice,
     highlightElement,
-    deHighlightElement } from './utils.js';
+    deHighlightElement,
+    fadeCleaInsideElement } from './utils.js';
 import { mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 
@@ -42,7 +43,7 @@ export class Phase_1 {
             globals.setTransitionLock(false);
             this.check();
         };
-        this.updateMessage();
+        this.updateHighlights();
         const promises = []
         for (const card_id of Object.keys(globals.CARDS)) {
             promises.push(this.createCard(card_id, suit_containers, this.dispatcher.hands))};
@@ -57,16 +58,14 @@ export class Phase_1 {
         return this.handleCard(cardElement, targetElement)
     };
 
-    dispatch() {
+    async dispatch() {
         Object.keys(globals.CARDS).forEach(card_id => {
             let cardElement = document.getElementById(card_id)
             cardElement.onclick = '';
             cardElement.style.cursor = 'default';
         });
-        while (this.master_middle.firstChild) {
-            this.master_middle.removeChild(this.master_middle.firstChild)
-        };
-        this.updateMessage()
+        await fadeCleaInsideElement(this.master_middle)
+        this.updateHighlights()
         for (let i=0; i<3; i++) {
             const hand_info_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
             const hand_name = document.getElementById(`hand-${i}`)
@@ -219,7 +218,7 @@ export class Phase_1 {
                 cardElement.style.top = `${Y}px`;
                 cardElement.style.left = `${X}px`;
                 this.sortHands();
-                this.updateMessage();
+                this.updateHighlights();
                 this.check();  
                 resolve();
                 globals.setTransitionLock(false)                     
@@ -342,7 +341,7 @@ export class Phase_1 {
         return promises
     };
 
-    updateMessage() {
+    updateHighlights() {
         const activeHand = this.activeHand();
         for (const handElement of this.dispatcher.hands) {
             if (handElement.id == activeHand.id) {

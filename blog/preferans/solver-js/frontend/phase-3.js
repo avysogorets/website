@@ -1,6 +1,7 @@
 import * as globals from '../globals.js'
 import { Game } from '../backend/game.js'
 import { Hand } from '../backend/hand.js'
+import { fadeCleaInsideElement } from './utils.js';
 
 export class Phase_3 {  
     constructor(dispatcher) {
@@ -13,6 +14,9 @@ export class Phase_3 {
         this.phase_middle.className = "middle-phase-3";
         this.phase_middle.id = "middle-phase-3";
         this.master_middle.appendChild(this.phase_middle);
+        this.messageContainer = document.createElement('div')
+        this.messageContainer.classList.add('message-container')
+        this.phase_middle.appendChild(this.messageContainer)
         let parameters = this.dispatcher.phases[1].parameters;
         let type = globals.GAME_NAMES.indexOf(parameters["contract type"]);
         let player_id = globals.PLAYER_NAMES.indexOf(parameters["playing hand"]);
@@ -37,12 +41,8 @@ export class Phase_3 {
         this.solve();
     };
 
-    dispatch() {
-        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER)
-        messageBox.innerHTML = "&nbsp;";
-        while (this.master_middle.firstChild) {
-            this.master_middle.removeChild(this.master_middle.firstChild);
-        };
+    async dispatch() {
+        await fadeCleaInsideElement(this.master_middle)
         this.dispatcher.dispatch()
     }
 
@@ -50,13 +50,12 @@ export class Phase_3 {
         const worker = new Worker(
             new URL('../backend/solver.js', import.meta.url),
             { type: 'module' });
-        const messageBox = document.getElementById(globals.MESSAGE_CONTAINER);
         worker.postMessage({ type: 'solve', game_str: this.game.to_string() });
         worker.onmessage = (event) => {
             if (event.data.type === 'progress') {
                 let size_str = `${event.data.size}`
                 size_str = size_str + ' '.repeat(7-size_str.length);
-                messageBox.innerHTML = `SUBGAMES SOLVED: <div class="counter">${size_str}</div>`;
+                this.messageContainer.innerHTML = `SUBGAMES SOLVED <div class="counter">${size_str}</div>`;
             };
             if (event.data.type === 'solution') {
                 if (!event.data.dp) {
