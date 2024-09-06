@@ -47,6 +47,12 @@ export function getContainerOptions(phase_id, cardElement) {
         const card_container = document.getElementById(`container-${suit}`)
         container_options.push(card_container)
     };
+    if (phase_id == 3) {
+        const handId = cardElement.parentElement.id.split('-')[1]
+        const trickCardContainer = document.getElementById(`trick-card-container-${handId}`)
+        container_options.push(trickCardContainer)
+        container_options.push(cardElement.parentElement)
+    }
     return container_options;
 };
 
@@ -133,6 +139,7 @@ export class dragDispatcher {
                 if (DX2 + DY2 > Math.pow(this.threshold,2)) {
                     this.isActiveDragging = true;
                     this.currentDraggable.style.transform = 'none'
+                    this.currentDraggable.style.pointerEvents = 'none'
                 };
                 if (this.isActiveDragging) {
                     this.currentDraggable.style.left = `${left}px`;
@@ -143,10 +150,7 @@ export class dragDispatcher {
                     const options = getContainerOptions(
                         this.dispatcher.phase_id,
                         this.currentDraggable);
-                    if (this.dispatcher.phase_id == 0) {
-                        const phase = this.dispatcher.phases[this.dispatcher.phase_id]
-                        phase.highlightContainer(closestTargetElement, options)
-                    };
+                    highlightContainer(closestTargetElement, options)
                 };
             };
         });
@@ -154,16 +158,19 @@ export class dragDispatcher {
 
     mouseUpConfig() {
         document.addEventListener('mouseup', async () => {
-            if (this.isActiveDragging && this.currentDraggable) {
+            if (this.currentDraggable) {
                 this.currentDraggable.style.zIndex = parseInt(this.currentDraggable.style.zIndex)-1000;
-                const closestTargetElement = getClosestContainer(
-                        this.dispatcher.phase_id,
-                        this.currentDraggable)
-                const phase = this.dispatcher.phases[this.dispatcher.phase_id]
-                const currentDraggable =  this.currentDraggable;
-                this.currentDraggable = NaN;
-                await phase.onMouseUpLogic(currentDraggable, closestTargetElement)
-            }
+                if (this.isActiveDragging) {
+                    const closestTargetElement = getClosestContainer(
+                            this.dispatcher.phase_id,
+                            this.currentDraggable)
+                    const phase = this.dispatcher.phases[this.dispatcher.phase_id]
+                    const currentDraggable =  this.currentDraggable;
+                    this.currentDraggable = NaN;
+                    await phase.onMouseUpLogic(currentDraggable, closestTargetElement)
+                    currentDraggable.style.removeProperty('pointer-events')
+                };
+            };
             this.currentDraggable = NaN;
             this.isActiveDragging = false;
             this.offsetX = NaN;
@@ -193,3 +200,35 @@ function getClosestContainer(phase_id, currElement) {
     };
     return closestTargetElement
 }
+
+
+export function highlightContainer(container, options) {
+    for (const element of options) {
+        if (element.id == container.id) {
+            highlightElement(element)
+        }
+        else {
+            deHighlightElement(element)
+        };
+    };
+};
+
+export function highlightElement(element) {
+    element.classList.add('background-focused')
+    if (element.id.includes('hand')) {
+        const idx = element.id.split('-')[1]
+        const handName = document.getElementById(`${globals.PLAYER_NAMES[idx]}`)
+        handName.classList.add('text-focused')
+    };
+}
+
+export function deHighlightElement(element) {
+    if (element.classList.contains('background-focused')) {
+        element.classList.remove('background-focused')
+        if (element.id.includes('hand')) {
+            const idx = element.id.split('-')[1]
+            const handName = document.getElementById(`${globals.PLAYER_NAMES[idx]}`)
+            handName.classList.remove('text-focused')
+        };
+    };
+};

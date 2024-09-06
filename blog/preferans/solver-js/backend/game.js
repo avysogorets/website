@@ -27,7 +27,7 @@ export class Game {
             };
         };
         for (let i=0; i<3; i++) {
-            this.player_map[mod((i+player_id), 3)] = i
+            this.player_map[mod(i+player_id, 3)] = i
         };
         this.params = {
             "type": type,
@@ -87,8 +87,8 @@ export class Game {
         globals.CARDS.forEach(card => {
             for (let i=0; i<3; i++) {
                 let player = this.player_map[i]
-                if (this.hands[player].cards.includes(card)) {
-                    suit_strs[this.suit_map[card.suit]] += `${i}`;
+                if (this.hands[i].cards.includes(card)) {
+                    suit_strs[this.suit_map[card.suit]] += `${player}`;
                 };
             };
             if (this.hands[globals.TRICK].cards.includes(card)) {
@@ -100,7 +100,7 @@ export class Game {
                 }
             }
         });
-        let turn = this.params["turn"];
+        let turn = parseInt(this.params["turn"]);
         if (this.hands[globals.TRICK].cards.length == 2) {
             suit_strs = adjust_left(
                     suit_strs,

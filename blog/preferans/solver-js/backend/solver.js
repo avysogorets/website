@@ -15,6 +15,7 @@ class Solver {
     solve() {
         this.last_update = Date.now();
         this._solve(this.game_str);
+        self.postMessage({type: 'progress', size: this._dp_keys.size});
     };
     
     _solve(game_str) {
@@ -48,7 +49,7 @@ class Solver {
                     current_obj = new_game_res[0];
                     this.dp[game_str] = new_game_res;
                     this._dp_keys.add(game_str)
-                };
+                }
                 if (minimize_obj == true && current_obj <= -new_game_res[0]) {
                     current_obj = -new_game_res[0];
                     this.dp[game_str] = new_game_res

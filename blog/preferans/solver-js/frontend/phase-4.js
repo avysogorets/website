@@ -1,7 +1,9 @@
 import * as globals from '../globals.js'
 import { assert, settle_trick } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
-import { calculateSteps } from './utils.js';
+import { calculateSteps,
+    highlightElement,
+    deHighlightElement } from './utils.js';
 
 
 export class Phase_4  {
@@ -48,16 +50,20 @@ export class Phase_4  {
         this.undoButton.className = 'standard-button';
         this.undoButton.innerText = 'UNDO';
         this.undoButton.onclick = () => {
-            assert(this.game_idx > 0);
-            this.game_idx -= 1;
-            this.drawGame()
+            if (!globals.getTransitionLock()) {
+                assert(this.game_idx > 0);
+                this.game_idx -= 1;
+                this.drawGame()
+            }
         };
         this.undoButton.disabled = true;
         button_strip.appendChild(this.undoButton);
         this.okButton = document.createElement('button');
         this.okButton.className = 'standard-button';
         this.okButton.onclick = () => {
-            this.flush();
+            if (!globals.getTransitionLock()) {
+                this.flush();
+            }
         };
         this.okButton.innerText = 'OK';
         this.okButton.disabled = true;
@@ -65,9 +71,11 @@ export class Phase_4  {
         this.redoButton = document.createElement('button')
         this.redoButton.className = 'standard-button';
         this.redoButton.onclick = () => {
-            assert(this.game_idx < this.games.length-1);
-            this.game_idx += 1;
-            this.drawGame()
+            if (!globals.getTransitionLock()) {
+                assert(this.game_idx < this.games.length-1);
+                this.game_idx += 1;
+                this.drawGame()
+            }
         };
         this.redoButton.disabled = true;
         this.redoButton.innerText = 'REDO';
@@ -76,7 +84,8 @@ export class Phase_4  {
             const info_name = document.getElementById(`info-${player_name}`);
             info_name.style.visibility = 'visible'
         };
-        this.optimal = this.dp[this.games[this.game_idx]["game"].to_string()];
+        this.optimal = this.dp[this.games[this.game_idx]["game"].to_string()]
+        this.optimal = this.permutePlayers(this.optimal)
         this.createInfoToolTip()
         this.drawGame();
     };
@@ -94,17 +103,26 @@ export class Phase_4  {
         this.dispatcher.dispatch();
     };
 
+    permutePlayers(scores) {
+        const game = this.games[this.game_idx]["game"]
+        return [
+            scores[game.player_map[globals.SOUTH]],
+            scores[game.player_map[globals.WEST]],
+            scores[game.player_map[globals.EAST]],
+        ];
+    };
+
     updateMessages() {
         const game = this.games[this.game_idx]["game"]
         let projects = NaN
         if (game.hands[globals.TRICK].cards.length == 3) {
             const flushed_game = game.deepcopy();
             const new_res = flushed_game.flush()
-            projects = this.dp[flushed_game.to_string()]
+            projects = this.permutePlayers(this.dp[flushed_game.to_string()])
             projects = projects.map((num, idx) => num + new_res[idx]);
         }
         else {
-            projects = this.dp[game.to_string()]
+            projects = this.permutePlayers(this.dp[game.to_string()])
         };
         const currents = this.games[this.game_idx]["tricks"]
         const player_name = globals.PLAYER_NAMES[game.params["player"]]
@@ -127,6 +145,15 @@ export class Phase_4  {
             };
             
         };
+    };
+
+    onMouseUpLogic(cardElement, targetElement) {
+        if (targetElement.id.includes('trick-card-container')) {
+            return this.playCard(cardElement);
+        }
+        else {
+            this.undoTransition(cardElement, targetElement)
+        }
     };
 
     createInfoToolTip() {
@@ -159,7 +186,6 @@ export class Phase_4  {
         textLine.className = 'text-line';
         textLine.style.backgroundColor = "white";
         if (trumps != globals.NO_TRUMP_ID) {
-            console.log('here')
             const img_path = 'imgs/card_utils/'+suit_names[trumps][0]+'b.png';
             const imgElement = document.createElement('img')
             imgElement.src = img_path;
@@ -180,7 +206,7 @@ export class Phase_4  {
         this.games.splice(this.game_idx+1)
         this.games.push(new_game_item)
         this.game_idx += 1;
-        this.drawGame();
+        return this.drawGame();
     };
 
     flush() {
@@ -188,7 +214,7 @@ export class Phase_4  {
         const new_res = new_game.flush()
         const now_res = this.games[this.game_idx]["tricks"]
         const tot_res = now_res.map((num, idx) => num + new_res[idx]);
-        this.pushGame({"game": new_game, "tricks": tot_res});
+        return this.pushGame({"game": new_game, "tricks": tot_res});
     }
 
     playCard(cardElement) {
@@ -197,15 +223,15 @@ export class Phase_4  {
         const now_res = this.games[this.game_idx]["tricks"]
         const new_res = new_game.play_card(card);
         const tot_res = now_res.map((num, idx) => num + new_res[idx]);
-        this.pushGame({"game": new_game, "tricks": tot_res});
+        return this.pushGame({"game": new_game, "tricks": tot_res});
     };
 
     optimalMove(card_id) {
         const virtual_game = this.games[this.game_idx]["game"].deepcopy();
         virtual_game.hands[globals.TRICK].auto_flush = true;
         const new_res = virtual_game.play_card(globals.CARDS[card_id]);
-        const opt_res = this.dp[this.games[this.game_idx]["game"].to_string()]
-        const vir_res = this.dp[virtual_game.to_string()];
+        const opt_res = this.permutePlayers(this.dp[this.games[this.game_idx]["game"].to_string()])
+        const vir_res = this.permutePlayers(this.dp[virtual_game.to_string()])
         const player_id = this.games[this.game_idx]["game"].params["player"]
         return (new_res[player_id] + vir_res[player_id] == opt_res[player_id])
     };
@@ -261,34 +287,41 @@ export class Phase_4  {
     };
 
     undoTransition(cardElement, handElement) {
-        const card = globals.CARDS[parseInt(cardElement.id)]
-        const handRect = handElement.getBoundingClientRect();
-        const cardRect = cardElement.getBoundingClientRect();
-        const deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
-        const deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
-        let [vstep, hstep, _] = calculateSteps();
-        let X = 0;
-        let Y = 0;
-        if (handElement.classList.contains("hand-horz")) {
-            X += hstep*card.card_idx;
-        };
-        if (handElement.classList.contains("hand-vert")) {
-            Y += vstep*card.card_idx;
-        };
-        cardElement.style.transform = `translate(${X + deltaX}px, ${Y + deltaY}px)`
-        return new Promise(resolve => { setTimeout(() => {
-            cardElement.style.transform = '';
-            cardElement.parentNode.removeChild(cardElement);
-            handElement.appendChild(cardElement);
-            cardElement.style.top = `${Y}px`;
-            cardElement.style.left = `${X}px`;
-            /*cardElement.style.zIndex = parseInt(cardElement.style.zIndex) - 1000*/
-            cardElement.onclick = () => this.playCard(cardElement);
-            resolve()
-        }, 1000*globals.TRANSITION_TIME)});
+        return new Promise(resolve => { 
+            const card = globals.CARDS[parseInt(cardElement.id)]
+            const handRect = handElement.getBoundingClientRect();
+            const cardRect = cardElement.getBoundingClientRect();
+            const deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
+            const deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
+            let [vstep, hstep, _] = calculateSteps();
+            let X = 0;
+            let Y = 0;
+            if (handElement.classList.contains("hand-horz")) {
+                X += hstep*card.card_idx;
+            };
+            if (handElement.classList.contains("hand-vert")) {
+                Y += vstep*card.card_idx;
+            };
+            cardElement.style.transform = `translate(${X + deltaX}px, ${Y + deltaY}px)`
+            setTimeout(() => {
+                cardElement.style.transform = '';
+                cardElement.parentNode.removeChild(cardElement);
+                handElement.appendChild(cardElement);
+                cardElement.style.top = `${Y}px`;
+                cardElement.style.left = `${X}px`;
+                /*cardElement.onclick = () => {
+                    console.log(this.dispatcher.drag_dispatcher.isActiveDragging)
+                    if (!this.dispatcher.drag_dispatcher.isActiveDragging) {
+                        this.playCard(cardElement)
+                    };
+                };*/
+                resolve()
+            }, 1000*globals.TRANSITION_TIME)
+        });
     };
 
     async transitionCards() {
+        globals.setTransitionLock(true)
         const game = this.games[this.game_idx]["game"]
         for (let i=0; i<3; i++) {
             const handElement = document.getElementById(`hand-${i}`)
@@ -336,6 +369,7 @@ export class Phase_4  {
             let winner = settle_trick(trick_cards, trumps)
             await Promise.all(this.flushTransition(trick_cardElements, winner))
         };
+        globals.setTransitionLock(false)
     };
 
     disableAllCards() {
@@ -352,72 +386,90 @@ export class Phase_4  {
         };
     };
 
-    drawGame() {
-        const game = this.games[this.game_idx]["game"]
-        this.okButton.disabled = true;
-        this.transitionCards()
-        if (game.hands[globals.TRICK].cards.length == 3) {
-            this.disableAllCards()
-        }
-        else {
-            const turn_id = game.params["turn"];
-            for (let i=0; i<3; i++) {
-                const options = game.hands[i].options(game.hands[globals.TRICK], game.params["trumps"]);
-                for (const card of game.hands[i].cards) {
-                    const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
-                    const cardElement = document.getElementById(card_id);
-                    if (options.includes(card) && i == turn_id) {
-                        if (this.optimalMove(card_id, turn_id)) {
-                            cardElement.removeChild(cardElement.firstChild);
-                            cardElement.appendChild(IMAGES["optimal"][card_id])
+    async drawGame() {
+        return new Promise((resolve) => {
+            const game = this.games[this.game_idx]["game"]
+            this.okButton.disabled = true;
+            let toDeHighlight = false;
+            this.transitionCards()
+            if (game.hands[globals.TRICK].cards.length == 3) {
+                this.disableAllCards()
+                toDeHighlight = true;
+            }
+            else {
+                const turn_id = game.params["turn"];
+                for (let i=0; i<3; i++) {
+                    const handElement = document.getElementById(`hand-${i}`)
+                    const trickElement = document.getElementById(`trick-card-container-${i}`)
+                    if (turn_id == i && !toDeHighlight) {
+                        highlightElement(handElement)
+                    }
+                    else {
+                        deHighlightElement(handElement)
+                    };
+                    deHighlightElement(trickElement)
+                    const options = game.hands[i].options(game.hands[globals.TRICK], game.params["trumps"]);
+                    for (const card of game.hands[i].cards) {
+                        const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
+                        const cardElement = document.getElementById(card_id);
+                        if (options.includes(card) && i == turn_id) {
+                            if (this.optimalMove(card_id, turn_id)) {
+                                cardElement.removeChild(cardElement.firstChild);
+                                cardElement.appendChild(IMAGES["optimal"][card_id])
+                            }
+                            else {
+                                cardElement.removeChild(cardElement.firstChild);
+                                cardElement.appendChild(IMAGES["normal"][card_id])
+                            };
+                            cardElement.style.cursor = 'pointer';
+                            cardElement.onclick = () => {
+                                if (!this.dispatcher.drag_dispatcher.isActiveDragging && !globals.getTransitionLock()) {
+                                    this.playCard(cardElement)
+                                }
+                            };
                         }
                         else {
                             cardElement.removeChild(cardElement.firstChild);
-                            cardElement.appendChild(IMAGES["normal"][card_id])
+                            cardElement.appendChild(IMAGES["disabled"][card_id])
+                            cardElement.style.cursor = 'default';
+                            cardElement.onclick = '';
                         };
-                        cardElement.style.cursor = 'pointer';
-                        cardElement.onclick = () => this.playCard(cardElement);
-                    }
-                    else {
-                        cardElement.removeChild(cardElement.firstChild);
-                        cardElement.appendChild(IMAGES["disabled"][card_id])
-                        cardElement.style.cursor = 'default';
-                        cardElement.onclick = '';
                     };
                 };
             };
-        };
-        for (const card of game.hands[3].cards) {
-            const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
-            const cardElement = document.getElementById(card_id);
-            cardElement.removeChild(cardElement.firstChild);
-            cardElement.appendChild(IMAGES["normal"][card_id])
-            cardElement.style.cursor = 'default';
-        };
-        this.updateMessages();
-        if (this.game_idx > 0) {
-            this.undoButton.disabled = false;
-        }
-        else {
-            this.undoButton.disabled = true;
-        };
-        if (this.game_idx < this.games.length-1) {
-            this.redoButton.disabled = false;
-        }
-        else {
-            this.redoButton.disabled = true;
-        };
-        let is_finished = true;
-        for (const hand of game.hands) {
-            if (hand.cards.length > 0) {
-                is_finished = false
+            for (const card of game.hands[3].cards) {
+                const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
+                const cardElement = document.getElementById(card_id);
+                cardElement.removeChild(cardElement.firstChild);
+                cardElement.appendChild(IMAGES["normal"][card_id])
+                cardElement.style.cursor = 'default';
             };
-        };
-        if (is_finished) {
-            this.result = {
-                "optimal": this.optimal,
-                "final": this.games[this.game_idx]["tricks"]}
-            this.dispatch()
-        }
+            this.updateMessages();
+            if (this.game_idx > 0) {
+                this.undoButton.disabled = false;
+            }
+            else {
+                this.undoButton.disabled = true;
+            };
+            if (this.game_idx < this.games.length-1) {
+                this.redoButton.disabled = false;
+            }
+            else {
+                this.redoButton.disabled = true;
+            };
+            let is_finished = true;
+            for (const hand of game.hands) {
+                if (hand.cards.length > 0) {
+                    is_finished = false
+                };
+            };
+            if (is_finished) {
+                this.result = {
+                    "optimal": this.optimal,
+                    "final": this.games[this.game_idx]["tricks"]}
+                this.dispatch()
+            }
+            resolve();
+        });
     };
 };

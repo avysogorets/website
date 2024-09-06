@@ -70,4 +70,12 @@ export function preloadImages() {
     return images
 };
 
+let transitionLock = false;
+export function setTransitionLock(val) {
+    transitionLock = val;
+}
+export function getTransitionLock() {
+    return transitionLock;
+}
+
 
