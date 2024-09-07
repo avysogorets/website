@@ -39,6 +39,11 @@ export class Phase_1 {
         });
         phase_middle.appendChild(randomDealButton)
         randomDealButton.onclick = async () => {
+            randomDealButton.classList.add('button-selected')
+            setTimeout(() => {
+                randomDealButton.classList.add('button-deactivated')
+                randomDealButton.classList.remove('button-selected')
+            }, 100)
             await Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
             globals.setTransitionLock(false);
             this.check();

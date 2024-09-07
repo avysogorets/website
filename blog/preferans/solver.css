@@ -15,6 +15,7 @@
 .main {
     height: 90%;
     width: 100%;
+    max-width: calc(12*var(--card-width));
     margin-top: 5%;
     margin-bottom: 5%;
     margin-left: 5%;
@@ -182,6 +183,25 @@ button:disabled {
     position: relative;
 }
 
+.standard-button {
+    width: auto;
+    user-select: none;
+    height: auto;
+    font-size: var(--button-font-size);
+    font-family: var(--font-familiy);
+    border-radius: calc(var(--card-height)/18);
+    border: var(--border-width) solid black;
+    align-items: center;
+    cursor: pointer;
+    margin: calc(var(--border-width));
+    padding-left: calc(4*var(--border-width));
+    padding-right: calc(4*var(--border-width));
+    padding-top: calc(var(--border-width));
+    padding-bottom: calc(var(--border-width));
+    justify-content: center;
+    background-color: white;
+}
+
 .parameter-button {
     font-size: var(--button-font-size);
     font-family: var(--font-familiy);
@@ -196,6 +216,38 @@ button:disabled {
     border: var(--border-width) solid black;
     border-radius: calc(var(--card-height)/18);
     cursor: pointer;
+}
+
+.button-deactivated {
+    background: white;
+    color: black;
+    pointer-events: none;
+    cursor: default;
+}
+
+.button-selected {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.75), rgba(93, 184, 249, 0.75));
+    color: white;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.button-blocked {
+    background-color: #ddd;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.standard-button:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.25), rgba(93, 184, 249, 0.25));
+}
+
+.parameter-button:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.25), rgba(93, 184, 249, 0.25));
+}
+
+.button-selected:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.75), rgba(93, 184, 249, 0.75));
 }
 
 .hand-container-vert {
@@ -397,25 +449,6 @@ button:disabled {
 .suit-img {
     height: 1rem;
     width: 1.1rem;
-}
-
-.standard-button {
-    width: auto;
-    user-select: none;
-    height: auto;
-    font-size: var(--button-font-size);
-    font-family: var(--font-familiy);
-    border-radius: calc(var(--card-height)/18);
-    border: var(--border-width) solid black;
-    align-items: center;
-    cursor: pointer;
-    margin: calc(var(--border-width));
-    padding-left: calc(4*var(--border-width));
-    padding-right: calc(4*var(--border-width));
-    padding-top: calc(var(--border-width));
-    padding-bottom: calc(var(--border-width));
-    justify-content: center;
-    background-color: white;
 }
 
 

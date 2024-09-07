@@ -1,5 +1,5 @@
 import * as globals from '../globals.js'
-import { assert, settle_trick } from '../backend/utils.js'
+import { assert, settle_trick, mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 import { calculateSteps,
     highlightElement,
@@ -21,7 +21,7 @@ export class Phase_4  {
         this.phase_middle.className = "middle-phase-4";
         this.phase_middle.id = "middle-phase-4";
         this.master_middle.appendChild(this.phase_middle);
-        this.createInfoToolTip()
+        this.createInfoToolTip();
         this.tricks = [];
         for (let i=0; i<3; i++) {
             const trick_i = document.createElement("div");
@@ -54,32 +54,44 @@ export class Phase_4  {
         this.undoButton.onclick = () => {
             if (!globals.getTransitionLock()) {
                 assert(this.game_idx > 0);
+                this.undoButton.classList.add('button-selected')
+                setTimeout(() => {
+                    this.undoButton.classList.remove('button-selected')
+                }, 100)
                 this.game_idx -= 1;
                 this.drawGame()
             }
         };
-        this.undoButton.disabled = true;
+        this.undoButton.classList.add('button-blocked')
         button_strip.appendChild(this.undoButton);
         this.okButton = document.createElement('button');
         this.okButton.className = 'standard-button';
         this.okButton.onclick = () => {
             if (!globals.getTransitionLock()) {
+                this.okButton.classList.add('button-selected')
+                setTimeout(() => {
+                    this.okButton.classList.remove('button-selected')
+                }, 100)
                 this.flush();
             }
         };
         this.okButton.innerText = 'OK';
-        this.okButton.disabled = true;
+        this.okButton.classList.add('button-blocked')
         button_strip.appendChild(this.okButton)
         this.redoButton = document.createElement('button')
         this.redoButton.className = 'standard-button';
         this.redoButton.onclick = () => {
             if (!globals.getTransitionLock()) {
                 assert(this.game_idx < this.games.length-1);
+                this.redoButton.classList.add('button-selected')
+                setTimeout(() => {
+                    this.redoButton.classList.remove('button-selected')
+                }, 100)
                 this.game_idx += 1;
                 this.drawGame()
             }
         };
-        this.redoButton.disabled = true;
+        this.redoButton.classList.add('button-blocked')
         this.redoButton.innerText = 'REDO';
         button_strip.appendChild(this.redoButton);
         for (const player_name of globals.PLAYER_NAMES) {
@@ -375,11 +387,16 @@ export class Phase_4  {
                 const card = globals.CARDS[parseInt(cardElement.id)]
                 trick_cards.push(card);
             };
-            let trumps = NaN
-            if (game.params["trumps"] != globals.NO_TRUMP_ID) {
-                trumps = game.params["trumps"];
+            let vir_game_idx = this.game_idx
+            while (this.games[vir_game_idx]["game"].hands[globals.TRICK].cards.length != 3) {
+                vir_game_idx -= 1;
             }
-            let winner = settle_trick(trick_cards, trumps)
+            let last_turn = this.games[vir_game_idx]["game"].params["turn"];
+            let winner = mod(settle_trick([
+                trick_cards[mod(last_turn-2, 3)],
+                trick_cards[mod(last_turn-1, 3)],
+                trick_cards[mod(last_turn-0, 3)]
+            ], game.params["trumps"])+last_turn-2, 3)
             await Promise.all(this.flushTransition(trick_cardElements, winner))
         };
         globals.setTransitionLock(false)
@@ -387,7 +404,9 @@ export class Phase_4  {
 
     disableAllCards() {
         const game = this.games[this.game_idx]["game"]
-        this.okButton.disabled = false;
+        if (this.okButton.classList.contains('button-blocked')) {
+            this.okButton.classList.remove('button-blocked')
+        }
         for (let i=0; i<3; i++) {
             for (const card of game.hands[i].cards) {
                 const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
@@ -402,7 +421,7 @@ export class Phase_4  {
     async drawGame() {
         return new Promise((resolve) => {
             const game = this.games[this.game_idx]["game"]
-            this.okButton.disabled = true;
+            this.okButton.classList.add('button-blocked')
             let toDeHighlight = false;
             this.transitionCards()
             if (game.hands[globals.TRICK].cards.length == 3) {
@@ -459,16 +478,20 @@ export class Phase_4  {
             };
             this.updateMessages();
             if (this.game_idx > 0) {
-                this.undoButton.disabled = false;
+                if (this.undoButton.classList.contains('button-blocked')) {
+                    this.undoButton.classList.remove('button-blocked')
+                }
             }
             else {
-                this.undoButton.disabled = true;
+                this.undoButton.classList.add('button-blocked')
             };
             if (this.game_idx < this.games.length-1) {
-                this.redoButton.disabled = false;
+                if (this.redoButton.classList.contains('button-blocked')) {
+                    this.redoButton.classList.remove('button-blocked')
+                }
             }
             else {
-                this.redoButton.disabled = true;
+                this.redoButton.classList.add('button-blocked')
             };
             let is_finished = true;
             for (const hand of game.hands) {

@@ -76,7 +76,14 @@ export class Phase_2 {
         buttonOK.id = 'button-OK';
         buttonOK.style.visibility = 'hidden';
         buttonOK.innerHTML = 'OK';
-        buttonOK.onclick = () => this.dispatch();
+        buttonOK.onclick = () => {
+            buttonOK.classList.add('button-selected')
+            setTimeout(() => {
+                buttonOK.classList.add('button-deeactivated')
+                buttonOK.classList.remove('button-selected') 
+            }, 100)
+            this.dispatch()
+        };
         buttonOK.style.gridColumn = '3 / span 2';
         phase_middle.appendChild(buttonOK);
     };
@@ -84,24 +91,29 @@ export class Phase_2 {
     _block_suit_buttons() {
         globals.SUIT_NAMES.forEach(suit => {
             let buttonSuit = document.getElementById('trump suit:' + suit);
-            buttonSuit.style.backgroundColor = 'lightgrey';
             let images = JSON.parse(buttonSuit.getAttribute('images'));
             buttonSuit.firstChild.src = images.normal;
-            buttonSuit.style.cursor = 'default';
+            if (buttonSuit.classList.contains('button-selected')) {
+                buttonSuit.classList.remove('button-selected')
+            }
+            buttonSuit.classList.add('button-blocked')
         });
         let buttonNONE = document.getElementById('trump suit:NONE');
-        buttonNONE.style.backgroundColor = globals.SELECTED_COLOR;
+        buttonNONE.classList.add('button-selected')
         buttonNONE.style.cursor = 'default';
     };
     
     _unblock_suit_buttons() {
         let buttonNONE = document.getElementById('trump suit:NONE');
-        buttonNONE.style.backgroundColor = 'white';
+        if (buttonNONE.classList.contains('button-selected')) {
+            buttonNONE.classList.remove('button-selected')
+        }
         buttonNONE.style.cursor = 'pointer';
         globals.SUIT_NAMES.forEach(suit => {
             let buttonSuit = document.getElementById('trump suit:' + suit);
-            buttonSuit.style.backgroundColor = 'white';
-            buttonSuit.style.cursor = 'pointer';
+            if (buttonSuit.classList.contains('button-blocked')) {
+                buttonSuit.classList.remove('button-blocked')
+            }
         });
     };
 
@@ -135,23 +147,31 @@ export class Phase_2 {
                             let imgElement = thatButtonElement.firstChild;
                             let images = JSON.parse(thatButtonElement.getAttribute('images'));
                             imgElement.src = images.normal;
+                            if (thatButtonElement.classList.contains('button-selected')) {
+                                thatButtonElement.classList.remove('button-selected')
+                            };
                         };
                         if (thatButtonElement.onclick != 'none') {
-                            thatButtonElement.style.backgroundColor = 'white';
+                            if (thatButtonElement.classList.contains('button-selected')) {
+                                thatButtonElement.classList.remove('button-selected')
+                            };
                         };
                     });
                     if (thisButtonElement.id != 'trump suit:NONE') {
                         let imgElement = thisButtonElement.firstChild
                         let images = JSON.parse(thisButtonElement.getAttribute('images'));
                         imgElement.src = images.active;
+                        thisButtonElement.classList.add('button-selected')
                     };
-                    thisButtonElement.style.backgroundColor = globals.SELECTED_COLOR;
+                    thisButtonElement.classList.add('button-selected')
                 }
                 else {
                     buttonElements.forEach(thatButtonElement => {
-                        thatButtonElement.style.backgroundColor = 'white'
+                        if (thatButtonElement.classList.contains('button-selected')) {
+                            thatButtonElement.classList.remove('button-selected')
+                        };
                     });
-                    thisButtonElement.style.backgroundColor = globals.SELECTED_COLOR;
+                    thisButtonElement.classList.add('button-selected')
                 };
                 if (this.parameters["contract type"] == "MISERE") {
                     this._block_suit_buttons();

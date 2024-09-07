@@ -1,20 +1,15 @@
 import * as globals from '../globals.js'
 
 
-function compareCards(card_1, card_2, trumps=globals.NO_TRUMP_ID) {
-    if (trumps !== globals.NO_TRUMP_ID) {
-        if (parseInt(card_1.suit) == trumps && parseInt(card_2.suit) != trumps) {
-            return true;
-        }
-        if (parseInt(card_1.suit) != trumps && parseInt(card_2.suit) == trumps) {
-            return false;
-        }
-    };
+function compareCards(card_1, card_2, trumps) {
+    if (parseInt(card_1.suit) == trumps && parseInt(card_2.suit) != trumps) {
+        return true;
+    }
+    if (parseInt(card_1.suit) != trumps && parseInt(card_2.suit) == trumps) {
+        return false;
+    }
     if (parseInt(card_1.kind) < parseInt(card_2.kind)) {
         return false;
-    };
-    if (parseInt(card_1.kind) > parseInt(card_2.kind)) {
-        return true;
     };
     return true
 };

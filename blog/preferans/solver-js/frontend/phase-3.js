@@ -69,6 +69,11 @@ export class Phase_3 {
                     this.dp = event.data.dp
                     this.startButton.onclick = () => {
                         if (this.dp) {
+                            this.startButton.classList.add('button-selected')
+                            setTimeout(() => {
+                                this.startButton.classList.add('button-deactivated')
+                                this.startButton.classList.remove('button-selected')
+                            }, 100)
                             this.dispatch();
                         };
                     };

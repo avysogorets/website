@@ -1,3 +1,4 @@
+import { settle_trick } from '../backend/utils.js'
 import * as globals from '../globals.js'
 import { Phase_1 } from './phase-1.js'
 import { Phase_2 } from './phase-2.js'
@@ -26,8 +27,12 @@ class FrontendDispatcher {
     constructor() {
         this.drag_dispatcher = new dragDispatcher(this)
         this.init()
+        console.log(settle_trick([
+            globals.CARDS[11],
+            globals.CARDS[1],
+            globals.CARDS[10]
+        ], 9))
     };
-
     init() {
         this.hands = [
             document.getElementById('hand-' + globals.SOUTH),
