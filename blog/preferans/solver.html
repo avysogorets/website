@@ -26,7 +26,7 @@
 		</script>
     	<title>Preferans Solver</title>
 	</head>
-<body style="background: white;">
+<body style="background: white; overscroll-behavior: none;">
     <header class="header">
         <a href="/" class="logo">
             <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
@@ -51,8 +51,24 @@
             </ul>
         </menu>
     </header>
-	<div class="panel" style="--c:white; justify-content: center;">
-		<div class="main">
+    <div class="about-container">
+        <div class="about-button" id="about-button">ABOUT</div>
+        <div class="about-background", id="about-background">
+            <div class="about-content" id="about-content">
+                <span style="font-weight: bold;">What is PreferAnswer?</span>
+                <span>PreferAnswer is an app that solves instances of Preferans by simulating all possible gameplay scenarios. You simply deal the cards, enter the game parameters (contract, turn, etc.), and it guides you through the optimal play for each hand. Since it needs to see all the cards, PreferAnswer does not support all-passes.</span>
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;">How it works?</span>
+                <span>Under the hood, PreferAnswer performs an exhaustive search (DFS with memoization) over all possible game states. During execution, it shows you in real-time how many games have already been processed. The optimized game serialization plays a key role in the algorithm's speed by hashing many different but essentially equivalent game states in the same way, thus avoiding unnecessary computations. Can you think of games with technically different card arrangements across hands but that are equivalent to each other? What about moves in a single turn?</span>
+                <hr style="height:15px; visibility:hidden;"/>
+                <span style="font-weight: bold;">Quick Guide</span>
+                <span>PreferAnswer highlights the cards that are optimal to play on each given turn. It assumes that both whisting hands aim to screw the player, i.e., minimize (or maximize) the final number of tricks taken by the player in a regular game (or misere). The first number next to each hand represents the current number of tricks taken, while the second number represents the predicted final number of tricks under optimal play by all.</span>
+            </div>
+        </div>
+    </div>      
+	<div class="panel" style="--c:white; justify-content: center;">  
+        <div class="fixed-wrapper">     
+		<div class="main", id="main">
             <div style="display:flex; flex-direction:row; height:100%; width:100%; align-items: center;">
                 <div class="hand-container-vert">
                     <div class="hand-vert-named">
@@ -92,8 +108,10 @@
                 </div>
             </div>
 		</div>
+        </div>  
 	</div>
 <script type="module" src="/blog/preferans/solver-js/frontend/frontend.js"></script>
+<script type="module" src="/blog/preferans/solver-js/meta.js"></script>
 <script type="module" src="/utils.js"></script>
 </body>
 </html>

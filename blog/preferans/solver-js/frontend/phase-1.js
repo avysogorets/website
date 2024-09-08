@@ -31,7 +31,7 @@ export class Phase_1 {
         };
         const randomDealButton = document.createElement('button');
         randomDealButton.className = 'standard-button';
-        randomDealButton.innerHTML = 'random deal';
+        randomDealButton.innerHTML = 'RANDOM DEAL';
         this.master_middle.appendChild(phase_middle)
         phase_middle.appendChild(card_container)
         suit_containers.forEach(suit_container => {

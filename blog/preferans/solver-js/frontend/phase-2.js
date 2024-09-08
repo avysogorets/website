@@ -79,7 +79,7 @@ export class Phase_2 {
         buttonOK.onclick = () => {
             buttonOK.classList.add('button-selected')
             setTimeout(() => {
-                buttonOK.classList.add('button-deeactivated')
+                buttonOK.classList.add('button-deactivated')
                 buttonOK.classList.remove('button-selected') 
             }, 100)
             this.dispatch()
