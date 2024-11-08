@@ -1,14 +1,10 @@
-import { settle_trick } from '../backend/utils.js'
 import * as globals from '../globals.js'
 import { Phase_1 } from './phase-1.js'
 import { Phase_2 } from './phase-2.js'
 import { Phase_3 } from './phase-3.js'
 import { Phase_4 } from './phase-4.js'
 import { Phase_5 } from './phase-5.js'
-import { dragDispatcher } from './utils.js'
-
-
-export const IMAGES = globals.preloadImages();
+import { MouseEventHandler, updateButtonsLock, drawCard } from './utils.js'
 
 
 document.documentElement.style.setProperty(
@@ -22,17 +18,15 @@ document.documentElement.style.setProperty(
 document.documentElement.style.setProperty(
         '--transition-time', `${globals.TRANSITION_TIME}s`);
 
+export let IMAGES;
 
 class FrontendDispatcher {
-    constructor() {
-        this.drag_dispatcher = new dragDispatcher(this)
-        this.init()
-        console.log(settle_trick([
-            globals.CARDS[11],
-            globals.CARDS[1],
-            globals.CARDS[10]
-        ], 9))
+    constructor(is_mobile) {
+        this.event_handler = new MouseEventHandler(this)
+        this.is_mobile = is_mobile;
+        this.init();
     };
+
     init() {
         this.hands = [
             document.getElementById('hand-' + globals.SOUTH),
@@ -48,10 +42,11 @@ class FrontendDispatcher {
         this.dispatch()
     };
 
-    dispatch() {
+    async dispatch() {
+        await updateButtonsLock(globals.RESTART)
         this.phase_id += 1;
-        console.log(this.phase_id)
-        this.phases[this.phase_id].init()
+        await this.phases[this.phase_id].init()
+        refreshLayout()
     };
 
     restart() {
@@ -59,9 +54,26 @@ class FrontendDispatcher {
     };
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+function refreshLayout() {
+    const middleMain = document.getElementById('middle-main');
+    const middleMainHeight = parseFloat(getComputedStyle(middleMain).height);
+    const handContainerVerts = document.querySelectorAll('.hand-container-vert');
+    for (const handContainerVert of handContainerVerts) {
+        const minHeight = parseFloat(getComputedStyle(handContainerVert).minHeight);
+        handContainerVert.style.height = `${Math.max(middleMainHeight, minHeight)}px`;
+    }
+    Object.keys(globals.CARDS).forEach(card_id => drawCard(card_id));
+}
+
+
+document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('dragover', (event) => {
         event.preventDefault();
     });
-    const dispatcher = new FrontendDispatcher();
+    IMAGES = await globals.preloadImages();
+    let is_mobile = false;
+    if (window.innerWidth < 768) {
+        is_mobile = true;
+    };
+    const dispatcher = new FrontendDispatcher(is_mobile);
 });

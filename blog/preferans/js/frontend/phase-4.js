@@ -4,7 +4,8 @@ import { IMAGES } from './frontend.js'
 import { calculateSteps,
     highlightElement,
     deHighlightElement, 
-    fadeCleaInsideElement} from './utils.js';
+    fadeClearInsideElement,
+    createButton} from './utils.js';
 
 
 export class Phase_4  {
@@ -14,93 +15,84 @@ export class Phase_4  {
     };
 
     init() {
-        this.dp = this.dispatcher.phases[2].dp;
-        this.games = [{"game": this.dispatcher.phases[2].game, "tricks": [0,0,0]}];
-        this.game_idx = 0;
-        this.phase_middle = document.createElement("div");
-        this.phase_middle.className = "middle-phase-4";
-        this.phase_middle.id = "middle-phase-4";
-        this.master_middle.appendChild(this.phase_middle);
-        this.createInfoToolTip();
-        this.tricks = [];
-        for (let i=0; i<3; i++) {
-            const trick_i = document.createElement("div");
-            trick_i.className = "trick-card-container";
-            trick_i.id = `trick-card-container-${i}`;
-            this.tricks.push(trick_i);
-        };
-        const trick_strip_U = document.createElement("div");
-        trick_strip_U.className = "trick-strip";
-        trick_strip_U.appendChild(this.tricks[1]);
-        trick_strip_U.appendChild(this.tricks[2]);
-        this.phase_middle.appendChild(trick_strip_U);
-        const trick_strip_D = document.createElement("div");
-        trick_strip_D.className = "trick-strip";
-        trick_strip_D.appendChild(this.tricks[0]);
-        this.phase_middle.appendChild(trick_strip_D);
-        for (let i=0; i<3; i++) {
-            const hand = this.games[this.game_idx]["game"].hands[i];
-            for (let j=0; j<hand.cards.length; j++) {
-                hand.cards[j].hand_idx = i;
-                hand.cards[j].card_idx = j;
+        return new Promise(async (resolve) => {
+            this.dp = this.dispatcher.phases[2].dp;
+            this.games = [{"game": this.dispatcher.phases[2].game, "tricks": [0,0,0]}];
+            this.game_idx = 0;
+            this.phase_middle = document.createElement("div");
+            this.phase_middle.className = "middle-phase-4";
+            this.phase_middle.id = "middle-phase-4";
+            this.master_middle.appendChild(this.phase_middle);
+            this.createInfoToolTip();
+            this.tricks = [];
+            for (let i=0; i<3; i++) {
+                const trick_i = document.createElement("div");
+                trick_i.className = "trick-card-container";
+                trick_i.id = `trick-card-container-${i}`;
+                this.tricks.push(trick_i);
             };
-        };
-        const button_strip = document.createElement("div");
-        button_strip.className = 'button-strip';
-        this.phase_middle.appendChild(button_strip);
-        this.undoButton = document.createElement('button')
-        this.undoButton.className = 'standard-button';
-        this.undoButton.innerText = 'UNDO';
-        this.undoButton.onclick = () => {
-            if (!globals.getTransitionLock()) {
+            const trick_strip_U = document.createElement("div");
+            trick_strip_U.className = "trick-strip";
+            trick_strip_U.appendChild(this.tricks[1]);
+            trick_strip_U.appendChild(this.tricks[2]);
+            this.phase_middle.appendChild(trick_strip_U);
+            const trick_strip_D = document.createElement("div");
+            trick_strip_D.className = "trick-strip";
+            trick_strip_D.appendChild(this.tricks[0]);
+            this.phase_middle.appendChild(trick_strip_D);
+            for (let i=0; i<3; i++) {
+                const hand = this.games[this.game_idx]["game"].hands[i];
+                for (let j=0; j<hand.cards.length; j++) {
+                    hand.cards[j].hand_idx = i;
+                    hand.cards[j].card_idx = j;
+                }
+            }
+            const buttonStrip = document.createElement("div");
+            buttonStrip.className = 'button-strip';
+            buttonStrip.style.gridTemplateColumns = 'repeat(3, 1fr)'
+            this.phase_middle.appendChild(buttonStrip);
+            this.undoButton = createButton()
+            this.undoButton.innerHTML = 'UNDO';
+            this.undoButton.clickLogic = () => {
                 assert(this.game_idx > 0);
-                this.undoButton.classList.add('button-selected')
-                setTimeout(() => {
-                    this.undoButton.classList.remove('button-selected')
-                }, 100)
                 this.game_idx -= 1;
-                this.drawGame()
+                return this.drawGame()
             }
-        };
-        this.undoButton.classList.add('button-blocked')
-        button_strip.appendChild(this.undoButton);
-        this.okButton = document.createElement('button');
-        this.okButton.className = 'standard-button';
-        this.okButton.onclick = () => {
-            if (!globals.getTransitionLock()) {
-                this.okButton.classList.add('button-selected')
-                setTimeout(() => {
-                    this.okButton.classList.remove('button-selected')
-                }, 100)
-                this.flush();
-            }
-        };
-        this.okButton.innerText = 'OK';
-        this.okButton.classList.add('button-blocked')
-        button_strip.appendChild(this.okButton)
-        this.redoButton = document.createElement('button')
-        this.redoButton.className = 'standard-button';
-        this.redoButton.onclick = () => {
-            if (!globals.getTransitionLock()) {
+            this.undoButton.classList.add('blocked')
+            this.undoButton.setLock(globals.RADIO_LOCK)
+            buttonStrip.appendChild(this.undoButton);
+            this.okButton = createButton()
+            this.okButton.innerHTML = 'OK';
+            this.okButton.clickLogic = () => this.flush()
+            this.okButton.classList.add('blocked')
+            this.okButton.setLock(globals.RADIO_LOCK)
+            buttonStrip.appendChild(this.okButton)
+            this.redoButton = createButton()
+            this.redoButton.clickLogic = () => {
                 assert(this.game_idx < this.games.length-1);
-                this.redoButton.classList.add('button-selected')
-                setTimeout(() => {
-                    this.redoButton.classList.remove('button-selected')
-                }, 100)
                 this.game_idx += 1;
-                this.drawGame()
+                return this.drawGame()
             }
-        };
-        this.redoButton.classList.add('button-blocked')
-        this.redoButton.innerText = 'REDO';
-        button_strip.appendChild(this.redoButton);
-        for (const player_name of globals.PLAYER_NAMES) {
-            const info_name = document.getElementById(`info-${player_name}`);
-            info_name.style.visibility = 'visible'
-        };
-        this.optimal = this.dp[this.games[this.game_idx]["game"].to_string()]
-        this.optimal = this.permutePlayers(this.optimal)
-        this.drawGame();
+            this.redoButton.classList.add('blocked')
+            this.redoButton.setLock(globals.RADIO_LOCK)
+            this.redoButton.innerText = 'REDO';
+            buttonStrip.appendChild(this.redoButton);
+            for (const player_name of globals.PLAYER_NAMES) {
+                const infoName = document.getElementById(`info-${player_name}`);
+                infoName.style.visibility = 'visible'
+            }
+            this.optimal = this.dp[this.games[this.game_idx]["game"].to_string()]
+            this.optimal = this.permutePlayers(this.optimal)
+            document.getElementById('info-EAST').style.display = 'block'
+            document.getElementById('info-WEST').style.display = 'block'
+            const southInfo = document.getElementById('info-SOUTH')
+            southInfo.style.display = 'flex'
+            const infoHeight = southInfo.offsetHeight;
+            southInfo.parentElement.style.marginTop = `-${infoHeight}px`
+            this.phase_middle.style.paddingBottom = `${infoHeight}px`
+            resolve()
+            await this.drawGame()
+        })
     };
 
     async dispatch() {
@@ -108,7 +100,7 @@ export class Phase_4  {
             const handElement = document.getElementById(`hand-${i}`)
             deHighlightElement(handElement)
         }
-        await fadeCleaInsideElement(this.master_middle)
+        await fadeClearInsideElement(this.master_middle)
         for (const player_name of globals.PLAYER_NAMES) {
             const info_name = document.getElementById(`info-${player_name}`);
             info_name.style.visibility = 'hidden'
@@ -174,14 +166,14 @@ export class Phase_4  {
         };
     };
 
-    onMouseUpLogic(cardElement, targetElement) {
+    /*onMouseUpLogic(cardElement, targetElement) {
         if (targetElement.id.includes('trick-card-container')) {
             return this.playCard(cardElement);
         }
         else {
             this.undoTransition(cardElement, targetElement)
         }
-    };
+    }*/
 
     createInfoToolTip() {
         const infoToolTip = document.createElement('div')
@@ -211,11 +203,7 @@ export class Phase_4  {
         textLine.className = 'text-line';
         textLine.style.backgroundColor = "white";
         if (trumps != globals.NO_TRUMP_ID) {
-            const img_path = 'imgs/card_utils/'+suit_names[trumps][0]+'b.png';
-            const imgElement = document.createElement('img')
-            imgElement.src = img_path;
-            imgElement.style.height = `${globals.INFO_FONT_SIZE}px`
-            textLine.appendChild(imgElement);
+            textLine.appendChild(IMAGES["suits"]["normal"][globals.SUIT_NAMES[trumps]]);
         }
         else {
             textLine.innerText = "NO TRUMPS";
@@ -278,7 +266,7 @@ export class Phase_4  {
                 flushElement.appendChild(cardElement);
                 cardElement.style.top = '0px';
                 cardElement.style.left = '0px';
-                cardElement.onclick = '';
+                cardElement.clickLogic = Promise.resolve();
                 resolve()
             }, 1000*globals.TRANSITION_TIME)}));
         };
@@ -298,13 +286,13 @@ export class Phase_4  {
             if (cardElement.style.opacity == 0) {
                 cardElement.style.opacity = 1;
             }
-            promises.push(new Promise(resolve => { setTimeout(() => {
+            promises.push(new Promise((resolve) => { setTimeout(() => {
                 cardElement.style.transform = '';
                 cardElement.parentNode.removeChild(cardElement);
                 trickElement.appendChild(cardElement);
                 cardElement.style.top = '0px';
                 cardElement.style.left = '0px';
-                cardElement.onclick = '';
+                cardElement.clickLogic = Promise.resolve();
                 resolve()
             }, 1000*globals.TRANSITION_TIME)}));
         };
@@ -312,7 +300,7 @@ export class Phase_4  {
     };
 
     undoTransition(cardElement, handElement) {
-        return new Promise(resolve => { 
+        return new Promise((resolve) => { 
             const card = globals.CARDS[parseInt(cardElement.id)]
             const handRect = handElement.getBoundingClientRect();
             const cardRect = cardElement.getBoundingClientRect();
@@ -334,19 +322,15 @@ export class Phase_4  {
                 handElement.appendChild(cardElement);
                 cardElement.style.top = `${Y}px`;
                 cardElement.style.left = `${X}px`;
-                /*cardElement.onclick = () => {
-                    .log(this.dispatcher.drag_dispatcher.isActiveDragging)
-                    if (!this.dispatcher.drag_dispatcher.isActiveDragging) {
-                        this.playCard(cardElement)
-                    };
-                };*/
+                cardElement.clickLogic = () => {
+                    return this.playCard(cardElement)
+                }
                 resolve()
             }, 1000*globals.TRANSITION_TIME)
-        });
-    };
+        })
+    }
 
     async transitionCards() {
-        globals.setTransitionLock(true)
         const game = this.games[this.game_idx]["game"]
         for (let i=0; i<3; i++) {
             const handElement = document.getElementById(`hand-${i}`)
@@ -398,8 +382,7 @@ export class Phase_4  {
                 trick_cards[mod(last_turn-0, 3)]
             ], game.params["trumps"])+last_turn-2, 3)
             await Promise.all(this.flushTransition(trick_cardElements, winner))
-        };
-        globals.setTransitionLock(false)
+        }
     };
 
     disableAllCards() {
@@ -452,23 +435,23 @@ export class Phase_4  {
                             else {
                                 cardElement.removeChild(cardElement.firstChild);
                                 cardElement.appendChild(IMAGES["normal"][card_id])
-                            };
+                            }
                             cardElement.style.cursor = 'pointer';
-                            cardElement.onclick = () => {
-                                if (!this.dispatcher.drag_dispatcher.isActiveDragging && !globals.getTransitionLock()) {
-                                    this.playCard(cardElement)
-                                }
-                            };
+                            cardElement.clickLogic = () => {
+                                return this.playCard(cardElement)
+                            }
                         }
                         else {
                             cardElement.removeChild(cardElement.firstChild);
                             cardElement.appendChild(IMAGES["disabled"][card_id])
                             cardElement.style.cursor = 'default';
-                            cardElement.onclick = '';
-                        };
-                    };
-                };
-            };
+                            cardElement.clickLogic = () => {
+                                return Promise.resolve()
+                            }
+                        }
+                    }
+                }
+            }
             for (const card of game.hands[3].cards) {
                 const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
                 const cardElement = document.getElementById(card_id);

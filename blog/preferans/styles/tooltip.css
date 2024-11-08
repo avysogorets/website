@@ -1,0 +1,46 @@
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-size: var(--info-font-size);
+}
+  
+.tooltip-text {
+    font-size: var(--font-size);
+    visibility: hidden;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: calc(var(--card-height)/18);
+    border: var(--border-width) solid black;
+    position: absolute;
+    z-index: 3000;
+    top: 125%;
+    left: 50%;
+    white-space: pre;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity var(--transition-time);
+}
+
+.text-line {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.text-line img {
+    height: 1.5rem;
+    object-fit: contain;
+    border-radius: inherit;
+}
+  
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    z-index: 3000;
+}

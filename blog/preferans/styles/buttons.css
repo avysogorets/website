@@ -1,0 +1,144 @@
+.button-strip {
+    height: calc(1rem + 4*var(--button-padding));
+    background-color: white;
+    display: grid;
+    align-items: center;
+    font-size: var(--button-font-size);
+    font-family: var(--font-family);
+    border-radius: calc(var(--card-height) / 18);
+    border: var(--border-width) solid black;
+    overflow: hidden;
+}
+
+button {
+    font-size: var(--button-font-size);
+    font-family: var(--font-family);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    padding: var(--button-padding);
+    background-color: white;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+button img {
+    height: auto;
+    width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/*
+.standard-button {
+    width: auto;
+    user-select: none;
+    height: auto;
+    font-size: var(--button-font-size);
+    font-family: var(--font-familiy);
+    border-radius: calc(var(--card-height)/18);
+    border: var(--border-width) solid black;
+    align-items: center;
+    cursor: pointer;
+    margin: calc(var(--border-width));
+    padding-left: calc(4*var(--border-width));
+    padding-right: calc(4*var(--border-width));
+    padding-top: calc(var(--border-width));
+    padding-bottom: calc(var(--border-width));
+    justify-content: center;
+    background-color: white;
+}
+
+.text-button {
+    width: auto;
+    user-select: none;
+    height: auto;
+    font-size: var(--button-font-size);
+    font-family: var(--font-familiy);
+    padding: calc(0.4*var(--button-font-size));
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    background-color: white;
+}
+*/
+
+button:hover {
+    background-color: white;
+    background-image: 
+        linear-gradient(45deg, rgba(238, 130, 238, 0.2), rgba(93, 184, 249, 0.2));
+    background-blend-mode: multiply;
+}
+
+.blocked:hover {
+    background-color: #ddd;
+    color: #555;
+    cursor: default;
+}
+
+.locked:hover {
+    background-image: none;
+}
+
+.selected:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.75), rgba(93, 184, 249, 0.75));
+}
+
+.pressed:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.75), rgba(93, 184, 249, 0.75));
+    color: white;
+}
+
+
+button.locked {
+    cursor: default;
+}
+
+button.pressed {
+    background-color: white;
+    background-image: 
+        linear-gradient(45deg, rgba(238, 130, 238, 0.2), rgba(93, 184, 249, 0.2));
+    background-blend-mode: multiply;
+}
+
+button.selected {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.75), rgba(93, 184, 249, 0.75));
+    color: white;
+}
+
+button.blocked {
+    background-color: #ddd;
+    color:#555;
+}
+
+/*
+button:disabled {
+    background-color: #ccc;
+    color: #333;
+    cursor: default;
+}
+
+.button-deactivated {
+    background: white;
+    color: black;
+    pointer-events: none;
+    cursor: default;
+}
+
+.button-blocked {
+    background-color: #ddd;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+
+.standard-button:hover {
+    background: linear-gradient(45deg, rgba(238, 130, 238, 0.25), rgba(93, 184, 249, 0.25));
+}
+
+*/

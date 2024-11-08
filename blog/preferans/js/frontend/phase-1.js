@@ -2,74 +2,83 @@ import * as globals from '../globals.js'
 import { drawCard,
     calculateSteps,
     randomChoice,
+    createButton,
     highlightElement,
     deHighlightElement,
-    fadeCleaInsideElement } from './utils.js';
+    fadeClearInsideElement} from './utils.js';
 import { mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 
 
+
 export class Phase_1 {
+    constructor(dispatcher) {
+        this.dispatcher = dispatcher;
+    };
+
+    init() {
+        if (this.dispatcher.is_mobile) {
+            this.phase = new Phase_1_Mobile(this.dispatcher);
+        }
+        else {
+            this.phase = new Phase_1_Desktop(this.dispatcher);
+        }
+        this.phase.init();
+    };
+};
+
+
+class Phase_1_Desktop {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
         this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
     };
 
     async init() {
-        const phase_middle = document.createElement('div');
-        const card_container = document.createElement('div');
-        phase_middle.className = 'middle-phase-1';
-        card_container.className = 'card-container';
-        const suit_containers = [
-            document.createElement('div'),
-            document.createElement('div'),
-            document.createElement('div'),
-            document.createElement('div')];
-        for (let i=0; i<suit_containers.length; i++) {
-            suit_containers[i].className = 'suit-container'
-            suit_containers[i].id = `container-${i}`
-        };
-        const randomDealButton = document.createElement('button');
-        randomDealButton.className = 'standard-button';
-        randomDealButton.innerHTML = 'RANDOM DEAL';
-        this.master_middle.appendChild(phase_middle)
-        phase_middle.appendChild(card_container)
-        suit_containers.forEach(suit_container => {
-            card_container.appendChild(suit_container)
-        });
-        phase_middle.appendChild(randomDealButton)
-        randomDealButton.onclick = async () => {
-            randomDealButton.classList.add('button-selected')
-            setTimeout(() => {
-                randomDealButton.classList.add('button-deactivated')
-                randomDealButton.classList.remove('button-selected')
-            }, 100)
-            await Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
-            globals.setTransitionLock(false);
-            this.check();
-        };
-        this.updateHighlights();
-        const promises = []
-        for (const card_id of Object.keys(globals.CARDS)) {
-            promises.push(this.createCard(card_id, suit_containers, this.dispatcher.hands))};
-        await Promise.all(promises)
-        window.addEventListener(
-            'resize', 
-            () => {Object.keys(globals.CARDS).forEach(
-                card_id => drawCard(card_id))});
-    };
-
-    onMouseUpLogic(cardElement, targetElement) {
-        return this.handleCard(cardElement, targetElement)
+        return new Promise(async (resolve) => {
+            const phase_middle = document.createElement('div');
+            phase_middle.className = 'middle-phase-1';
+            const card_container = document.createElement('div');
+            this.master_middle.appendChild(phase_middle)
+            card_container.className = 'card-container';
+            const suit_containers = [
+                document.createElement('div'),
+                document.createElement('div'),
+                document.createElement('div'),
+                document.createElement('div')];
+            for (let i=0; i<suit_containers.length; i++) {
+                suit_containers[i].className = 'suit-container'
+                suit_containers[i].id = `container-${i}`
+            };
+            phase_middle.appendChild(card_container)
+            const buttonStrip = document.createElement('div');
+            buttonStrip.classList.add('button-strip')
+            buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
+            const randomDealButton = createButton()
+            randomDealButton.innerHTML = 'RANDOM';
+            randomDealButton.clickLogic = async () => {
+                return Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
+            };
+            buttonStrip.appendChild(randomDealButton)
+            phase_middle.appendChild(buttonStrip)
+            suit_containers.forEach(suit_container => {
+                card_container.appendChild(suit_container)
+            });
+            this.updateHighlights();
+            const promises = []
+            for (const card_id of Object.keys(globals.CARDS)) {
+                promises.push(this.createCard(card_id, suit_containers, this.dispatcher.hands))};
+            await Promise.all(promises)
+            window.addEventListener(
+                'resize', 
+                () => {Object.keys(globals.CARDS).forEach(
+                    card_id => drawCard(card_id))});
+            resolve();
+        })
     };
 
     async dispatch() {
-        Object.keys(globals.CARDS).forEach(card_id => {
-            let cardElement = document.getElementById(card_id)
-            cardElement.onclick = '';
-            cardElement.style.cursor = 'default';
-        });
-        await fadeCleaInsideElement(this.master_middle)
+        await fadeClearInsideElement(this.master_middle)
         this.updateHighlights()
         for (let i=0; i<3; i++) {
             const hand_info_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
@@ -225,15 +234,14 @@ export class Phase_1 {
                 this.sortHands();
                 this.updateHighlights();
                 this.check();  
-                resolve();
-                globals.setTransitionLock(false)                     
+                resolve();                  
             }, 1000*globals.TRANSITION_TIME)
         });
     };
 
     createCard(card_id, containers) {
         return new Promise(resolve => {
-            const cardElement = document.createElement('div');
+            const cardElement = createButton(true);
             cardElement.classList.add('card');
             cardElement.appendChild(IMAGES["normal"][card_id])
             cardElement.id = `${card_id}`;
@@ -241,21 +249,18 @@ export class Phase_1 {
             cardElement.style.animationDelay = '0.1s';
             cardElement.style.opacity = 0;
             cardElement.style.zIndex = 10 + parseInt(card_id);
-            containers[parseInt(globals.CARDS[card_id].suit)].appendChild(cardElement);
-            cardElement.onclick = async () => {
-                if (!this.dispatcher.drag_dispatcher.isActiveDragging && !globals.getTransitionLock()) {
-                    let targetElement = NaN;
-                    globals.setTransitionLock(true)
-                    if (!cardElement.parentElement.id.includes('container')) {
-                        const suit = globals.CARDS[parseInt(cardElement.id)].suit
-                        const container = document.getElementById(`container-${suit}`)
-                        targetElement = container
+            const parentContainer = containers[parseInt(globals.CARDS[card_id].suit)]
+            parentContainer.appendChild(cardElement);
+            cardElement.clickLogic = async (targetElement=NaN) => {
+                if (!targetElement) {
+                    if (cardElement.parentElement === parentContainer) {
+                        targetElement = this.activeHand()
                     }
                     else {
-                        targetElement = this.activeHand();
+                        targetElement = parentContainer;
                     }
-                    await this.handleCard(cardElement, targetElement)
                 }
+                return this.handleCard(cardElement, targetElement)
             };
             const [, , cstep] = calculateSteps();
             cardElement.style.left = `${globals.CARDS[card_id].kind*cstep}px`;
@@ -282,7 +287,6 @@ export class Phase_1 {
     };
 
     randomDeal(containers) {
-        globals.setTransitionLock(true)
         const promises = []
         var freeElements = [];
         containers.forEach(container => {
@@ -337,6 +341,7 @@ export class Phase_1 {
                             selected[i].offsetHeight;
                             selected[i].style.transform = '';
                             this.dispatcher.hands[hand_id].appendChild(selected[i]);
+                            this.check();
                             resolve();
                         }, 1000*globals.TRANSITION_TIME);
                     }, currTimeout);

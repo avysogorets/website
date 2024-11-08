@@ -1,0 +1,89 @@
+.master-middle {
+    margin: 2%;
+    overflow-y: visible;
+    flex-grow: 1;
+    justify-content: center;
+    display: flex;
+}
+
+.middle-main {
+    width: 92%;
+    min-height: calc(18*var(--font-size));
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-bottom: calc(var(--font-size)/8);
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.middle-phase-1 {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.middle-phase-2 {
+    height: 100%;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: calc(var(--card-width)/4);
+    margin-right: calc(var(--card-width)/4);
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    align-content: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.middle-phase-3 {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.middle-phase-4 {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.middle-phase-5 {
+    margin-top: calc(var(--card-height)/4);
+    margin-bottom: calc(var(--card-height)/4);
+    margin-left: 0;
+    margin-right:0;
+    height: auto;
+    width: auto;
+    row-gap: 1%;
+    column-gap: 2%;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: auto;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    white-space: pre;
+    align-content: flex-start;
+    background-color: white;
+}

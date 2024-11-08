@@ -12,6 +12,11 @@ export const MASTER_MIDDLE = "master-middle"
 export const INFO_FONT_SIZE = 24;
 export const FONT_SIZE = 20;
 export const DRAG_THRESHOLD = CARD_HEIGHT / 12;
+export const START = 0;
+export const END = 1;
+export const RESTART = 2;
+export const RADIO_LOCK = 2;
+export const RADIO_UNLOCK = 1;
 
 export const SUITS = ["0", "1", "2", "3"]
 export const KINDS = ["0", "1", "2", "3", "4", "5", "6", "7"]
@@ -52,21 +57,42 @@ export function createCards() {
 
 export const CARDS = createCards();
 
-export function preloadImages() {
-    const images = {
-        "disabled": [],
-        "normal": [],
-        "optimal": []};
-
-    Object.keys(images).forEach(key => {
-        Object.keys(CARDS).forEach(card_id => {
-            const img = new Image();
-            const card_key = `${CARDS[card_id].suit}_${CARDS[card_id].kind}`;
-            img.src = IMG_PATH + `card_imgs_${key}/${card_key}.png`;
-            images[key].push(img)
+export const preloadImages = async () => {
+    return new Promise((resolve) => {
+        const images = {
+            "disabled": [],
+            "normal": [],
+            "optimal": []}
+        const imageLoadPromises = [];
+        Object.keys(images).forEach(key => {
+            Object.keys(CARDS).forEach(card_id => {
+                const img = new Image();
+                const card_key = `${CARDS[card_id].suit}_${CARDS[card_id].kind}`;
+                img.src = IMG_PATH + `card_imgs_${key}/${card_key}.png`;
+                const imgLoadPromise = new Promise((imgResolve) => {
+                    img.onload = imgResolve;
+                });
+                imageLoadPromises.push(imgLoadPromise);
+                images[key].push(img)
+            });
         });
-    });
-    return images
+        images["suits"] = {"normal": {}, "selected": {}};
+        for (const suit of SUIT_NAMES) {
+            Object.keys(images["suits"]).forEach(key => {
+                const img = new Image();
+                const img_key = `${suit[0]}_${key}`
+                img.src = IMG_PATH + `card_utils/${img_key}.png`
+                const imgLoadPromise = new Promise((imgResolve) => {
+                    img.onload = imgResolve;
+                });
+                imageLoadPromises.push(imgLoadPromise);
+                images["suits"][key][suit] = img
+            });
+        }
+        Promise.all(imageLoadPromises).then(() => {
+            resolve(images)
+        })
+    })
 };
 
 let transitionLock = false;

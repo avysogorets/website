@@ -1,0 +1,12 @@
+<span style="font-weight: bold;">What is PreferAnswer?</span>
+<span>PreferAnswer is an app that solves instances of Preferans by simulating all possible gameplay scenarios. You deal the cards, enter the game parameters (contract, turn, etc.), and it guides you through the optimal play for each player. Since it needs to see all the cards, PreferAnswer does not support all-passes.</span>
+<hr style="height:15px; visibility:hidden;"/>
+<span style="font-weight: bold;">How it works?</span>
+<span>Under the hood, PreferAnswer performs an exhaustive search (DFS with memoization) over all possible game states. During execution, it shows you in real-time how many (sub)games have already been processed. The optimized game serialization plays a key role in the algorithm's speed by hashing many different but essentially equivalent game states in the same way, thus avoiding unnecessary computations. Can you think of games with technically different cards in hands but that are equivalent to each other? What about moves in a single turn?</span>
+<hr style="height:15px; visibility:hidden;"/>
+<span style="font-weight: bold;">Quick guide</span>
+<span>PreferAnswer highlights the cards that are optimal to play on each given turn. It assumes that both whisting hands aim to screw the player, i.e., minimize (or maximize) the final number of tricks taken by the player in a regular game (or misere). The first number next to each hand represents the current number of tricks taken, while the second number represents the predicted final number of tricks under optimal play by all.</span>
+<hr style="height:25px; visibility:hidden;"/>
+<!--<hr style="border: none; height: 4px; background-color: #aaa; margin: 10px 0;">
+<hr style="height:15px; visibility:hidden;"/>
+<span style="font-weight: bold;">Enjoying PreferAnswer? Buy me a coffee :)</span>-->
