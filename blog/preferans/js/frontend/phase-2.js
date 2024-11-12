@@ -78,9 +78,7 @@ export class Phase_2 {
             phase_middle.appendChild(buttonStrip);
             buttonSolve.id = 'button-solve';
             buttonSolve.innerHTML = 'SOLVE';
-            buttonSolve.classList.add('blocked')
-            buttonSolve.setLock(globals.RADIO_LOCK)
-            buttonSolve.style.fontWeight = 'bold';
+            buttonSolve.setBlock(true)
             buttonSolve.clickLogic = () => {
                 this.dispatch()
             };
@@ -91,12 +89,10 @@ export class Phase_2 {
     checkAllParameters() {
         const buttonSolve = document.getElementById('button-solve')
         if (Object.values(this.parameters).every(val => val)) {
-            buttonSolve.setLock(globals.RADIO_UNLOCK)
-            buttonSolve.classList.remove('blocked')
+            buttonSolve.setBlock(false)
         }
         else {
-            buttonSolve.setLock(globals.RADIO_LOCK)
-            buttonSolve.classList.add('blocked')
+            buttonSolve.setBlock(true)
         };
     }
 
@@ -113,7 +109,7 @@ export class Phase_2 {
                                 thatButtonElement.appendChild(IMAGES["suits"]["normal"][suit])
                             }
                             thatButtonElement.classList.remove('selected')
-                            thatButtonElement.setLock(globals.RADIO_UNLOCK)
+                            thatButtonElement.setLock(false)
                         }
                         const suit = thisButtonElement.id.split(':')[1]
                         if (thisButtonElement.id != 'trump suit:NA') {
@@ -121,7 +117,7 @@ export class Phase_2 {
                             thisButtonElement.appendChild(IMAGES["suits"]["selected"][suit])
                         }
                         thisButtonElement.classList.add('selected')
-                        thisButtonElement.setLock(globals.RADIO_LOCK)
+                        thisButtonElement.setLock(true)
                     }
                     else {
                         if (key == 'contract type' && val == 'MISERE') {
@@ -136,10 +132,10 @@ export class Phase_2 {
                         }
                         for (const thatButtonElement of buttonElements) {
                             thatButtonElement.classList.remove('selected')
-                            thatButtonElement.setLock(globals.RADIO_UNLOCK)
+                            thatButtonElement.setLock(false)
                         }
                         thisButtonElement.classList.add('selected')
-                        thisButtonElement.setLock(globals.RADIO_LOCK)
+                        thisButtonElement.setLock(true)
                     }
                     this.parameters[key] = val;
                     this.checkAllParameters();
@@ -156,22 +152,20 @@ export class Phase_2 {
             buttonSuit.removeChild(buttonSuit.firstChild)
             buttonSuit.appendChild(IMAGES["suits"]["normal"][suit])
             buttonSuit.classList.remove('selected')
-            buttonSuit.classList.add('blocked')
-            buttonSuit.setLock(globals.RADIO_LOCK)
+            buttonSuit.setBlock(true)
         });
         let buttonNA = document.getElementById('trump suit:NA');
         buttonNA.classList.add('selected')
-        buttonNA.setLock(globals.RADIO_LOCK) 
+        buttonNA.setLock(true) 
     };
     
     unblock_suit_buttons() {
         let buttonNA = document.getElementById('trump suit:NA');
         buttonNA.classList.remove('selected')
-        buttonNA.setLock(globals.RADIO_UNLOCK)
+        buttonNA.setLock(false)
         globals.SUIT_NAMES.forEach(suit => {
             let buttonSuit = document.getElementById('trump suit:'+suit);
-            buttonSuit.classList.remove('blocked')
-            buttonSuit.setLock(globals.RADIO_UNLOCK)
+            buttonSuit.setBlock(false)
         });
     };
 

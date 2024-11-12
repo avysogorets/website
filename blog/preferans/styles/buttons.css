@@ -76,6 +76,7 @@ button:hover {
 }
 
 .blocked:hover {
+    background-image: none;
     background-color: #ddd;
     color: #555;
     cursor: default;
@@ -114,6 +115,7 @@ button.selected {
 button.blocked {
     background-color: #ddd;
     color:#555;
+    cursor: default;
 }
 
 /*

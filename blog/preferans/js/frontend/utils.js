@@ -90,39 +90,41 @@ export function randomChoice(array, size) {
 
 export function createButton(isDraggable=false) {
     const buttonElement = document.createElement('button')
-    buttonElement.lock = 0
+    buttonElement.private_lock = 0
+    buttonElement.public_lock = false
+    buttonElement.public_block = false
     buttonElement.isDraggable = isDraggable
     buttonElement.clickLogic = async () => {
         throw ErrorEvent('click logic in not defined')
     }
-    buttonElement.incLock = () => {
-        buttonElement.lock += 1
-        if (!buttonElement.classList.contains('locked')) {
+    buttonElement.updateState = () => {
+        buttonElement.classList.remove('locked')
+        buttonElement.classList.remove('blocked')
+        if (buttonElement.private_lock > 0) {
             buttonElement.classList.add('locked')
         }
+        if (buttonElement.public_lock) {
+            buttonElement.classList.add('locked')
+        }
+        if (buttonElement.public_block) {
+            buttonElement.classList.add('blocked')
+        }
+    }
+    buttonElement.incLock = () => {
+        buttonElement.private_lock += 1
+        buttonElement.updateState()
     }
     buttonElement.decLock = () => {
-        buttonElement.lock -= 1
-        assert(buttonElement.lock >= 0)
-        if (buttonElement.lock == 0) {
-            if (buttonElement.classList.contains('locked')) {
-                buttonElement.classList.remove('locked')
-            }
-        }
+        buttonElement.private_lock = Math.max(buttonElement.private_lock-1, 0)
+        buttonElement.updateState()
     }
     buttonElement.setLock = (value) => {
-        buttonElement.lock = value
-        assert(buttonElement.lock >= 0)
-        if (buttonElement.lock == 0) {
-            if (buttonElement.classList.contains('locked')) {
-                buttonElement.classList.remove('locked')
-            }
-        }
-        else {
-            if (!buttonElement.classList.contains('locked')) {
-                buttonElement.classList.add('locked')
-            }
-        }
+        buttonElement.public_lock = value
+        buttonElement.updateState()
+    }
+    buttonElement.setBlock = (value) => {
+        buttonElement.public_block = value
+        buttonElement.updateState()
     }
     return buttonElement
 }
@@ -287,7 +289,9 @@ function getButton(element, mindLock=true) {
     let candidateElement = element
     while (candidateElement.parentElement) {
         if (candidateElement.tagName === 'BUTTON') {
-            if (!mindLock || candidateElement.lock == 0) {
+            const isLocked = candidateElement.classList.contains('locked')
+            const isBlocked = candidateElement.classList.contains('blocked')
+            if (!mindLock || (!isLocked && !isBlocked)) {
                 return candidateElement
             }
             else {
@@ -311,7 +315,8 @@ export function updateButtonsLock(eventType) {
                 button.decLock()
             }  
             else if (eventType == globals.RESTART) {
-                button.setLock(0)
+                button.private_lock = 0
+                button.updateState()
             }
         }
         resolve()

@@ -15,8 +15,9 @@ export const DRAG_THRESHOLD = CARD_HEIGHT / 12;
 export const START = 0;
 export const END = 1;
 export const RESTART = 2;
-export const RADIO_LOCK = 2;
-export const RADIO_UNLOCK = 1;
+export const PRIVATE_LOCKED = 1;
+export const PUBLIC_LOCKED = 2;
+export const PUBLIC_BLOCKED = 3;
 
 export const SUITS = ["0", "1", "2", "3"]
 export const KINDS = ["0", "1", "2", "3", "4", "5", "6", "7"]

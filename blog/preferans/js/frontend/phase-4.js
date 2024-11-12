@@ -50,31 +50,48 @@ export class Phase_4  {
             const buttonStrip = document.createElement("div");
             buttonStrip.className = 'button-strip';
             buttonStrip.style.gridTemplateColumns = 'repeat(3, 1fr)'
+            buttonStrip.style.marginTop = 'auto'
             this.phase_middle.appendChild(buttonStrip);
             this.undoButton = createButton()
             this.undoButton.innerHTML = 'UNDO';
             this.undoButton.clickLogic = () => {
                 assert(this.game_idx > 0);
                 this.game_idx -= 1;
-                return this.drawGame()
+                const promises = []
+                promises.push(this.undoTransitionLogic())
+                promises.push(this.placeTransitionLogic())
+                promises.push(this.drawGame())
+                return Promise.all(promises)
             }
-            this.undoButton.classList.add('blocked')
-            this.undoButton.setLock(globals.RADIO_LOCK)
+            this.undoButton.setBlock(true)
             buttonStrip.appendChild(this.undoButton);
             this.okButton = createButton()
             this.okButton.innerHTML = 'OK';
-            this.okButton.clickLogic = () => this.flush()
-            this.okButton.classList.add('blocked')
-            this.okButton.setLock(globals.RADIO_LOCK)
+            this.okButton.clickLogic = async () => {
+                const game = this.games[this.game_idx]["game"]
+                assert(game.hands[globals.TRICK].cards.length == 3)
+                await this.flush()
+                const promises = []
+                promises.push(this.flushTransitionLogic())
+                promises.push(this.drawGame())
+                return Promise.all(promises)
+            }
+            this.okButton.setBlock(true)
             buttonStrip.appendChild(this.okButton)
             this.redoButton = createButton()
             this.redoButton.clickLogic = () => {
                 assert(this.game_idx < this.games.length-1);
+                const promises = []
+                const game = this.games[this.game_idx]["game"]
                 this.game_idx += 1;
-                return this.drawGame()
+                if (game.hands[globals.TRICK].cards.length == 3) {
+                    promises.push(this.flushTransitionLogic())
+                }
+                promises.push(this.placeTransitionLogic())
+                promises.push(this.drawGame())
+                return Promise.all(promises)
             }
-            this.redoButton.classList.add('blocked')
-            this.redoButton.setLock(globals.RADIO_LOCK)
+            this.redoButton.setBlock(true)
             this.redoButton.innerText = 'REDO';
             buttonStrip.appendChild(this.redoButton);
             for (const player_name of globals.PLAYER_NAMES) {
@@ -90,10 +107,73 @@ export class Phase_4  {
             const infoHeight = southInfo.offsetHeight;
             southInfo.parentElement.style.marginTop = `-${infoHeight}px`
             this.phase_middle.style.paddingBottom = `${infoHeight}px`
-            resolve()
             await this.drawGame()
+            resolve()
         })
     };
+
+    undoTransitionLogic() {
+        const promises = []
+        const game = this.games[this.game_idx]["game"]
+        for (let i=0; i<3; i++) {
+            const handElement = document.getElementById(`hand-${i}`)
+            for (const card of game.hands[i].cards) {
+                let card_id = 8*parseInt(card.id.split("")[0])
+                card_id += parseInt(card.id.split("")[1])
+                const cardElement = document.getElementById(`${card_id}`);
+                if (cardElement.parentElement.id != handElement.id) {
+                    promises.push(this.undoTransition(cardElement, handElement))
+                };
+            };
+        };
+        return Promise.all(promises)
+    }
+
+    placeTransitionLogic() {
+        const promises = []
+        const game = this.games[this.game_idx]["game"]
+        for (let j=0; j<game.hands[3].cards.length; j++) {
+            const card = game.hands[globals.TRICK].cards[j];
+            let card_id = 8*parseInt(card.id.split("")[0])
+            card_id += parseInt(card.id.split("")[1])
+            const cardElement = document.getElementById(`${card_id}`);
+            if (cardElement.parentElement.id != this.tricks[card.hand_idx].id) {
+                promises.push(this.placeTransition(cardElement, this.tricks[card.hand_idx]))
+            };
+        };
+        return Promise.all(promises)
+    }
+
+    flushTransitionLogic() {
+        const promises = []
+        const game = this.games[this.game_idx]["game"]
+        const trick_cardElements = []
+        if (game.hands[globals.TRICK].cards.length == 0) {
+            for (const trick of this.tricks) {
+                if (trick.firstChild) {
+                    trick_cardElements.push(trick.firstChild)
+                };
+            };
+        };
+        assert(trick_cardElements.length == 3);
+        const trick_cards = []
+        for (const cardElement of trick_cardElements) {
+            const card = globals.CARDS[parseInt(cardElement.id)]
+            trick_cards.push(card);
+        };
+        let vir_game_idx = this.game_idx
+        while (this.games[vir_game_idx]["game"].hands[globals.TRICK].cards.length != 3) {
+            vir_game_idx -= 1;
+        }
+        let last_turn = this.games[vir_game_idx]["game"].params["turn"];
+        let winner = mod(settle_trick([
+            trick_cards[mod(last_turn-2, 3)],
+            trick_cards[mod(last_turn-1, 3)],
+            trick_cards[mod(last_turn-0, 3)]
+        ], game.params["trumps"])+last_turn-2, 3)
+        promises.push(this.flushTransition(trick_cardElements, winner))
+        return Promise.all(promises)
+    }
 
     async dispatch() {
         for (let i=0; i<3; i++) {
@@ -162,7 +242,6 @@ export class Phase_4  {
                     info_proj.classList.remove('blink');
                 }, 50)
             };
-            
         };
     };
 
@@ -216,10 +295,12 @@ export class Phase_4  {
     };
 
     pushGame(new_game_item) {
-        this.games.splice(this.game_idx+1)
-        this.games.push(new_game_item)
-        this.game_idx += 1;
-        return this.drawGame();
+        return new Promise ((resolve) => {
+            this.games.splice(this.game_idx+1)
+            this.games.push(new_game_item)
+            this.game_idx += 1;
+            resolve();
+        })
     };
 
     flush() {
@@ -250,9 +331,9 @@ export class Phase_4  {
     };
 
    flushTransition(cardElements, winner) {
+        const promises = []
         const winner_name = globals.PLAYER_NAMES[winner]
         const flushElement = document.getElementById(`flush-${winner_name}`);
-        const promises = []
         for (const cardElement of cardElements) {
             const flushRect = flushElement.getBoundingClientRect();
             const cardRect = cardElement.getBoundingClientRect();
@@ -260,47 +341,45 @@ export class Phase_4  {
             const deltaY = flushRect.top - cardRect.top + globals.BORDER_WIDTH;
             cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`
             cardElement.style.opacity = 0;
-            promises.push(new Promise(resolve => { setTimeout(() => {
-                cardElement.style.transform = '';
-                cardElement.parentNode.removeChild(cardElement);
-                flushElement.appendChild(cardElement);
-                cardElement.style.top = '0px';
-                cardElement.style.left = '0px';
-                cardElement.clickLogic = Promise.resolve();
-                resolve()
-            }, 1000*globals.TRANSITION_TIME)}));
-        };
-        return promises
-    };
-
-    placeTransition(toPlace) {
-        const promises = []
-        for (const to_place of toPlace) {
-            const cardElement = to_place["card"];
-            const trickElement = this.tricks[to_place["idx"]];
-            const trickRect = trickElement.getBoundingClientRect();
-            const cardRect = cardElement.getBoundingClientRect();
-            const deltaX = trickRect.left - cardRect.left + globals.BORDER_WIDTH;
-            const deltaY = trickRect.top - cardRect.top + globals.BORDER_WIDTH;
-            cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`
-            if (cardElement.style.opacity == 0) {
-                cardElement.style.opacity = 1;
-            }
             promises.push(new Promise((resolve) => { setTimeout(() => {
                 cardElement.style.transform = '';
                 cardElement.parentNode.removeChild(cardElement);
-                trickElement.appendChild(cardElement);
-                cardElement.style.top = '0px';
-                cardElement.style.left = '0px';
-                cardElement.clickLogic = Promise.resolve();
+                flushElement.appendChild(cardElement);
+                cardElement.style.top = '';
+                cardElement.style.left = '';
+                cardElement.setLock(true)
+                cardElement.style.display = 'none'
+                /*cardElement.clickLogic = Promise.resolve();*/
                 resolve()
             }, 1000*globals.TRANSITION_TIME)}));
         };
-        return promises
+        return Promise.all(promises)
     };
 
-    undoTransition(cardElement, handElement) {
-        return new Promise((resolve) => { 
+    placeTransition(cardElement, targetElement) {
+        cardElement.style.display = 'block'
+        const trickRect = targetElement.getBoundingClientRect();
+        const cardRect = cardElement.getBoundingClientRect();
+        const deltaX = trickRect.left - cardRect.left + globals.BORDER_WIDTH;
+        const deltaY = trickRect.top - cardRect.top + globals.BORDER_WIDTH;
+        cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`
+        if (cardElement.style.opacity == 0) {
+            cardElement.style.opacity = 1;
+        }
+        return new Promise((resolve) => { setTimeout(() => {
+            cardElement.style.transform = '';
+            cardElement.parentNode.removeChild(cardElement);
+            targetElement.appendChild(cardElement);
+            cardElement.style.top = '';
+            cardElement.style.left = '';
+            cardElement.setLock(true)
+            /*cardElement.clickLogic = Promise.resolve();*/
+            resolve()
+        }, 1000*globals.TRANSITION_TIME)});
+    };
+
+    returnTransition(cardElement, handElement) {
+        return new Promise((resolve) => {
             const card = globals.CARDS[parseInt(cardElement.id)]
             const handRect = handElement.getBoundingClientRect();
             const cardRect = cardElement.getBoundingClientRect();
@@ -310,11 +389,11 @@ export class Phase_4  {
             let X = 0;
             let Y = 0;
             if (handElement.classList.contains("hand-horz")) {
-                X += hstep*card.card_idx;
-            };
+                X += hstep*card.card_idx
+            }
             if (handElement.classList.contains("hand-vert")) {
-                Y += vstep*card.card_idx;
-            };
+                Y += vstep*card.card_idx
+            }
             cardElement.style.transform = `translate(${X + deltaX}px, ${Y + deltaY}px)`
             setTimeout(() => {
                 cardElement.style.transform = '';
@@ -322,92 +401,150 @@ export class Phase_4  {
                 handElement.appendChild(cardElement);
                 cardElement.style.top = `${Y}px`;
                 cardElement.style.left = `${X}px`;
-                cardElement.clickLogic = () => {
-                    return this.playCard(cardElement)
+                cardElement.setLock(false)
+                resolve()
+            }, 1000*globals.TRANSITION_TIME)
+        })
+    }
+
+    async cardClickLogic(cardElement, targetElement) {
+        const promises = []
+        if (!targetElement) {
+            const card = globals.CARDS[parseInt(cardElement.id)]
+            targetElement = this.tricks[card.hand_idx]
+        }
+        if (targetElement.classList.contains('trick-card-container')) {
+            await this.playCard(cardElement)
+            promises.push(this.placeTransition(cardElement, targetElement))
+            promises.push(this.drawGame())
+        }
+        else {
+            promises.push(this.returnTransition(cardElement, targetElement))
+        }
+        return Promise.all(promises)
+    }
+
+    undoTransition(cardElement, handElement) {
+        cardElement.clickLogic = async (targetElement=NaN) => {
+            return this.cardClickLogic(cardElement, targetElement)
+        }
+        return this.returnTransition(cardElement, handElement)
+    }
+
+    /*
+    undoTransition(cardElement, handElement) {
+        return new Promise((resolve) => { 
+            X, Y = this.sendCardElement(cardElement, handElement)
+            setTimeout(() => {
+                cardElement.style.transform = '';
+                cardElement.parentNode.removeChild(cardElement);
+                handElement.appendChild(cardElement);
+                cardElement.style.top = `${Y}px`;
+                cardElement.style.left = `${X}px`;
+                cardElement.setLock(false)
+                cardElement.clickLogic = async (targetElement=NaN) => {
+                    const promises = []
+                    if (!targetElement) {
+                        const card = globals.CARDS[parseInt(cardElement.id)]
+                        targetElement = this.tricks[card.hand_idx]
+                    }
+                    else {
+                        let isHand = false
+                        isHand = isHand || targetElement.classList.contains('hand-horz')
+                        isHand = isHand || targetElement.classList.contains('hand-vert')
+                        if (isHand) {
+
+                        }
+                    }
+                    await this.playCard(cardElement)
+                    promises.push(this.placeTransition(cardElement, targetElement))
+                    return Promise.all(promises)
                 }
                 resolve()
             }, 1000*globals.TRANSITION_TIME)
         })
     }
 
-    async transitionCards() {
-        const game = this.games[this.game_idx]["game"]
-        for (let i=0; i<3; i++) {
-            const handElement = document.getElementById(`hand-${i}`)
-            for (const card of game.hands[i].cards) {
+    transitionCards() {
+        return new Promise(async (resolve) => {
+            const game = this.games[this.game_idx]["game"]
+            for (let i=0; i<3; i++) {
+                const handElement = document.getElementById(`hand-${i}`)
+                for (const card of game.hands[i].cards) {
+                    let card_id = 8*parseInt(card.id.split("")[0])
+                    card_id += parseInt(card.id.split("")[1])
+                    const cardElement = document.getElementById(`${card_id}`);
+                    if (cardElement.parentElement.id != handElement.id) {
+                        await this.undoTransition(cardElement, handElement);
+                    };
+                };
+            };
+            const cardElements = []
+            const targetElements = []
+            for (let j=0; j<game.hands[3].cards.length; j++) {
+                const card = game.hands[globals.TRICK].cards[j];
                 let card_id = 8*parseInt(card.id.split("")[0])
                 card_id += parseInt(card.id.split("")[1])
                 const cardElement = document.getElementById(`${card_id}`);
-                if (cardElement.parentElement.id != handElement.id) {
-                    await this.undoTransition(cardElement, handElement);
+                if (cardElement.parentElement.id != this.tricks[card.hand_idx].id) {
+                    toPlace.push({"card": cardElement, "idx": card.hand_idx});
                 };
             };
-        };
-        const toPlace = []
-        for (let j=0; j<game.hands[3].cards.length; j++) {
-            const card = game.hands[globals.TRICK].cards[j];
-            let card_id = 8*parseInt(card.id.split("")[0])
-            card_id += parseInt(card.id.split("")[1])
-            const cardElement = document.getElementById(`${card_id}`);
-            if (cardElement.parentElement.id != this.tricks[card.hand_idx].id) {
-                toPlace.push({"card": cardElement, "idx": card.hand_idx});
+            if (toPlace.length > 0) {
+                await this.placeTransition(toPlace);
             };
-        };
-        if (toPlace.length > 0) {
-            await Promise.all(this.placeTransition(toPlace));
-        };
-        const trick_cardElements = []
-        if (game.hands[3].cards.length == 0) {
-            for (const trick of this.tricks) {
-                if (trick.firstChild) {
-                    trick_cardElements.push(trick.firstChild)
+            const trick_cardElements = []
+            if (game.hands[3].cards.length == 0) {
+                for (const trick of this.tricks) {
+                    if (trick.firstChild) {
+                        trick_cardElements.push(trick.firstChild)
+                    };
                 };
             };
-        };
-        if (trick_cardElements.length > 0) {
-            assert(trick_cardElements.length == 3);
-            const trick_cards = []
-            for (const cardElement of trick_cardElements) {
-                const card = globals.CARDS[parseInt(cardElement.id)]
-                trick_cards.push(card);
-            };
-            let vir_game_idx = this.game_idx
-            while (this.games[vir_game_idx]["game"].hands[globals.TRICK].cards.length != 3) {
-                vir_game_idx -= 1;
+            if (trick_cardElements.length > 0) {
+                assert(trick_cardElements.length == 3);
+                const trick_cards = []
+                for (const cardElement of trick_cardElements) {
+                    const card = globals.CARDS[parseInt(cardElement.id)]
+                    trick_cards.push(card);
+                };
+                let vir_game_idx = this.game_idx
+                while (this.games[vir_game_idx]["game"].hands[globals.TRICK].cards.length != 3) {
+                    vir_game_idx -= 1;
+                }
+                let last_turn = this.games[vir_game_idx]["game"].params["turn"];
+                let winner = mod(settle_trick([
+                    trick_cards[mod(last_turn-2, 3)],
+                    trick_cards[mod(last_turn-1, 3)],
+                    trick_cards[mod(last_turn-0, 3)]
+                ], game.params["trumps"])+last_turn-2, 3)
+                await this.flushTransition(trick_cardElements, winner)
             }
-            let last_turn = this.games[vir_game_idx]["game"].params["turn"];
-            let winner = mod(settle_trick([
-                trick_cards[mod(last_turn-2, 3)],
-                trick_cards[mod(last_turn-1, 3)],
-                trick_cards[mod(last_turn-0, 3)]
-            ], game.params["trumps"])+last_turn-2, 3)
-            await Promise.all(this.flushTransition(trick_cardElements, winner))
-        }
+            resolve()
+        })
     };
+    */
 
     disableAllCards() {
         const game = this.games[this.game_idx]["game"]
-        if (this.okButton.classList.contains('button-blocked')) {
-            this.okButton.classList.remove('button-blocked')
-        }
         for (let i=0; i<3; i++) {
             for (const card of game.hands[i].cards) {
                 const card_id = 8*parseInt(card.suit) + parseInt(card.kind)
                 const cardElement = document.getElementById(card_id);
                 cardElement.removeChild(cardElement.firstChild);
-                cardElement.appendChild(IMAGES["disabled"][card_id])
-                cardElement.style.cursor = 'default';
+                cardElement.appendChild(IMAGES["normal"][card_id])
+                cardElement.setLock(true)
             };
         };
     };
 
-    async drawGame() {
+    drawGame() {
         return new Promise((resolve) => {
             const game = this.games[this.game_idx]["game"]
-            this.okButton.classList.add('button-blocked')
+            this.okButton.setBlock(true)
             let toDeHighlight = false;
-            this.transitionCards()
             if (game.hands[globals.TRICK].cards.length == 3) {
+                this.okButton.setBlock(false)
                 this.disableAllCards()
                 toDeHighlight = true;
             }
@@ -436,18 +573,18 @@ export class Phase_4  {
                                 cardElement.removeChild(cardElement.firstChild);
                                 cardElement.appendChild(IMAGES["normal"][card_id])
                             }
-                            cardElement.style.cursor = 'pointer';
-                            cardElement.clickLogic = () => {
-                                return this.playCard(cardElement)
+                            cardElement.setLock(false)
+                            cardElement.clickLogic = async (targetElement=NaN) => {
+                                return this.cardClickLogic(cardElement, targetElement)
                             }
                         }
                         else {
                             cardElement.removeChild(cardElement.firstChild);
-                            cardElement.appendChild(IMAGES["disabled"][card_id])
-                            cardElement.style.cursor = 'default';
-                            cardElement.clickLogic = () => {
+                            cardElement.appendChild(IMAGES["normal"][card_id])
+                            cardElement.setLock(true)
+                            /*cardElement.clickLogic = () => {
                                 return Promise.resolve()
-                            }
+                            }*/
                         }
                     }
                 }
@@ -457,24 +594,19 @@ export class Phase_4  {
                 const cardElement = document.getElementById(card_id);
                 cardElement.removeChild(cardElement.firstChild);
                 cardElement.appendChild(IMAGES["normal"][card_id])
-                cardElement.style.cursor = 'default';
             };
             this.updateMessages();
             if (this.game_idx > 0) {
-                if (this.undoButton.classList.contains('button-blocked')) {
-                    this.undoButton.classList.remove('button-blocked')
-                }
+                this.undoButton.setBlock(false)
             }
             else {
-                this.undoButton.classList.add('button-blocked')
+                this.undoButton.setBlock(true)
             };
             if (this.game_idx < this.games.length-1) {
-                if (this.redoButton.classList.contains('button-blocked')) {
-                    this.redoButton.classList.remove('button-blocked')
-                }
+                this.redoButton.setBlock(false)
             }
             else {
-                this.redoButton.classList.add('button-blocked')
+                this.redoButton.setBlock(true)
             };
             let is_finished = true;
             for (const hand of game.hands) {
@@ -489,6 +621,6 @@ export class Phase_4  {
                 this.dispatch()
             }
             resolve();
-        });
+        })
     };
 };

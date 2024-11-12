@@ -28,9 +28,7 @@ export class Phase_3 {
             buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
             this.startButton = createButton()
             this.startButton.innerHTML = 'START'
-            this.startButton.classList.add('blocked')
-            this.startButton.setLock(globals.RADIO_LOCK)
-            this.startButton.style.fontWeight = 'bold'
+            this.startButton.setBlock(true)
             buttonStrip.appendChild(this.startButton)
             this.phase_middle.appendChild(buttonStrip);
             let parameters = this.dispatcher.phases[1].parameters;
@@ -81,8 +79,7 @@ export class Phase_3 {
                 }
                 else {
                     this.dp = event.data.dp
-                    this.startButton.classList.remove('blocked')
-                    this.startButton.setLock(0)
+                    this.startButton.setBlock(false)
                     this.startButton.clickLogic = () => {
                         return new Promise((resolve) => {
                             if (this.dp) {

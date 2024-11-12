@@ -32,7 +32,6 @@
 .middle-phase-2 {
     height: 100%;
     width: 100%;
-    margin-top: auto;
     margin-bottom: auto;
     margin-left: calc(var(--card-width)/4);
     margin-right: calc(var(--card-width)/4);

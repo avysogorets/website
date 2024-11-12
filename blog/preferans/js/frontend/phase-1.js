@@ -56,7 +56,7 @@ class Phase_1_Desktop {
             buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
             const randomDealButton = createButton()
             randomDealButton.innerHTML = 'RANDOM';
-            randomDealButton.clickLogic = async () => {
+            randomDealButton.clickLogic = () => {
                 return Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
             };
             buttonStrip.appendChild(randomDealButton)
@@ -82,12 +82,12 @@ class Phase_1_Desktop {
         this.updateHighlights()
         for (let i=0; i<3; i++) {
             const hand_info_name = document.getElementById(`${globals.PLAYER_NAMES[i]}`)
-            const hand_name = document.getElementById(`hand-${i}`)
+            const handElement = document.getElementById(`hand-${i}`)
             if (hand_info_name.classList.contains('text-focused')) {
                 hand_info_name.classList.remove('text-focused');
-                hand_name.classList.remove('background-focused')
-            };
-        };
+                handElement.classList.remove('background-focused')
+            }
+        }
         this.dispatcher.dispatch()
     };
 
@@ -251,7 +251,7 @@ class Phase_1_Desktop {
             cardElement.style.zIndex = 10 + parseInt(card_id);
             const parentContainer = containers[parseInt(globals.CARDS[card_id].suit)]
             parentContainer.appendChild(cardElement);
-            cardElement.clickLogic = async (targetElement=NaN) => {
+            cardElement.clickLogic = (targetElement=NaN) => {
                 if (!targetElement) {
                     if (cardElement.parentElement === parentContainer) {
                         targetElement = this.activeHand()
