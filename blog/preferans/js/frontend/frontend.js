@@ -43,9 +43,11 @@ class FrontendDispatcher {
     };
 
     async dispatch() {
+        console.log(this.phase_id, 'before await in frontend', Date.now())
         await updateButtonsLock(globals.RESTART)
         this.phase_id += 1;
         await this.phases[this.phase_id].init()
+        console.log(this.phase_id, 'after await in frontend', Date.now())
         refreshLayout()
     };
 

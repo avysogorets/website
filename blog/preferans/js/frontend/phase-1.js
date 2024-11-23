@@ -32,6 +32,7 @@ class Phase_1_Desktop {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
         this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
+        this.dispatched = false
     };
 
     async init() {
@@ -57,7 +58,8 @@ class Phase_1_Desktop {
             const randomDealButton = createButton()
             randomDealButton.innerHTML = 'RANDOM';
             randomDealButton.clickLogic = () => {
-                return Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
+                const promise = Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
+                return promise
             };
             buttonStrip.appendChild(randomDealButton)
             phase_middle.appendChild(buttonStrip)
@@ -98,7 +100,8 @@ class Phase_1_Desktop {
                 to_exit = false
             };
         });
-        if (to_exit) {
+        if (to_exit && !this.dispatched) {
+            this.dispatched = true
             this.dispatch();
         };
     };
@@ -341,7 +344,7 @@ class Phase_1_Desktop {
                             selected[i].offsetHeight;
                             selected[i].style.transform = '';
                             this.dispatcher.hands[hand_id].appendChild(selected[i]);
-                            this.check();
+                            this.check()
                             resolve();
                         }, 1000*globals.TRANSITION_TIME);
                     }, currTimeout);

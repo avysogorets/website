@@ -12,6 +12,7 @@ export class Phase_2 {
             "playing hand": NaN,
             "first hand": NaN,
             "trump suit": NaN};
+        this.dispatched = false
     };
 
     init() {
@@ -28,8 +29,11 @@ export class Phase_2 {
     };
 
     async dispatch() {
-        await fadeClearInsideElement(this.master_middle)
-        this.dispatcher.dispatch()
+        if (!this.dispatched) {
+            this.dispatched = true
+            await fadeClearInsideElement(this.master_middle)
+            this.dispatcher.dispatch()
+        }
     };
 
     setupSelection() {

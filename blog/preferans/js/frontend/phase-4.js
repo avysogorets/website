@@ -12,6 +12,7 @@ export class Phase_4  {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
         this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
+        this.dispatched = false
     };
 
     init() {
@@ -176,16 +177,19 @@ export class Phase_4  {
     }
 
     async dispatch() {
-        for (let i=0; i<3; i++) {
-            const handElement = document.getElementById(`hand-${i}`)
-            deHighlightElement(handElement)
+        if (!this.dispatched) {
+            this.dispatched = true
+            for (let i=0; i<3; i++) {
+                const handElement = document.getElementById(`hand-${i}`)
+                deHighlightElement(handElement)
+            }
+            await fadeClearInsideElement(this.master_middle)
+            for (const player_name of globals.PLAYER_NAMES) {
+                const info_name = document.getElementById(`info-${player_name}`);
+                info_name.style.visibility = 'hidden'
+            };
+            this.dispatcher.dispatch();
         }
-        await fadeClearInsideElement(this.master_middle)
-        for (const player_name of globals.PLAYER_NAMES) {
-            const info_name = document.getElementById(`info-${player_name}`);
-            info_name.style.visibility = 'hidden'
-        };
-        this.dispatcher.dispatch();
     };
 
     permutePlayers(scores) {

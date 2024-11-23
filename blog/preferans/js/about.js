@@ -20,6 +20,10 @@ aboutButton.classList.add('about-button')
 aboutButton.id = 'about-button'
 const fadeDuration = (1000*TRANSITION_TIME + 600) / 2;
 buttonText.style.transition = `opacity ${fadeDuration}ms ease`;
+const initialHeight = buttonText.offsetHeight;
+const initialWidth = buttonText.offsetWidth;
+buttonText.style.height = `${initialHeight}px`;
+buttonText.style.width = `${initialWidth}px`;
 aboutButton.appendChild(buttonText)
 aboutButton.clickLogic = () => {
     return new Promise((resolve) => {
@@ -31,6 +35,8 @@ aboutButton.clickLogic = () => {
             buttonText.style.opacity = 0;
             setTimeout(() => {
                 buttonText.innerHTML = "ABOUT"
+                buttonText.style.height = `${initialHeight}px`;
+                buttonText.style.width = `${initialWidth}px`;
                 buttonText.style.opacity = 1;
             }, fadeDuration)
             setTimeout(() => {
@@ -48,6 +54,8 @@ aboutButton.clickLogic = () => {
             buttonText.style.opacity = 0;
             setTimeout(() => {
                 buttonText.innerHTML = `<i class='bx bx-x', style='font-size:${1.25*INFO_FONT_SIZE}px'></i>`
+                buttonText.style.height = `${initialHeight}px`;
+                buttonText.style.width = `${initialWidth}px`;
                 buttonText.style.opacity = 1;
             }, fadeDuration)
             main.classList.toggle('blurred')

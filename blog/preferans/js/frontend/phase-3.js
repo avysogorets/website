@@ -7,6 +7,7 @@ export class Phase_3 {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
         this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
+        this.dispatched = false
     };
 
     init() {
@@ -58,8 +59,11 @@ export class Phase_3 {
     };
 
     async dispatch() {
-        await fadeClearInsideElement(this.master_middle)
-        this.dispatcher.dispatch()
+        if (!this.dispatched) {
+            this.dispatched = true
+            await fadeClearInsideElement(this.master_middle)
+            this.dispatcher.dispatch()
+        }
     }
 
     solve() {
