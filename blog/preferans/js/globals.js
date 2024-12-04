@@ -1,24 +1,27 @@
+export const _CSS_VARIABLES = {
+    'transition-time': 1,
+    'font-size': 20,
+    'border-width': 2,
+    'button-font-size': 18,
+    'button-padding': 4,
+    'info-font-size': 24,
+    'card-height': 90,
+    'card-width': 64,
+    'card-border': 0.5,
+    'suit-container-margin': 10,
+    'info-font-size-pad': 5}
+export let CSS_VARIABLES = Object.assign({}, _CSS_VARIABLES);
+export const MOBILE_FACTOR = 0.8
+export const MAX_MOBILE_WIDTH = 680
 export const IMG_PATH = "/blog/preferans/imgs/"
 export const PLAYER_NAMES = ["SOUTH", "WEST", "EAST"]
 export const SUIT_NAMES = ["SPADES", "DIAMONDS", "CLUBS", "HEARTS"]
 export const GAME_NAMES = ["PLAY", "MISERE"]
-export const CARD_HEIGHT = 90;
-export const CARD_WIDTH = 64
-export const BORDER_WIDTH = 2;
-export const CARD_BORDER = 0.5;
-export const TRANSITION_TIME = 0.3;
-export const SELECTED_COLOR = "lightskyblue"
 export const MASTER_MIDDLE = "master-middle"
-export const INFO_FONT_SIZE = 24;
-export const FONT_SIZE = 20;
-export const DRAG_THRESHOLD = CARD_HEIGHT / 12;
+export const DRAG_THRESHOLD = 8;
 export const START = 0;
 export const END = 1;
 export const RESTART = 2;
-export const PRIVATE_LOCKED = 1;
-export const PUBLIC_LOCKED = 2;
-export const PUBLIC_BLOCKED = 3;
-
 export const SUITS = ["0", "1", "2", "3"]
 export const KINDS = ["0", "1", "2", "3", "4", "5", "6", "7"]
 export const NO_TRUMP_ID = 9;
@@ -36,6 +39,8 @@ export const HEARTS = 3;
 export const SOUTH = 0;
 export const WEST = 1;
 export const EAST = 2;
+export const LAYOUT_MOBILE = 0;
+export const LAYOUT_DESKTOP = 1;
 
 class Card {
     constructor(suit, kind) {
@@ -95,13 +100,5 @@ export const preloadImages = async () => {
         })
     })
 };
-
-let transitionLock = false;
-export function setTransitionLock(val) {
-    transitionLock = val;
-}
-export function getTransitionLock() {
-    return transitionLock;
-}
 
 

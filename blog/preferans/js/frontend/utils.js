@@ -1,16 +1,20 @@
-import { assert } from '../backend/utils.js';
 import * as globals from '../globals.js'
 
 
-export function drawCard(card_id) {
-    const [vstep, hstep, cstep] = calculateSteps();
+export function drawCard(card_id, layout) {
+    const [vstep, hstep, cstep] = calculateSteps(layout);
     const cardElement = document.getElementById(card_id);
     const card = globals.CARDS[card_id];
     if (!cardElement) {
         return;
     }
-    if (cardElement.parentElement.classList.contains("suit-container")) {
+    if (cardElement.parentElement.classList.contains("suit-container-horz")) {
         cardElement.style.left = `${parseInt(globals.CARDS[card_id].kind)*cstep}px`;
+        cardElement.style.top = '0px'
+    };
+    if (cardElement.parentElement.classList.contains("suit-container-vert")) {
+        cardElement.style.top = `${parseInt(globals.CARDS[card_id].kind)*cstep}px`;
+        cardElement.style.left = '0px'
     };
     if (cardElement.parentElement.classList.contains("hand-vert")) {
         let idx = NaN;
@@ -46,7 +50,9 @@ export function getContainerOptions(phase_id, cardElement) {
         };
         const suit = globals.CARDS[parseInt(cardElement.id)].suit
         const card_container = document.getElementById(`container-${suit}`)
-        container_options.push(card_container)
+        if (card_container.style.visibility != 'hidden') {
+            container_options.push(card_container)
+        }
     };
     if (phase_id == 3) {
         const handId = cardElement.parentElement.id.split('-')[1]
@@ -58,19 +64,37 @@ export function getContainerOptions(phase_id, cardElement) {
 };
 
 
-export function calculateSteps() {
-    var vert_hand_height = document.getElementById('hand-' + globals.WEST).offsetHeight;
-    var horz_hand_width = document.getElementById('hand-' + globals.SOUTH).offsetWidth;
-    if (document.getElementById('container-' + globals.SPADES)) {
-        var suit_container_width = document.getElementById('container-' + globals.SPADES).offsetWidth;
-        cstep = (suit_container_width - 2*globals.BORDER_WIDTH - globals.CARD_WIDTH) / 7;
+export function calculateSteps(layout=globals.LAYOUT_DESKTOP) {
+    let vert_hand_height = document.getElementById('hand-' + globals.WEST).offsetHeight;
+    let horz_hand_width = document.getElementById('hand-' + globals.SOUTH).offsetWidth;
+    const dealContainer = document.getElementById('container-' + globals.SPADES)
+    let cstep;
+    let suit_container_dim;
+    if (dealContainer) {
+        if (layout == globals.LAYOUT_MOBILE) {
+            suit_container_dim = dealContainer.offsetHeight;
+            cstep = suit_container_dim;
+            cstep -= globals.CSS_VARIABLES["card-height"]
+        }
+        else {
+            suit_container_dim = dealContainer.offsetWidth;
+            cstep = suit_container_dim;
+            cstep -= globals.CSS_VARIABLES["card-width"]
+        }
+        cstep -= 2*globals.CSS_VARIABLES["border-width"]
+        cstep /= 7
     }
     else {
-        cstep = 0;
+        cstep = 0
     }
-    var vstep = (vert_hand_height - globals.CARD_HEIGHT - 2*globals.BORDER_WIDTH) / 9;
-    var hstep = (horz_hand_width - globals.CARD_WIDTH - 2*globals.BORDER_WIDTH) / 9;
-    var cstep = (suit_container_width - 2*globals.BORDER_WIDTH - globals.CARD_WIDTH) / 7;
+    let vstep = vert_hand_height
+    vstep -= globals.CSS_VARIABLES["card-height"]
+    vstep -= 2*globals.CSS_VARIABLES["border-width"]
+    vstep /= 9
+    let hstep = horz_hand_width
+    hstep -= globals.CSS_VARIABLES["card-width"]
+    hstep -= 2*globals.CSS_VARIABLES["border-width"]
+    hstep /= 9
     return [vstep, hstep, cstep];
 };
 
@@ -395,7 +419,7 @@ export function deHighlightElement(element) {
 export function fadeClearInsideElement(element) {
     return new Promise(async (resolve) => {
         for (const child of element.children) {
-            child.style.transition = `opacity ${globals.TRANSITION_TIME}s ease-out`;
+            child.style.transition = `opacity ${globals.CSS_VARIABLES["transition-time"]}s ease-out`;
             child.style.opacity = '0';
         };
         await updateButtonsLock(globals.START)
@@ -404,6 +428,43 @@ export function fadeClearInsideElement(element) {
                 element.removeChild(element.firstChild)
             };
             resolve();
-        }, 1000*globals.TRANSITION_TIME);
+        }, 1000*globals.CSS_VARIABLES["transition-time"]);
     });
 };
+
+export function updateLayout() {
+    let layout;
+    if (window.innerWidth <= globals.MAX_MOBILE_WIDTH) {
+        layout = globals.LAYOUT_MOBILE
+    }
+    else {
+        layout = globals.LAYOUT_DESKTOP
+    }
+    return layout
+}
+
+
+export function refreshLayout() {
+    const layout = updateLayout()
+    const middleMain = document.getElementById('middle-main');
+    const middleMainHeight = parseFloat(getComputedStyle(middleMain).height);
+    const handContainerVerts = document.querySelectorAll('.hand-container-vert');
+    for (const handContainerVert of handContainerVerts) {
+        const minHeight = parseFloat(getComputedStyle(handContainerVert).minHeight);
+        handContainerVert.style.height = `${Math.max(middleMainHeight, minHeight)}px`;
+    }
+    Object.keys(globals.CARDS).forEach(card_id => drawCard(card_id, layout));
+}
+
+
+export function applyCSSVariables() {
+    const isMobile = window.innerWidth <= globals.MAX_MOBILE_WIDTH
+    const factor = isMobile ? globals.MOBILE_FACTOR : 1;
+    const root = document.documentElement;
+    for (const key of Object.keys(globals._CSS_VARIABLES)) {
+        const unit = key.includes('time') ? 's' : 'px';
+        globals.CSS_VARIABLES[key] = factor*globals._CSS_VARIABLES[key]
+        root.style.setProperty(`--${key}`, `${globals.CSS_VARIABLES[key]}`+unit)
+    }
+    window.addEventListener('resize', applyCSSVariables);
+}

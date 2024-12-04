@@ -1,5 +1,6 @@
 .master-middle {
     margin: 2%;
+    margin-bottom: calc(2% + 10px);
     overflow-y: visible;
     flex-grow: 1;
     justify-content: center;

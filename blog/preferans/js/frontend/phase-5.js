@@ -70,8 +70,8 @@ export class Phase_5  {
         newGameButton.innerText = "NEW GAME";
         newGameButton.clickLogic = () => this.dispatch();
         const buttonStrip = document.createElement('div')
-        buttonStrip.style.marginTop = `${globals.FONT_SIZE}px`
-        /*buttonStrip.style.marginTop = `${0.5*globals.CARD_WIDTH}px`;*/
+        buttonStrip.style.marginTop = `${globals.CSS_VARIABLES["font-size"]}px`
+        /*buttonStrip.style.marginTop = `${0.5*globals.CSS_VARIABLES["card-width"]}px`;*/
         buttonStrip.classList.add('button-strip')
         buttonStrip.appendChild(newGameButton);
         phase_middle.appendChild(buttonStrip);

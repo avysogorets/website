@@ -5,7 +5,9 @@ import { drawCard,
     createButton,
     highlightElement,
     deHighlightElement,
-    fadeClearInsideElement} from './utils.js';
+    fadeClearInsideElement,
+    refreshLayout,
+    updateLayout} from './utils.js';
 import { mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 
@@ -17,13 +19,8 @@ export class Phase_1 {
     };
 
     init() {
-        if (this.dispatcher.is_mobile) {
-            this.phase = new Phase_1_Mobile(this.dispatcher);
-        }
-        else {
-            this.phase = new Phase_1_Desktop(this.dispatcher);
-        }
-        this.phase.init();
+        this.phase = new Phase_1_Desktop(this.dispatcher);
+       return this.phase.init();
     };
 };
 
@@ -35,46 +32,149 @@ class Phase_1_Desktop {
         this.dispatched = false
     };
 
+    handleLayout() {
+        return new Promise((resolve) => {
+            const layout = updateLayout()
+            if (layout === globals.LAYOUT_MOBILE) {
+                this.cardContainer.className = 'card-container-mobile'
+                this.suitStrip.style.visibility = 'visible'
+                for (let i=0; i<globals.SUIT_NAMES.length; i++) {
+                    const suitContainer = document.getElementById(`container-${i}`)
+                    suitContainer.className = 'suit-container-vert'
+                    suitContainer.style.left = this.suitContainerLefts[i]
+                    if (i != this.activeSuit) {
+                        suitContainer.style.visibility = 'hidden'
+                    }
+                    else {
+                        suitContainer.style.visibility = 'visible'
+                    }
+                }
+            }
+            if (layout === globals.LAYOUT_DESKTOP) {
+                this.cardContainer.className = 'card-container-desktop'
+                this.suitStrip.style.visibility = 'hidden'
+                for (let i=0; i<globals.SUIT_NAMES.length; i++) {
+                    const suitContainer = document.getElementById(`container-${i}`)
+                    suitContainer.className = 'suit-container-horz'
+                    suitContainer.style.visibility = 'visible'
+                    suitContainer.style.left = ''
+                }
+            }
+            refreshLayout()
+            resolve()
+        })
+    }
+
     async init() {
         return new Promise(async (resolve) => {
             const phase_middle = document.createElement('div');
             phase_middle.className = 'middle-phase-1';
-            const card_container = document.createElement('div');
             this.master_middle.appendChild(phase_middle)
-            card_container.className = 'card-container';
-            const suit_containers = [
+            this.cardContainer = document.createElement('div');
+            this.cardContainer.className = 'card-container-desktop';
+            const suitContainers = [
                 document.createElement('div'),
                 document.createElement('div'),
                 document.createElement('div'),
                 document.createElement('div')];
-            for (let i=0; i<suit_containers.length; i++) {
-                suit_containers[i].className = 'suit-container'
-                suit_containers[i].id = `container-${i}`
+            this.suitContainerLefts = []
+            for (let i=0; i<suitContainers.length; i++) {
+                suitContainers[i].className = 'suit-container-horz'
+                suitContainers[i].id = `container-${i}`
+                this.suitContainerLefts.push(suitContainers[i].style.left)
             };
-            phase_middle.appendChild(card_container)
+            this.suitStrip = document.createElement('div')
+            this.suitStrip.classList.add('button-strip')
+            this.suitStrip.style.visibility = 'hidden';
+            this.activeSuit = globals.SPADES
+            this.suitStrip.style.gridTemplateColumns = `repeat(4, 1fr)`
+            for (const suit of globals.SUIT_NAMES) {
+                const suitButton = createButton()
+                suitButton.appendChild(IMAGES["suits"]["normal"][suit])
+                this.suitStrip.appendChild(suitButton)
+            }
+            for (let i=0; i<globals.SUIT_NAMES.length; i++) {
+                const thisSuit = globals.SUIT_NAMES[i]
+                const thisSuitButton = this.suitStrip.childNodes[i]
+                thisSuitButton.clickLogic = () => {
+                    return new Promise(async (resolve) => {
+                        for (let j=0; j<globals.SUIT_NAMES.length; j++) {
+                            const thatSuitButton = this.suitStrip.childNodes[j]
+                            const thatSuit = globals.SUIT_NAMES[j]
+                            thatSuitButton.removeChild(thatSuitButton.firstChild)
+                            thatSuitButton.appendChild(IMAGES["suits"]["normal"][thatSuit])
+                            thatSuitButton.classList.remove('selected')
+                        }
+                        this.cardContainer.style.overflowX = 'hidden'
+                        thisSuitButton.removeChild(thisSuitButton.firstChild)
+                        thisSuitButton.appendChild(IMAGES["suits"]["selected"][thisSuit])
+                        thisSuitButton.classList.add('selected')
+                        const computedStyles = window.getComputedStyle(this.cardContainer);
+                        let shiftX = globals.CSS_VARIABLES["card-width"]
+                        shiftX += 2*globals.CSS_VARIABLES["border-width"]
+                        shiftX += 2*globals.CSS_VARIABLES["card-border"]
+                        shiftX += parseFloat(computedStyles.columnGap)
+                        const promises = []
+                        for (let j=0; j<globals.SUIT_NAMES.length; j++) {
+                            const thatContainer = document.getElementById(`container-${j}`)
+                            const baseLeft = this.cardContainer.getBoundingClientRect().left
+                            const fisrtLeft = suitContainers[0].getBoundingClientRect().left
+                            const offsetLeft = fisrtLeft-baseLeft
+                            thatContainer.style.transform = `translate(${-i*shiftX-offsetLeft}px, 0px)`;
+                            thatContainer.style.transition = ''
+                            thatContainer.style.visibility = 'visible'
+                            promises.push(new Promise((resolve) => {
+                                setTimeout(() => {
+                                    if (i != j) {
+                                        thatContainer.style.visibility = 'hidden'
+                                    }
+                                    thatContainer.style.transform = 'none'
+                                    thatContainer.style.transition = 'none'
+                                    thatContainer.style.left = `${-i*shiftX}px`
+                                    this.suitContainerLefts[j] = `${-i*shiftX}px`
+                                    resolve()
+                                }, 1000*globals.CSS_VARIABLES["transition-time"])
+                            }))
+                        }
+                        this.activeSuit = i;
+                        await Promise.all(promises)
+                        this.cardContainer.style.overflowX = 'visible'
+                        resolve()
+                    })
+                }
+            }
+            const spadesButton = this.suitStrip.childNodes[globals.SPADES]
+            spadesButton.classList.add('selected')
+            spadesButton.removeChild(spadesButton.firstChild)
+            spadesButton.appendChild(IMAGES["suits"]["selected"][globals.SUIT_NAMES[globals.SPADES]])
+            this.suitStrip.style.width = `${7*globals.CSS_VARIABLES["font-size"]}px`
+            phase_middle.appendChild(this.suitStrip)
+            phase_middle.appendChild(this.cardContainer)
             const buttonStrip = document.createElement('div');
             buttonStrip.classList.add('button-strip')
             buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
             const randomDealButton = createButton()
             randomDealButton.innerHTML = 'RANDOM';
             randomDealButton.clickLogic = () => {
-                const promise = Promise.all(this.randomDeal(suit_containers, this.dispatcher.hands));
-                return promise
+                return Promise.all(this.randomDeal(suitContainers, this.dispatcher.hands));
             };
             buttonStrip.appendChild(randomDealButton)
             phase_middle.appendChild(buttonStrip)
-            suit_containers.forEach(suit_container => {
-                card_container.appendChild(suit_container)
-            });
+            for (const suitContainer of suitContainers) {
+                this.cardContainer.appendChild(suitContainer)
+            }
             this.updateHighlights();
             const promises = []
+            document.getElementById('main').style.opacity = 1;
             for (const card_id of Object.keys(globals.CARDS)) {
-                promises.push(this.createCard(card_id, suit_containers, this.dispatcher.hands))};
+                promises.push(this.createCard(card_id, suitContainers, this.dispatcher.hands))};
+            await this.handleLayout()
             await Promise.all(promises)
-            window.addEventListener(
-                'resize', 
-                () => {Object.keys(globals.CARDS).forEach(
-                    card_id => drawCard(card_id))});
+            window.addEventListener('resize', () => {
+                if (this.dispatcher.phase_id == 0) {
+                    this.handleLayout()
+                }
+            });
             resolve();
         })
     };
@@ -118,21 +218,22 @@ class Phase_1_Desktop {
 
     handleCard(cardElement, targetElement) {
         return new Promise((resolve) => {
-            const [vstep, hstep, cstep] = calculateSteps();
+            const layout = updateLayout()
+            const [vstep, hstep, cstep] = calculateSteps(layout);
             const card_id = parseInt(cardElement.id)
             const targetRect = targetElement.getBoundingClientRect()
             const cardRect = cardElement.getBoundingClientRect()
-            let deltaX = targetRect.left - cardRect.left + globals.BORDER_WIDTH;
-            let deltaY = targetRect.top - cardRect.top + globals.BORDER_WIDTH;
+            let deltaX = targetRect.left - cardRect.left + globals.CSS_VARIABLES["border-width"];
+            let deltaY = targetRect.top - cardRect.top + globals.CSS_VARIABLES["border-width"];
             let zIndex = 10;
-            const isParentHandHorz = cardElement.parentElement.classList.contains('hand-horz')
-            const isParentHandVert = cardElement.parentElement.classList.contains('hand-vert')
-            const isTargetHandHorz = targetElement.classList.contains('hand-horz')
-            const isTargetHandVert = targetElement.classList.contains('hand-vert')
-            const isTargetHand = isTargetHandHorz || isTargetHandVert
-            const isParentHand = isParentHandHorz || isParentHandVert
-            const isParentTargetSameHand = cardElement.parentElement.id == targetElement.id
             const parentElement = cardElement.parentElement
+            const isParentHorz = parentElement.className.includes('horz')
+            const isParentVert = parentElement.className.includes('vert')
+            const isTargetHorz = targetElement.className.includes('horz')
+            const isTargetVert = targetElement.className.includes('vert')
+            const isTargetHand = targetElement.className.includes('hand')
+            const isParentHand = parentElement.className.includes('hand')
+            const isParentTargetSame = parentElement.id == targetElement.id
             let X = 0;
             let Y = 0;
             let DeltaX = 0;
@@ -149,17 +250,17 @@ class Phase_1_Desktop {
                         break;
                     };
                 };
-                if (isTargetHandHorz) {
+                if (isTargetHorz) {
                     X += hstep*card_idx
                     deltaX += hstep*card_idx
                     DeltaX = hstep
                 };
-                if (isTargetHandVert) {
+                if (isTargetVert) {
                     Y += vstep*card_idx
                     deltaY += vstep*card_idx
                     DeltaY = vstep
                 };
-                if (!isParentTargetSameHand) {
+                if (!isParentTargetSame) {
                     for (let i=card_idx; i<targetElement.childNodes.length; i++) {
                         targetElement.childNodes[i].style.transform = `translate(${DeltaX}px, ${DeltaY}px)`;
                     };
@@ -178,13 +279,13 @@ class Phase_1_Desktop {
                         break;
                     };
                 };
-                if (isParentHandHorz) {
+                if (isParentHorz) {
                     DeltaX = -hstep
                 };
-                if (isParentHandVert) {
+                if (isParentVert) {
                     DeltaY = -vstep
                 };
-                if (!isParentTargetSameHand) {
+                if (!isParentTargetSame) {
                     for (let i=card_idx+1; i<parentElement.childNodes.length; i++) {
                         parentElement.childNodes[i].style.transform = `translate(${DeltaX}px, ${DeltaY}px)`;
                     };
@@ -192,35 +293,41 @@ class Phase_1_Desktop {
             };
             let parent_card_idx = card_idx;
             if (!isTargetHand) {
-                X += cstep*mod(card_id, 8)
-                deltaX += cstep*mod(card_id, 8)
+                if (isTargetHorz) {
+                    X += cstep*mod(card_id, 8)
+                    deltaX += cstep*mod(card_id, 8)
+                }
+                if (isTargetVert) {
+                    Y += cstep*mod(card_id, 8)
+                    deltaY += cstep*mod(card_id, 8)
+                }
                 zIndex += card_id;
             };
             cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`; 
             cardElement.style.offsetHeight;    
             setTimeout(() => {
                 cardElement.style.zIndex = zIndex;
-                if (isTargetHand && !isParentTargetSameHand) {
+                if (isTargetHand && !isParentTargetSame) {
                     for (let i=target_card_idx; i<targetElement.childNodes.length; i++) {
                         targetElement.childNodes[i].style.transform = '';
-                        if (isTargetHandHorz) {
+                        if (isTargetHorz) {
                             targetElement.childNodes[i].style.left = `${(i+1)*hstep}px`
                             targetElement.childNodes[i].offsetWidth;
                         }
-                        if (isTargetHandVert) {
+                        if (isTargetVert) {
                             targetElement.childNodes[i].style.top = `${(i+1)*vstep}px`
                             targetElement.childNodes[i].offsetHeight;
                         }
                     };
                 } 
-                if (isParentHand && !isParentTargetSameHand) {
+                if (isParentHand && !isParentTargetSame) {
                     for (let i=parent_card_idx+1; i<parentElement.childNodes.length; i++) {
                         parentElement.childNodes[i].style.transform = '';
-                        if (isParentHandHorz) {
+                        if (isParentHorz) {
                             parentElement.childNodes[i].style.left = `${(i-1)*hstep}px`
                             parentElement.childNodes[i].offsetWidth;
                         }
-                        if (isParentHandVert) {
+                        if (isParentVert) {
                             parentElement.childNodes[i].style.top = `${(i-1)*vstep}px`
                             parentElement.childNodes[i].offsetHeight;
                         }
@@ -238,7 +345,7 @@ class Phase_1_Desktop {
                 this.updateHighlights();
                 this.check();  
                 resolve();                  
-            }, 1000*globals.TRANSITION_TIME)
+            }, 1000*globals.CSS_VARIABLES["transition-time"])
         });
     };
 
@@ -322,8 +429,8 @@ class Phase_1_Desktop {
                         const cardRect = selected[i].getBoundingClientRect();
                         const handRect = this.dispatcher.hands[hand_id].getBoundingClientRect();
                         const [vstep, hstep, _] = calculateSteps();
-                        let deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
-                        let deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
+                        let deltaX = handRect.left - cardRect.left + globals.CSS_VARIABLES["border-width"];
+                        let deltaY = handRect.top - cardRect.top + globals.CSS_VARIABLES["border-width"];
                         if (this.dispatcher.hands[hand_id].classList.contains('hand-horz')) {
                             deltaX += i * hstep;
                         }
@@ -346,7 +453,7 @@ class Phase_1_Desktop {
                             this.dispatcher.hands[hand_id].appendChild(selected[i]);
                             this.check()
                             resolve();
-                        }, 1000*globals.TRANSITION_TIME);
+                        }, 1000*globals.CSS_VARIABLES["transition-time"]);
                     }, currTimeout);
                 }));
             };

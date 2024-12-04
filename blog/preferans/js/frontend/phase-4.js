@@ -292,7 +292,8 @@ export class Phase_4  {
             textLine.innerText = "NO TRUMPS";
             textLine.style.color = "black";
         };
-        textLine.style.marginBottom = `${globals.BORDER_WIDTH}px`;
+        let size = `${globals.CSS_VARIABLES["border-width"]}px`
+        textLine.style.marginBottom = size
         toolTipText.appendChild(textLine);
         infoToolTip.appendChild(toolTipText);
         this.phase_middle.appendChild(infoToolTip);
@@ -341,8 +342,8 @@ export class Phase_4  {
         for (const cardElement of cardElements) {
             const flushRect = flushElement.getBoundingClientRect();
             const cardRect = cardElement.getBoundingClientRect();
-            const deltaX = flushRect.left - cardRect.left + globals.BORDER_WIDTH;
-            const deltaY = flushRect.top - cardRect.top + globals.BORDER_WIDTH;
+            const deltaX = flushRect.left - cardRect.left + globals.CSS_VARIABLES["border-width"];
+            const deltaY = flushRect.top - cardRect.top + globals.CSS_VARIABLES["border-width"];
             cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`
             cardElement.style.opacity = 0;
             promises.push(new Promise((resolve) => { setTimeout(() => {
@@ -355,7 +356,7 @@ export class Phase_4  {
                 cardElement.style.display = 'none'
                 /*cardElement.clickLogic = Promise.resolve();*/
                 resolve()
-            }, 1000*globals.TRANSITION_TIME)}));
+            }, 1000*globals.CSS_VARIABLES["transition-time"])}));
         };
         return Promise.all(promises)
     };
@@ -364,8 +365,8 @@ export class Phase_4  {
         cardElement.style.display = 'block'
         const trickRect = targetElement.getBoundingClientRect();
         const cardRect = cardElement.getBoundingClientRect();
-        const deltaX = trickRect.left - cardRect.left + globals.BORDER_WIDTH;
-        const deltaY = trickRect.top - cardRect.top + globals.BORDER_WIDTH;
+        const deltaX = trickRect.left - cardRect.left + globals.CSS_VARIABLES["border-width"];
+        const deltaY = trickRect.top - cardRect.top + globals.CSS_VARIABLES["border-width"];
         cardElement.style.transform = `translate(${deltaX}px, ${deltaY}px)`
         if (cardElement.style.opacity == 0) {
             cardElement.style.opacity = 1;
@@ -379,7 +380,7 @@ export class Phase_4  {
             cardElement.setLock(true)
             /*cardElement.clickLogic = Promise.resolve();*/
             resolve()
-        }, 1000*globals.TRANSITION_TIME)});
+        }, 1000*globals.CSS_VARIABLES["transition-time"])});
     };
 
     returnTransition(cardElement, handElement) {
@@ -387,8 +388,8 @@ export class Phase_4  {
             const card = globals.CARDS[parseInt(cardElement.id)]
             const handRect = handElement.getBoundingClientRect();
             const cardRect = cardElement.getBoundingClientRect();
-            const deltaX = handRect.left - cardRect.left + globals.BORDER_WIDTH;
-            const deltaY = handRect.top - cardRect.top + globals.BORDER_WIDTH;
+            const deltaX = handRect.left - cardRect.left + globals.CSS_VARIABLES["border-width"];
+            const deltaY = handRect.top - cardRect.top + globals.CSS_VARIABLES["border-width"];
             let [vstep, hstep, _] = calculateSteps();
             let X = 0;
             let Y = 0;
@@ -407,7 +408,7 @@ export class Phase_4  {
                 cardElement.style.left = `${X}px`;
                 cardElement.setLock(false)
                 resolve()
-            }, 1000*globals.TRANSITION_TIME)
+            }, 1000*globals.CSS_VARIABLES["transition-time"])
         })
     }
 
@@ -465,7 +466,7 @@ export class Phase_4  {
                     return Promise.all(promises)
                 }
                 resolve()
-            }, 1000*globals.TRANSITION_TIME)
+            }, 1000*globals.CSS_VARIABLES["transition-time"])
         })
     }
 

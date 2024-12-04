@@ -14,20 +14,20 @@
 }
 
 .about-button {
+    width: calc(4*var(--info-font-size));
+    height: calc(1.5*var(--info-font-size));
     position: relative;
-    top: -10px;
-    padding-top: 12px;
-    padding-bottom: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
     background-color: white;
     color: black;
-    width: fit-content;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     font-size: var(--info-font-size);
     z-index: 5000;
-    border: var(--border-width) solid black;
-    border-radius: calc(var(--card-height)/10);
+    border-bottom: var(--border-width) solid black;
+    border-left: var(--border-width) solid black;
+    border-right: var(--border-width) solid black;
+    border-bottom-left-radius: calc(var(--card-height) / 10);
+    border-bottom-right-radius: calc(var(--card-height) / 10);
     cursor: pointer;
 }
 
