@@ -4,7 +4,7 @@
 
 .main {
     width: 95%;
-    max-width: calc(10*var(--card-width))px;
+    max-width: calc(12*var(--card-width));
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 2.5%;

@@ -12,20 +12,7 @@ import { mod } from '../backend/utils.js'
 import { IMAGES } from './frontend.js'
 
 
-
 export class Phase_1 {
-    constructor(dispatcher) {
-        this.dispatcher = dispatcher;
-    };
-
-    init() {
-        this.phase = new Phase_1_Desktop(this.dispatcher);
-       return this.phase.init();
-    };
-};
-
-
-class Phase_1_Desktop {
     constructor(dispatcher) {
         this.dispatcher = dispatcher;
         this.master_middle = document.getElementById(globals.MASTER_MIDDLE);
@@ -94,53 +81,9 @@ class Phase_1_Desktop {
                 this.suitStrip.appendChild(suitButton)
             }
             for (let i=0; i<globals.SUIT_NAMES.length; i++) {
-                const thisSuit = globals.SUIT_NAMES[i]
                 const thisSuitButton = this.suitStrip.childNodes[i]
                 thisSuitButton.clickLogic = () => {
-                    return new Promise(async (resolve) => {
-                        for (let j=0; j<globals.SUIT_NAMES.length; j++) {
-                            const thatSuitButton = this.suitStrip.childNodes[j]
-                            const thatSuit = globals.SUIT_NAMES[j]
-                            thatSuitButton.removeChild(thatSuitButton.firstChild)
-                            thatSuitButton.appendChild(IMAGES["suits"]["normal"][thatSuit])
-                            thatSuitButton.classList.remove('selected')
-                        }
-                        this.cardContainer.style.overflowX = 'hidden'
-                        thisSuitButton.removeChild(thisSuitButton.firstChild)
-                        thisSuitButton.appendChild(IMAGES["suits"]["selected"][thisSuit])
-                        thisSuitButton.classList.add('selected')
-                        const computedStyles = window.getComputedStyle(this.cardContainer);
-                        let shiftX = globals.CSS_VARIABLES["card-width"]
-                        shiftX += 2*globals.CSS_VARIABLES["border-width"]
-                        shiftX += 2*globals.CSS_VARIABLES["card-border"]
-                        shiftX += parseFloat(computedStyles.columnGap)
-                        const promises = []
-                        for (let j=0; j<globals.SUIT_NAMES.length; j++) {
-                            const thatContainer = document.getElementById(`container-${j}`)
-                            const baseLeft = this.cardContainer.getBoundingClientRect().left
-                            const fisrtLeft = suitContainers[0].getBoundingClientRect().left
-                            const offsetLeft = fisrtLeft-baseLeft
-                            thatContainer.style.transform = `translate(${-i*shiftX-offsetLeft}px, 0px)`;
-                            thatContainer.style.transition = ''
-                            thatContainer.style.visibility = 'visible'
-                            promises.push(new Promise((resolve) => {
-                                setTimeout(() => {
-                                    if (i != j) {
-                                        thatContainer.style.visibility = 'hidden'
-                                    }
-                                    thatContainer.style.transform = 'none'
-                                    thatContainer.style.transition = 'none'
-                                    thatContainer.style.left = `${-i*shiftX}px`
-                                    this.suitContainerLefts[j] = `${-i*shiftX}px`
-                                    resolve()
-                                }, 1000*globals.CSS_VARIABLES["transition-time"])
-                            }))
-                        }
-                        this.activeSuit = i;
-                        await Promise.all(promises)
-                        this.cardContainer.style.overflowX = 'visible'
-                        resolve()
-                    })
+                    this.switchActiveSuit(i)
                 }
             }
             const spadesButton = this.suitStrip.childNodes[globals.SPADES]
@@ -156,7 +99,7 @@ class Phase_1_Desktop {
             const randomDealButton = createButton()
             randomDealButton.innerHTML = 'RANDOM';
             randomDealButton.clickLogic = () => {
-                return Promise.all(this.randomDeal(suitContainers, this.dispatcher.hands));
+                return this.randomDeal(suitContainers, this.dispatcher.hands);
             };
             buttonStrip.appendChild(randomDealButton)
             phase_middle.appendChild(buttonStrip)
@@ -178,6 +121,56 @@ class Phase_1_Desktop {
             resolve();
         })
     };
+
+    switchActiveSuit(suitId) {
+        const thisSuit = globals.SUIT_NAMES[suitId]
+        const thisSuitButton = this.suitStrip.childNodes[suitId]
+        return new Promise(async (resolve) => {
+            for (let j=0; j<globals.SUIT_NAMES.length; j++) {
+                const thatSuitButton = this.suitStrip.childNodes[j]
+                const thatSuit = globals.SUIT_NAMES[j]
+                thatSuitButton.removeChild(thatSuitButton.firstChild)
+                thatSuitButton.appendChild(IMAGES["suits"]["normal"][thatSuit])
+                thatSuitButton.classList.remove('selected')
+            }
+            this.cardContainer.style.overflowX = 'hidden'
+            thisSuitButton.removeChild(thisSuitButton.firstChild)
+            thisSuitButton.appendChild(IMAGES["suits"]["selected"][thisSuit])
+            thisSuitButton.classList.add('selected')
+            const computedStyles = window.getComputedStyle(this.cardContainer);
+            let shiftX = globals.CSS_VARIABLES["card-width"]
+            shiftX += 2*globals.CSS_VARIABLES["border-width"]
+            shiftX += 2*globals.CSS_VARIABLES["card-border"]
+            shiftX += parseFloat(computedStyles.columnGap)
+            const promises = []
+            const spadesContainer = document.getElementById(`container-${globals.SPADES}`)
+            for (let j=0; j<globals.SUIT_NAMES.length; j++) {
+                const thatContainer = document.getElementById(`container-${j}`)
+                const baseLeft = this.cardContainer.getBoundingClientRect().left
+                const fisrtLeft = spadesContainer.getBoundingClientRect().left
+                const offsetLeft = fisrtLeft-baseLeft
+                thatContainer.style.transform = `translate(${-suitId*shiftX-offsetLeft}px, 0px)`;
+                thatContainer.style.transition = ''
+                thatContainer.style.visibility = 'visible'
+                promises.push(new Promise((resolve) => {
+                    setTimeout(() => {
+                        if (suitId != j) {
+                            thatContainer.style.visibility = 'hidden'
+                        }
+                        thatContainer.style.transform = 'none'
+                        thatContainer.style.transition = 'none'
+                        thatContainer.style.left = `${-suitId*shiftX}px`
+                        this.suitContainerLefts[j] = `${-suitId*shiftX}px`
+                        resolve()
+                    }, 1000*globals.CSS_VARIABLES["transition-time"])
+                }))
+            }
+            this.activeSuit = suitId;
+            await Promise.all(promises)
+            this.cardContainer.style.overflowX = 'visible'
+            resolve()
+        })
+    }
 
     async dispatch() {
         await fadeClearInsideElement(this.master_middle)
@@ -359,15 +352,20 @@ class Phase_1_Desktop {
             cardElement.style.animationDelay = '0.1s';
             cardElement.style.opacity = 0;
             cardElement.style.zIndex = 10 + parseInt(card_id);
-            const parentContainer = containers[parseInt(globals.CARDS[card_id].suit)]
+            const suitId = parseInt(globals.CARDS[card_id].suit)
+            const parentContainer = containers[suitId]
             parentContainer.appendChild(cardElement);
-            cardElement.clickLogic = (targetElement=NaN) => {
+            cardElement.clickLogic = async (targetElement=NaN) => {
                 if (!targetElement) {
                     if (cardElement.parentElement === parentContainer) {
                         targetElement = this.activeHand()
                     }
                     else {
+                        const layout = updateLayout()
                         targetElement = parentContainer;
+                        if (layout === globals.LAYOUT_MOBILE && !this.dispatched && this.activeSuit != suitId) {
+                            await this.switchActiveSuit(suitId)
+                        }
                     }
                 }
                 return this.handleCard(cardElement, targetElement)
@@ -396,7 +394,7 @@ class Phase_1_Desktop {
         });
     };
 
-    randomDeal(containers) {
+    async randomDeal(containers) {
         const promises = []
         var freeElements = [];
         containers.forEach(container => {
@@ -404,6 +402,18 @@ class Phase_1_Desktop {
                 freeElements.push(container.childNodes[i]);
             }
         });
+        const layout = updateLayout()
+        if (layout === globals.LAYOUT_MOBILE) {
+            const computedStyles = window.getComputedStyle(this.cardContainer);
+            let shiftX = globals.CSS_VARIABLES["card-width"]
+            shiftX += 2*globals.CSS_VARIABLES["border-width"]
+            shiftX += 2*globals.CSS_VARIABLES["card-border"]
+            shiftX += parseFloat(computedStyles.columnGap)
+            for (let i=0; i<globals.SUIT_NAMES.length; i++) {
+                containers[i].style.left = `${-i*shiftX}px`
+                containers[i].style.visibility = 'visible'
+            }
+        }
         let transitionOrder = 0
         for (let hand_id = 0; hand_id<3; hand_id++) {
             const to_select = 10 - this.dispatcher.hands[hand_id].childNodes.length;
@@ -454,11 +464,11 @@ class Phase_1_Desktop {
                             this.check()
                             resolve();
                         }, 1000*globals.CSS_VARIABLES["transition-time"]);
-                    }, currTimeout);
+                    }, currTimeout); 
                 }));
             };
         };
-        return promises
+        return Promise.all(promises)
     };
 
     updateHighlights() {

@@ -19,10 +19,11 @@ export function createAbout() {
         const aboutButton = createButton()
         aboutButton.classList.add('about-button')
         aboutButton.appendChild(buttonText)
-        const fadeDuration = (1000*globals.CSS_VARIABLES["transition-time"] + 600) / 2;
+        const fadeDuration = (1000*globals.CSS_VARIABLES["transition-time"] + 300) / 2;
         buttonText.style.transition = `opacity ${fadeDuration}ms ease`;
         buttonText.innerHTML = 'ABOUT'
         contentElement.innerHTML = await (async () => loadContent())()
+        console.log(1000*globals.CSS_VARIABLES["transition-time"])
         aboutButton.clickLogic = () => {
             return new Promise((resolve) => {
                 const main = document.getElementById('main');
@@ -43,7 +44,7 @@ export function createAbout() {
                             main.style.position = 'relative'
                             main.style.top = ''
                             resolve()
-                        }, 300)
+                        }, 1000*globals.CSS_VARIABLES["transition-time"])
                     }, 300)
                 }
                 else {

@@ -236,6 +236,7 @@ export class MouseEventHandler {
         else {
             if (this.eventElement === candidateElement) {
                 eventPromise = this.eventElement.clickLogic();
+                console.log(eventPromise)
             };
         };
         this.eventElement = NaN
