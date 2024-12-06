@@ -1,5 +1,6 @@
 .about-container {
     position: relative;
+    overscroll-behavior: none;
     width: 100%;
     font-family: var(--font-familiy);
     font-size: var(--info-font-size);
@@ -11,6 +12,7 @@
     z-index: 4999;
     background-color: transparent;
     transition: background-color var(--transition-time) ease-in;
+    -webkit-overflow-scrolling: touch;
 }
 
 .about-button {
@@ -39,7 +41,8 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
+    overscroll-behavior: none;
     padding: 20px;
     opacity: 0;
     z-index: 5000;

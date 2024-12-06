@@ -118,6 +118,12 @@ export function createButton(isDraggable=false) {
     buttonElement.public_lock = false
     buttonElement.public_block = false
     buttonElement.isDraggable = isDraggable
+    buttonElement.addEventListener('mouseenter', function() {
+        buttonElement.classList.add('hover-style');
+    });
+    buttonElement.addEventListener('mouseleave', function() {
+        buttonElement.classList.remove('hover-style');
+    });
     buttonElement.clickLogic = async () => {
         throw ErrorEvent('click logic in not defined')
     }
@@ -223,6 +229,9 @@ export class MouseEventHandler {
     clearEvent(candidateElement) {
         this.eventElement.style.zIndex = parseInt(this.eventElement.style.zIndex)-2000;
         this.eventElement.classList.toggle('pressed')
+        console.log('1', this.eventElement.classList)
+        this.eventElement.classList.remove('hover-style')
+        console.log('2', this.eventElement.classList)
         let eventPromise = Promise.resolve();
         if (this.eventElement.classList.contains('card')) {
             let closestTargetElement;
@@ -236,7 +245,6 @@ export class MouseEventHandler {
         else {
             if (this.eventElement === candidateElement) {
                 eventPromise = this.eventElement.clickLogic();
-                console.log(eventPromise)
             };
         };
         this.eventElement = NaN
@@ -454,6 +462,7 @@ export function refreshLayout() {
         const minHeight = parseFloat(getComputedStyle(handContainerVert).minHeight);
         handContainerVert.style.height = `${Math.max(middleMainHeight, minHeight)}px`;
     }
+    middleMain.offsetWidth
     Object.keys(globals.CARDS).forEach(card_id => drawCard(card_id, layout));
 }
 
