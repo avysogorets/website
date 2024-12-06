@@ -1,5 +1,5 @@
 .master-middle {
-    /*margin: 2%;*/
+    margin: calc(min(2%, 10px));
     margin-bottom: calc(2% + 10px);
     overflow-y: visible;
     flex-grow: 1;
