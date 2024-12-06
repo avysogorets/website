@@ -30,7 +30,9 @@ export class Phase_2 {
         for (const playerId of playerOrder) {
             this.localPlayerNames.push(globals.PLAYER_NAMES[playerId])
         }
-        return this.setupSelection();
+        promise = this.setupSelection();
+        phase_middle.offsetWidth
+        return promise
     };
 
     async dispatch() {

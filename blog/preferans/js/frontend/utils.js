@@ -229,9 +229,9 @@ export class MouseEventHandler {
     clearEvent(candidateElement) {
         this.eventElement.style.zIndex = parseInt(this.eventElement.style.zIndex)-2000;
         this.eventElement.classList.toggle('pressed')
-        console.log('1', this.eventElement.classList)
+        console.log('1', this.eventElement, this.eventElement.classList)
         this.eventElement.classList.remove('hover-style')
-        console.log('2', this.eventElement.classList)
+        console.log('2', this.eventElement, this.eventElement.classList)
         let eventPromise = Promise.resolve();
         if (this.eventElement.classList.contains('card')) {
             let closestTargetElement;
