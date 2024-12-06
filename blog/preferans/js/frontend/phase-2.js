@@ -25,6 +25,11 @@ export class Phase_2 {
                 cardElement.incLock()
             }
         }
+        const playerOrder = [1, 0, 2]
+        this.localPlayerNames = []
+        for (const playerId of playerOrder) {
+            this.localPlayerNames.push(globals.PLAYER_NAMES[playerId])
+        }
         return this.setupSelection();
     };
 
@@ -40,8 +45,8 @@ export class Phase_2 {
         return new Promise((resolve) => {
             let parameter_vals = {
                 "contract type": globals.GAME_NAMES,
-                "playing hand": globals.PLAYER_NAMES,
-                "first hand": globals.PLAYER_NAMES,
+                "playing hand": this.localPlayerNames,
+                "first hand": this.localPlayerNames,
                 "trump suit": globals.SUIT_NAMES.concat(["NA"])}
             const phase_middle = document.getElementById("middle-phase-2");
             Object.keys(parameter_vals).forEach(key => {

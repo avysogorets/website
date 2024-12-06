@@ -10,6 +10,11 @@ export class Phase_5  {
     };
 
     init() {
+        const playerOrder = [1, 0, 2]
+        const localPlayerNames = []
+        for (const playerId of playerOrder) {
+            localPlayerNames.push(globals.PLAYER_NAMES[playerId])
+        }
         this.result = this.dispatcher.phases[3].result
         const phase_middle = document.createElement("div");
         phase_middle.className = "middle-phase-5";
@@ -23,12 +28,12 @@ export class Phase_5  {
         expectedGrid.classList.add('results-grid')
         for (let i=0; i<3; i++)  {
             const info = document.createElement("div")
-            info.innerHTML = `${globals.PLAYER_NAMES[i]}`.toUpperCase()
+            info.innerHTML = `${localPlayerNames[i]}`.toUpperCase()
             expectedGrid.appendChild(info)
         }
         for (let i=0; i<3; i++)  {
             const res = document.createElement("div")
-            res.innerHTML = `${this.result["optimal"][i]}`.toUpperCase()
+            res.innerHTML = `${this.result["optimal"][playerOrder[i]]}`.toUpperCase()
             expectedGrid.appendChild(res)
         }
         phase_middle.appendChild(expectedGrid)
@@ -40,32 +45,15 @@ export class Phase_5  {
         actualGrid.classList.add('results-grid')
         for (let i=0; i<3; i++)  {
             const info = document.createElement("div")
-            info.innerHTML = `${globals.PLAYER_NAMES[i]}`.toUpperCase()
+            info.innerHTML = `${localPlayerNames[i]}`.toUpperCase()
             actualGrid.appendChild(info)
         }
         for (let i=0; i<3; i++)  {
             const res = document.createElement("div")
-            res.innerHTML = `${this.result["final"][i]}`.toUpperCase()
+            res.innerHTML = `${this.result["final"][playerOrder[i]]}`.toUpperCase()
             actualGrid.appendChild(res)
         }
         phase_middle.appendChild(actualGrid)
-        /*this.result = this.dispatcher.phases[3].result
-        this.result[" "] = globals.PLAYER_NAMES;
-        const keys = ["optimal", " ", "final"]
-        keys.forEach(key => {
-            const keyText = document.createElement('div');
-            keyText.style.textAlign = 'center';
-            phase_middle.appendChild(keyText);
-            keyText.innerText = `${key}`.toUpperCase();
-        });
-        for (let i=0; i<3; i++)  {
-            keys.forEach(key => {
-                const valText = document.createElement('div');
-                valText.style.textAlign = 'center';
-                phase_middle.appendChild(valText);
-                valText.innerText = `${this.result[key][i]}`.toUpperCase();
-            });
-        };*/
         const newGameButton = createButton()
         newGameButton.innerText = "NEW GAME";
         newGameButton.clickLogic = () => this.dispatch();

@@ -1,5 +1,5 @@
 export const _CSS_VARIABLES = {
-    'transition-time': 1,
+    'transition-time': 0.4,
     'font-size': 20,
     'border-width': 2,
     'button-font-size': 18,
