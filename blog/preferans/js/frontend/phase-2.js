@@ -31,7 +31,7 @@ export class Phase_2 {
             this.localPlayerNames.push(globals.PLAYER_NAMES[playerId])
         }
         const promise = this.setupSelection();
-        /*phase_middle.offsetWidth*/
+        phase_middle.offsetWidth
         return promise
     };
 
