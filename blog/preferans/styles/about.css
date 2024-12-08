@@ -12,7 +12,6 @@
     z-index: 4999;
     background-color: transparent;
     transition: background-color var(--transition-time) ease-in;
-    -webkit-overflow-scrolling: touch;
 }
 
 .about-button {
