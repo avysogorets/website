@@ -104,7 +104,8 @@
 }
 
 .hand-info-vert-east {
-    display: none;
+    /*display: none;*/
+    visibility: hidden;
     background-color: white;
     user-select: none;
     text-orientation: upright;
@@ -117,7 +118,8 @@
 
 
 .hand-info-vert-west {
-    display: none;
+    /*display: none;*/
+    visibility: hidden;
     background-color: white;
     user-select: none;
     text-orientation: upright;

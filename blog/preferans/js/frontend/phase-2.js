@@ -30,8 +30,8 @@ export class Phase_2 {
         for (const playerId of playerOrder) {
             this.localPlayerNames.push(globals.PLAYER_NAMES[playerId])
         }
-        promise = this.setupSelection();
-        phase_middle.offsetWidth
+        const promise = this.setupSelection();
+        /*phase_middle.offsetWidth*/
         return promise
     };
 
