@@ -163,6 +163,7 @@ export class Phase_2 {
             buttonSuit.removeChild(buttonSuit.firstChild)
             buttonSuit.appendChild(IMAGES["suits"]["normal"][suit])
             buttonSuit.classList.remove('selected')
+            buttonSuit.setLock(false)
             buttonSuit.setBlock(true)
         });
         let buttonNA = document.getElementById('trump suit:NA');
