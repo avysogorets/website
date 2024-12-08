@@ -23,7 +23,6 @@ export function createAbout() {
         buttonText.style.transition = `opacity ${fadeDuration}ms ease`;
         buttonText.innerHTML = 'ABOUT'
         contentElement.innerHTML = await (async () => loadContent())()
-        console.log(1000*globals.CSS_VARIABLES["transition-time"])
         aboutButton.clickLogic = () => {
             return new Promise((resolve) => {
                 const main = document.getElementById('main');

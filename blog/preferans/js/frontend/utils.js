@@ -119,10 +119,16 @@ export function createButton(isDraggable=false) {
     buttonElement.public_block = false
     buttonElement.isDraggable = isDraggable
     buttonElement.addEventListener('mouseenter', function() {
-        buttonElement.classList.add('hover-style');
+        const layout = updateLayout()
+        if (layout == globals.LAYOUT_DESKTOP) {
+            buttonElement.classList.add('hover-style')
+        }
     });
     buttonElement.addEventListener('mouseleave', function() {
-        buttonElement.classList.remove('hover-style');
+        const layout = updateLayout()
+        if (layout == globals.LAYOUT_DESKTOP) {
+            buttonElement.classList.remove('hover-style')
+        }
     });
     buttonElement.clickLogic = async () => {
         throw ErrorEvent('click logic in not defined')
@@ -156,6 +162,9 @@ export function createButton(isDraggable=false) {
         buttonElement.public_block = value
         buttonElement.updateState()
     }
+    buttonElement.isActive = () => {
+        return !(buttonElement.public_block || buttonElement.private_lock || buttonElement.public_lock)
+    }
     return buttonElement
 }
 
@@ -176,7 +185,7 @@ export class MouseEventHandler {
         document.addEventListener('mousedown', async (event) => {
             event.preventDefault();
             const candidateElement = getButton(event.target)
-            if (!this.eventElement && candidateElement) {
+            if (!this.eventElement && candidateElement && candidateElement.isActive()) {
                 const clientX = event.clientX;
                 const clientY = event.clientY;
                 this.registerEvent(clientX, clientY, candidateElement)
@@ -201,7 +210,7 @@ export class MouseEventHandler {
         document.addEventListener('touchstart', async (event) => {
             event.preventDefault();
             const candidateElement = getButton(event.target)
-            if (!this.eventElement && candidateElement) {
+            if (!this.eventElement && candidateElement && candidateElement.isActive()) {
                 const clientX = event.touches[0].clientX;
                 const clientY = event.touches[0].clientY;
                 this.registerEvent(clientX, clientY, candidateElement)
@@ -229,9 +238,7 @@ export class MouseEventHandler {
     clearEvent(candidateElement) {
         this.eventElement.style.zIndex = parseInt(this.eventElement.style.zIndex)-2000;
         this.eventElement.classList.toggle('pressed')
-        console.log('1', this.eventElement, this.eventElement.classList)
         this.eventElement.classList.remove('hover-style')
-        console.log('2', this.eventElement, this.eventElement.classList)
         let eventPromise = Promise.resolve();
         if (this.eventElement.classList.contains('card')) {
             let closestTargetElement;
