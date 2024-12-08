@@ -116,6 +116,7 @@ button.blocked {
     background-color: #ddd;
     color:#555;
     cursor: default;
+    pointer-events: none;
 }
 
 /*

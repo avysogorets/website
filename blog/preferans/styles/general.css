@@ -1,5 +1,6 @@
 :root {
     --font-familiy: Arial, Helvetica, sans-serif;
+    
 }
 
 .main {
@@ -17,6 +18,10 @@
     font-size: var(--font-size);
     font-family: var(--font-familiy);
     opacity: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     transition: filter var(--transition-time) ease-in, opacity var(--transition-time) ease-in;
 }
 

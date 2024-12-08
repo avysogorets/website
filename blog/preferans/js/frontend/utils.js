@@ -329,9 +329,7 @@ function getButton(element, mindLock=true) {
     let candidateElement = element
     while (candidateElement.parentElement) {
         if (candidateElement.tagName === 'BUTTON') {
-            const isLocked = candidateElement.classList.contains('locked')
-            const isBlocked = candidateElement.classList.contains('blocked')
-            if (!mindLock || (!isLocked && !isBlocked)) {
+            if (!mindLock || candidateElement.isActive()) {
                 return candidateElement
             }
             else {
