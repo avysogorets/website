@@ -24,14 +24,15 @@ export class Phase_3 {
             this.messageContainer = document.createElement('div')
             this.messageContainer.classList.add('message-container')
             this.phase_middle.appendChild(this.messageContainer)
-            const buttonStrip = document.createElement('div');
-            buttonStrip.classList.add('button-strip')
-            buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
+            this.buttonStrip = document.createElement('div');
+            this.buttonStrip.classList.add('button-strip')
+            this.buttonStrip.style.gridTemplateColumns = `repeat(1, 1fr)`
             this.startButton = createButton()
             this.startButton.innerHTML = 'START'
             this.startButton.setBlock(true)
-            buttonStrip.appendChild(this.startButton)
-            this.phase_middle.appendChild(buttonStrip);
+            this.buttonStrip.appendChild(this.startButton)
+            this.phase_middle.appendChild(this.buttonStrip);
+            this.messageContainer.innerHTML = `STATES SOLVED <div class="counter">0</div>`;
             let parameters = this.dispatcher.phases[1].parameters;
             let type = globals.GAME_NAMES.indexOf(parameters["contract type"]);
             let player_id = globals.PLAYER_NAMES.indexOf(parameters["playing hand"]);
