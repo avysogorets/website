@@ -1,6 +1,6 @@
 :root {
     --font-familiy: Arial, Helvetica, sans-serif;
-    
+    overscroll-behavior: none;
 }
 
 .main {
