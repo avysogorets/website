@@ -48,10 +48,6 @@ class FrontendDispatcher {
 };
 
 
-window.addEventListener("orientationchange", function() {
-    console.log('orientation change!')
-})
-
 document.addEventListener('DOMContentLoaded', async () => {
     await createAbout();
     document.addEventListener('dragover', (event) => {
