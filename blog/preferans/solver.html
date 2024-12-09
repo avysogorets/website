@@ -30,7 +30,7 @@
 		</script>
     	<title>PreferAnswer</title>
 	</head>
-<body style="background: white; overscroll-behavior:none;">
+<body style="background: white;">
     <header class="header">
         <a href="/" class="logo">
             <img src="/imgs/av/horz_ww_logo-nb.png" onmouseover="this.src='/imgs/av/horz_ww_logo-active.png';" onmouseout="this.src='/imgs/av/horz_ww_logo-nb.png';" style="width:100%">
@@ -55,10 +55,15 @@
             </ul>
         </menu>
     </header>
-    <div style="display: flex; flex-direction: column; height: calc(100% - 52px); overflow-y: scroll; overflow-x: hidden;">
+    <div style="display: flex; flex-direction: column; height: calc(100% - 52px); overflow-y: scroll; overflow-x: hidden; overscroll-behavior:none;">
         <div class="about-container" id="about-container"></div>
         <div style="display: flex; flex-direction: column; align-items: center; height: 100%; flex-grow: 1;">   
-        <div class="main", id="main">
+            <div class="loader" id="loading">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+            <div class="main", id="main">
             <div class="middle-main", id="middle-main">
                 <div class="hand-container-vert">
                     <div class="hand-vert-named">
@@ -72,7 +77,6 @@
                     </div>
                 </div>
                 <div class="master-middle", id="master-middle">
-                    <span class="counter">LOADING...</span>
                     <!-- ... -->
                 </div>
                 <div class="hand-container-vert">

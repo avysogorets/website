@@ -54,9 +54,6 @@ export class Phase_1 {
 
     async init() {
         return new Promise(async (resolve) => {
-            while (this.master_middle.firstChild) {
-                this.master_middle.removeChild(this.master_middle.firstChild)
-            }
             const phase_middle = document.createElement('div');
             phase_middle.className = 'middle-phase-1';
             this.master_middle.appendChild(phase_middle)
@@ -111,6 +108,8 @@ export class Phase_1 {
             }
             this.updateHighlights();
             const promises = []
+            const loadingElement = document.getElementById('loading')
+            loadingElement.parentElement.removeChild(loadingElement)
             document.getElementById('main').style.opacity = 1;
             for (const card_id of Object.keys(globals.CARDS)) {
                 promises.push(this.createCard(card_id, suitContainers, this.dispatcher.hands))};
