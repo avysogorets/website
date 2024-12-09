@@ -95,10 +95,10 @@ body {
 .content {
     height: 100%;
     background: var(--c);
-    padding-top: max(20px, min(7%, 30px));
-    padding-bottom: max(45px, min(7%, 50px));
-    padding-left: max(25px, min(5%, 70px));
-    padding-right: max(20px, min(5%, 50px));
+    padding-top: 20px;
+    margin-bottom: auto;
+    margin-left: max(25px, min(5%, 70px));
+    margin-right: max(20px, min(5%, 50px));
     flex-direction: column;
     display: flex;
     flex-grow: 1;
@@ -145,8 +145,6 @@ body {
 
 .small-text {
     font-family: Arial, Helvetica, sans-serif;
-    /*margin-top: 2%;
-    margin-bottom: 2%;*/
     padding-right: 0;
     font-weight: 100;
     color: var(--c);
@@ -190,6 +188,7 @@ body {
 
 .paper {
     height: 120px;
+    margin-left: 10px;
     max-width: 100%;
     display: flex;
     justify-items: start;
@@ -296,9 +295,10 @@ mjx-container[jax="CHTML"][display="true"] {
 }
 
 .paper-icon {
+    background:black;
     height:87px;
     width:67px;
-    background:black;
+
 }
 
 .categories {
@@ -416,8 +416,7 @@ header menu {
 
 
 @media (
-    max-width: 700px
-)
+    max-width: 700px)
 {
     .side-panel {display: none;}
     /*.content {height: calc(100% - 50px)}*/
@@ -436,3 +435,4 @@ header menu {
     .math-float {height: 100px;}
     .math-float-center {height: 100px;}
 }
+
