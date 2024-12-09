@@ -48,6 +48,10 @@ class FrontendDispatcher {
 };
 
 
+if (window.matchMedia("(orientation: portrait)").matches) {
+    screen.orientation.lock("portrait");
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     await createAbout();
     document.addEventListener('dragover', (event) => {
