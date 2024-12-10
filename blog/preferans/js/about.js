@@ -16,6 +16,8 @@ export function createAbout() {
         const contentElement = document.createElement('div')
         const buttonText = document.createElement('span')
         contentElement.classList.add('about-content')
+        const creditElement = document.createElement('div')
+        creditElement.innerHTML = '<div class="credit">Developed and designed by Artem Vysogorets, 2024.</div>'
         const aboutButton = createButton()
         aboutButton.classList.add('about-button')
         aboutButton.appendChild(buttonText)
@@ -23,6 +25,8 @@ export function createAbout() {
         buttonText.style.transition = `opacity ${fadeDuration}ms ease`;
         buttonText.innerHTML = 'ABOUT'
         contentElement.innerHTML = await (async () => loadContent())()
+        contentElement.appendChild(creditElement)
+        console.log(contentElement.childNodes)
         aboutButton.clickLogic = () => {
             return new Promise((resolve) => {
                 const main = document.getElementById('main');

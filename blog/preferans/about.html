@@ -1,13 +1,14 @@
+<div style="padding: 15px">
 <span style="font-weight: bold;">What is PreferAnswer?</span>
-<span>PreferAnswer is an app that solves instances of Preferans by simulating all possible gameplay scenarios. Given the deal and game parameters (contract, turn, etc.), it guides you through the optimal play for each player. Since it has to know about all cards, PreferAnswer does not support all-passes (you probably don't need PreferAnswer for all-passes anyway).</span>
+<span>PreferAnswer is an assistant that solves instances of Preferans by simulating all possible gameplay scenarios. Given the deal and game parameters (contract, turn, etc.), it guides you through the optimal play for each player and recaclulates the predictions based on the moves you make. Since it has to know about all cards, PreferAnswer does not support all-passes (you probably don't need PreferAnswer for all-passes anyway). PreferAnswer can be used in a real whist-pass game when playing in the light or to analyze interesting deals and alternative gameplay scenarios for practice.</span>
 <hr style="height:15px; visibility:hidden;"/>
 <span style="font-weight: bold;">How it works?</span>
-<span>Under the hood, PreferAnswer performs an exhaustive search (DFS with memoization) over all possible game states. During execution, it shows you in real-time how many (sub)games have already been processed. The optimized game serialization plays a key role in the algorithm's speed by hashing many different but essentially equivalent game states in the same way, thus avoiding unnecessary computations; the hash table hit rate for an average deal is approximately 40%. Can you think of games with technically different cards in hands but that are equivalent to each other? What about equivalent moves in a turn?</span>
+<span>Under the hood, PreferAnswer performs an exhaustive search (DFS with memoization) over all possible game states. During execution, it shows you in real-time how many (sub)games have already been processed. The optimized game serialization plays a key role in the algorithm's speed by hashing many different but equivalent game states in the same way, thus avoiding unnecessary computations; the hash table hit rate for an average deal is approximately 40%. Can you think of games with technically different cards in hands but that are equivalent to each other? What about equivalent moves in a turn?</span>
 <hr style="height:15px; visibility:hidden;"/>
 <span style="font-weight: bold;">Quick guide</span>
-<span>PreferAnswer highlights the cards that are optimal to play on each turn. It assumes that both whisting hands aim to screw the player, i.e., minimize (or maximize) the final number of tricks taken by the player in a regular game (or misere). The first number next to each hand represents the current number of tricks taken, and the second number represents the predicted final number of tricks under optimal play by all.</span>
-<hr style="height:25px; visibility:hidden;"/>
-<span style="font-weight: bold;">Enjoying PreferAnswer? <a href='https://donate.stripe.com/00g02a74L2ltb5KdQQ' style="text-decoration:none"><span class="text-focused-dark" style="font-style: italic; font-weight: bold;">Buy me a coffee :)<span></a></span>
+<span>PreferAnswer highlights the cards that are optimal to play on each turn. It assumes that both whisting hands aim to screw the playe&mdash;minimize (maximize) the final number of tricks taken by the player in a regular game (misere). The first number (in a white box) next to each hand represents the current number of tricks taken, and the second number (in a black box)&mdash;the predicted final number of tricks under optimal play by all. </span>
 <hr style="height:15px; visibility:hidden;"/>
-<hr style="border: none; height: 2px; background-color: #aaa; margin-bottom: 10px;">
-Developed and designed by Artem Vysogorets, 2024.
+<span style="font-weight: bold;">Enjoying PreferAnswer? <a href='https://donate.stripe.com/00g02a74L2ltb5KdQQ' style="text-decoration:none"><span class="text-focused-dark" style="font-style: italic; font-weight: bold;">Buy me a coffee :)<span></a></span>
+<!--<hr style="height:15px; visibility:hidden;"/>
+<hr style="height:15px; visibility:hidden;"/>-->
+</div>

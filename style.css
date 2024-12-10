@@ -96,10 +96,10 @@ body {
     height: 100%;
     background: var(--c);
     padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     overflow-x: hidden;
-    margin-bottom: auto;
-    margin-left: max(25px, min(5%, 70px));
-    margin-right: max(20px, min(5%, 50px));
     flex-direction: column;
     display: flex;
     flex-grow: 1;
@@ -195,7 +195,7 @@ body {
     justify-items: start;
     align-items: center;
     color: black;
-    margin-top:4%;
+    margin-top: 20px;
 }
 
 it {
@@ -214,14 +214,12 @@ mjx-container[jax="CHTML"][display="true"] {
 .home-sci {
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
-    margin-top: min(30px, 10%);
-    margin-bottom: 50px;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-top: auto;
+    padding-top: 30px;
+    margin-bottom: 30px;
     padding-left: auto;
     padding-right: auto;
-    justify-content: space-evenly;
+    justify-content: space-between;
     background: black;
     align-items: center;
 }
@@ -297,9 +295,8 @@ mjx-container[jax="CHTML"][display="true"] {
 
 .paper-icon {
     background:black;
-    height:87px;
-    width:67px;
-
+    height: 100px;
+    width: fit-content
 }
 
 .categories {
@@ -427,12 +424,9 @@ header menu {
     .big-text {font-size: 20px;}
     .middle-text {font-size: 16px;}
     .small-text {font-size: 14px;}
-    .home-sci {justify-content: space-between;
-        margin-top: 15%;
-        margin-bottom: 15%;}
     .paper {max-width: 100%;
-        margin-top:1%;}
-    .paper-icon {height: 85%;}
+        margin-top: 15px;}
+    .paper-icon {height: 85px;}
     .math-float {height: 100px;}
     .math-float-center {height: 100px;}
 }
