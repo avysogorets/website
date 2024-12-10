@@ -2,6 +2,10 @@
     --font-familiy: Arial, Helvetica, sans-serif;
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .main {
@@ -19,10 +23,6 @@
     font-size: var(--font-size);
     font-family: var(--font-familiy);
     opacity: 0;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     transition: filter var(--transition-time) ease-in, opacity var(--transition-time) ease-in;
 }
 
@@ -184,6 +184,13 @@
 
 .text-focused {
     background: linear-gradient(45deg, violet, rgb(93, 184, 249));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-focused-dark {
+    background: linear-gradient(45deg, rgb(218, 113, 218), rgb(80, 161, 220));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

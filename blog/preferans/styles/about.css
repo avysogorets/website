@@ -1,6 +1,6 @@
 .about-container {
     position: relative;
-    /*overscroll-behavior: none;*/
+    user-select: none;
     width: 100%;
     font-family: var(--font-familiy);
     font-size: var(--info-font-size);
@@ -8,7 +8,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /*overflow-y: hidden;*/
     z-index: 4999;
     background-color: transparent;
     transition: background-color var(--transition-time) ease-in;
