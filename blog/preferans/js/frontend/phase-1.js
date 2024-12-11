@@ -83,7 +83,7 @@ export class Phase_1 {
             for (let i=0; i<globals.SUIT_NAMES.length; i++) {
                 const thisSuitButton = this.suitStrip.childNodes[i]
                 thisSuitButton.clickLogic = () => {
-                    this.switchActiveSuit(i)
+                    return this.switchActiveSuit(i)
                 }
             }
             const spadesButton = this.suitStrip.childNodes[globals.SPADES]
@@ -110,6 +110,7 @@ export class Phase_1 {
             const promises = []
             const loadingElement = document.getElementById('loading')
             loadingElement.parentElement.removeChild(loadingElement)
+            loadingElement.style.display = 'none'
             document.getElementById('main').style.opacity = 1;
             for (const card_id of Object.keys(globals.CARDS)) {
                 promises.push(this.createCard(card_id, suitContainers, this.dispatcher.hands))};

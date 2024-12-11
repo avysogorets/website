@@ -51,7 +51,12 @@
         </menu>
     </header>
 	<div class="panel" style="--c:black;">
-		<div class="content" style="--c:black;">
+        <div class="loader" id="loading">
+            <div class="inner one" style="--c:white"></div>
+            <div class="inner two" style="--c:white"></div>
+            <div class="inner three" style="--c:white"></div>
+        </div>
+		<div class="content wait" style="--c:black;">
 			<div class="big-text" style="--c:white">
 				Selected Publications
 			</div>
@@ -142,5 +147,6 @@
 		</div>
 	</div>
 <script src="/utils.js"></script>
+<script src="/loading.js"></script>
 </body>
 </html>
