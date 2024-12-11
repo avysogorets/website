@@ -73,6 +73,9 @@ export const preloadImages = async () => {
         Object.keys(images).forEach(key => {
             Object.keys(CARDS).forEach(card_id => {
                 const img = new Image();
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
                 const card_key = `${CARDS[card_id].suit}_${CARDS[card_id].kind}`;
                 img.src = IMG_PATH + `card_imgs_${key}/${card_key}.png`;
                 const imgLoadPromise = new Promise((imgResolve) => {
