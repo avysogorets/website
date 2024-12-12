@@ -182,13 +182,13 @@ export class MouseEventHandler {
         this.dispatcher = dispatcher;
         this.mainElement = document.getElementById("main")
 
-        /*this.mainElement.addEventListener('dblclick', function(event) {
+        document.addEventListener('dblclick', function(event) {
             event.preventDefault();
         },{passive: false});
 
-        this.mainElement.addEventListener('contextmenu', function(event) {
+        document.addEventListener('contextmenu', function(event) {
             event.preventDefault();
-        },{passive: false});*/
+        },{passive: false});
     
         document.addEventListener('mousedown', async (event) => {
             event.preventDefault();
@@ -217,14 +217,13 @@ export class MouseEventHandler {
 
         document.addEventListener('touchstart', async (event) => {
             event.preventDefault();
-            const candidateElement = getButton(event.target)
-            if (!this.eventElement && candidateElement && candidateElement.isActive()) {
-                const clientX = event.touches[0].clientX;
-                const clientY = event.touches[0].clientY;
-                this.registerEvent(clientX, clientY, candidateElement)
-                await updateButtonsLock(globals.START)
-            }
-        },{ passive: false });
+            await this.touchStart(event)
+            },{ passive: true });
+
+        this.mainElement.addEventListener('touchstart', async (event) => {
+            event.preventDefault();
+            await this.touchStart(event)
+            },{ passive: false });
 
         document.addEventListener('touchmove', (event) => {
             if (this.eventElement && this.eventElement.isDraggable) {
@@ -242,6 +241,17 @@ export class MouseEventHandler {
             }
         });
     };
+
+    touchStart(e) {
+        const candidateElement = getButton(e.target)
+        if (!this.eventElement && candidateElement && candidateElement.isActive()) {
+            const clientX = e.touches[0].clientX;
+            const clientY = e.touches[0].clientY;
+            this.registerEvent(clientX, clientY, candidateElement)
+            return updateButtonsLock(globals.START)
+        }
+        return Promise.resolve()
+    }
 
     clearEvent(candidateElement) {
         this.eventElement.style.zIndex = parseInt(this.eventElement.style.zIndex)-2000;
