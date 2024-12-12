@@ -181,6 +181,14 @@ export class MouseEventHandler {
             'initialY': NaN}
         this.dispatcher = dispatcher;
         this.mainElement = document.getElementById("main")
+
+        document.addEventListener('dblclick', function(event) {
+            event.preventDefault();
+        },{passive: false});
+
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        },{passive: false});
     
         document.addEventListener('mousedown', async (event) => {
             event.preventDefault();
@@ -216,7 +224,7 @@ export class MouseEventHandler {
                 this.registerEvent(clientX, clientY, candidateElement)
                 await updateButtonsLock(globals.START)
             }
-        });
+        },{ passive: false });
 
         document.addEventListener('touchmove', (event) => {
             if (this.eventElement && this.eventElement.isDraggable) {

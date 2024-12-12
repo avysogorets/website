@@ -9,9 +9,6 @@ import { createAbout } from '../about.js'
 
 export let IMAGES;
 applyCSSVariables()
-window.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
 
 
 class FrontendDispatcher {
