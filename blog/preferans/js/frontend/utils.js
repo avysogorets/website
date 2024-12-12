@@ -182,13 +182,13 @@ export class MouseEventHandler {
         this.dispatcher = dispatcher;
         this.mainElement = document.getElementById("main")
 
-        this.mainElement.addEventListener('dblclick', function(event) {
+        /*this.mainElement.addEventListener('dblclick', function(event) {
             event.preventDefault();
         },{passive: false});
 
         this.mainElement.addEventListener('contextmenu', function(event) {
             event.preventDefault();
-        },{passive: false});
+        },{passive: false});*/
     
         document.addEventListener('mousedown', async (event) => {
             event.preventDefault();
