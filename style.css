@@ -97,7 +97,7 @@ body {
     background: var(--c);
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-left: 20px;
+    margin-left: max(3%, 10px);
     margin-right: 20px;
     overflow-x: hidden;
     overscroll-behavior: none;
