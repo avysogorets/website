@@ -97,8 +97,8 @@ body {
     background: var(--c);
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-left: max(3%, 10px);
-    margin-right: 20px;
+    margin-left: calc(5px + max(3%, 0px));
+    margin-right: calc(5px + max(3%, 0px));
     overflow-x: hidden;
     overscroll-behavior: none;
     flex-direction: column;
