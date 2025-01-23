@@ -494,6 +494,8 @@ header menu {
     .big-text {font-size: 20px;}
     .middle-text {font-size: 16px;}
     .small-text {font-size: 14px;}
+    .content {margin-left: 10%;
+        margin-right: 10%;}
     .paper {max-width: 100%;
         margin-top: 15px;}
     .paper-icon {height: 85px;}
