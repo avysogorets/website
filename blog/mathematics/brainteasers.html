@@ -17,7 +17,8 @@
     	<link type="text/css" rel="stylesheet" href="/style.css?v24" />
     	<link rel="preconnect" href="https://fonts.googleapis.com">
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
 		<script id="MathJax-script" async
@@ -49,9 +50,9 @@
         </nav>
         <menu>
             <div class="menu-icon">
-                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+                <i class='bx bx-menu' style="color:#e8e8e8;font-size:34px;cursor:pointer;margin-right:15px;"></i>
             </div>
-            <ul class="menu-dropdown" style="background:black;">
+            <ul class="menu-dropdown" style="background:#1a1a1a;">
                 <li><a href="/" style="--i:0" class="menu-option-vert">Home</a></li>
                 <li><a href="/aboutme" style="--i:0;" class="menu-option-vert">About me</a></li>
                 <li><a href="/publications" style="--i:0;" class="menu-option-vert">Publications</a></li>
@@ -98,7 +99,7 @@
                     <li>
                         <div style="margin-top:3px;margin-left:10px;">
                             <span class="small-text" style="--c:rgb(88,88,88);--d:1;cursor: pointer;" onclick="jump('#island')">
-                                4. a hundered islanders with blue eyes
+                                4. a hundred islanders with blue eyes
                             </span>
                         </div>
                     </li>
@@ -261,7 +262,7 @@
             <hr style="height:5px; visibility:hidden;"/>
             </span>
             <ul id='1-S' class="subcategories" style="color:black;margin-bottom:5px;">
-            Take <it>any</it> \(k\) cards from the deck (with an unknown \(x\) of them face-down) and flip them. The remainder of the deck now has \(k-x\) cards dace-down. The other part originally contained \(x\) cards face-down but
+            Take <it>any</it> \(k\) cards from the deck (with an unknown \(x\) of them face-down) and flip them. The remainder of the deck now has \(k-x\) cards face-down. The other part originally contained \(x\) cards face-down but
             after the flip it has become \(k-x\) as well. <span style="float:right"><i class='bx bx-square'></i></span>
             </ul>
             <hr style="height:15px; visibility:hidden;"/>
@@ -320,7 +321,7 @@
                     \[p(n) = \frac{1}{n}\left(2 + \sum_{m=2}^{n-2}{p(n-m+1)}\right)\]
                     where \(2 = 1 + 1\) comes from \(m=1\) (\(P_1\) takes his own seat) and \(m=n-1\) (\(P_n\) is guaranteed his seat). Assuming that \(p(k)=50\%,\) for all \(1 < k < n\) as an induction hypothesis, we compute \(p(n) = \frac{1}{n}(50\%\cdot(n-4) + 2) = 50\%.\)<span style="float:right"><i class='bx bx-square'></i></span>
                     <hr style="height:5px; visibility:hidden;"/>
-                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy their assigned seats and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n.\) Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
+                    A more elegant approach is to reformulate the boarding procedure in an equivalent but more intuitive way. As is likely to happen in real life, assume passengers \(P_2, P_3, \ldots, P_{n-1}\) each occupy their assigned seats and, in case it is already taken, kindly ask the squatter to move. While this will result in a different arrangement than in the original problem, it clearly does not affect the odds of the last passenger getting the correct seat. In this scenario, all passengers \(P_2\) through \(P_{n-1}\) sit in the right places while \(P_1\) is getting moved across the cabin unless he settles for his own seat or the seat of \(P_n.\) Each time someone kicks him out, \(P_1\) is equally likely to move to either of these two seats, so the probability that either of these two seats is available by the time \(P_n\) arrives should be the same by symmetry. Finally, note that these two seats are the only ones that can potentially remain unoccupied when \(P_n\) boards the flight.<span style="float:right"><i class='bx bx-square'></i></span>                 
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="geo">
@@ -333,7 +334,7 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='10-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                One obvious solution is the South pole; but there's more, infinitely many more. The other solutions are in the vicinity of the North pole so that moving 10 miles East comprises a full circle (or multiple circles) around the Earth.  For this to happen, the original starting point should be 10 miles South of one of such concentric circles, so we first move up, make one or more loops (10 miles) around the North pole, and come back down.
+                One obvious solution is the South pole; but there are more, infinitely many more. The other solutions are in the vicinity of the North pole so that moving 10 miles East comprises a full circle (or multiple circles) around the Earth.  For this to happen, the original starting point should be 10 miles South of one of such concentric circles, so we first move up, make one or more loops (10 miles) around the North pole, and come back down.
                 Thus, the full solution is the South pole union a countable collection of
                 concentric circles around the North pole.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
@@ -350,7 +351,7 @@
                 <ul id='GL8' class="subcategories" style="color:black;margin-bottom:5px;">
                 <span class="math-float" style="--s:left"><img src="/blog/imgs/gl-lake.png" style="height:100%"></span>
                 Since the ratio of their speeds is \(4,\) the angular velocity of the prisoner is larger than the angular velocity of the guard provided that the prisoner stays within the circle of radius \(R/4.\) It then follows that he can eventually get to be opposite to the guard on that circle (see the picture).
-                When this happens, the prisoner needs to smiw \(\frac{3R}{4}\) to the nearest point on the ground whereas the guard must cover \(\pi R\) to get there. Therefore, the prisoner will be able to escape. <span style="float:right"><i class='bx bx-square'></i></span>
+                When this happens, the prisoner needs to swim \(\frac{3R}{4}\) to the nearest point on the ground whereas the guard must cover \(\pi R\) to get there. Therefore, the prisoner will be able to escape. <span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="level">
@@ -374,7 +375,7 @@
             </div>
             <span id="badges">
                 <span style="color:black;font-weight:bold;">1. Identify the hiding employee. </span> Each employee of a large corporation has a badge with a unique integer ID number. Every time an employee enters or leaves the office
-                building, they scan their badge at the gates, which gets registered in the daily logs. One day, exaclty one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
+                building, they scan their badge at the gates, which gets registered in the daily logs. One day, exactly one employee stayed in the office overnight. Given the logs for that day, write an algorithm that finds the ID number of that employee in \(O(N)\) time and \(O(1)\)
                 extra space where \(N\) is the total number of employees. 
             </span>
             <br>

@@ -17,6 +17,7 @@
     	<link type="text/css" rel="stylesheet" href="/style.css?v24" />
     	<link rel="preconnect" href="https://fonts.googleapis.com">
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
@@ -49,9 +50,9 @@
         </nav>
         <menu>
             <div class="menu-icon">
-                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+                <i class='bx bx-menu' style="color:#e8e8e8;font-size:34px;cursor:pointer;margin-right:15px;"></i>
             </div>
-            <ul class="menu-dropdown" style="background:black;">
+            <ul class="menu-dropdown" style="background:#1a1a1a;">
                 <li><a href="/" style="--i:0" class="menu-option-vert">Home</a></li>
                 <li><a href="/aboutme" style="--i:0;" class="menu-option-vert">About me</a></li>
                 <li><a href="/publications" style="--i:0;" class="menu-option-vert">Publications</a></li>
@@ -67,7 +68,7 @@
             </div>
             <ul style="list-style:none;">
                 <li>
-                    <div style="padding-top:3px;;">
+                    <div style="padding-top:3px;">
                         <a href="#intro" style="text-decoration: none;" onclick="jump('#into')">
                             <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
                                 1. Introduction
@@ -87,7 +88,7 @@
                 countable collection \(\{A_i\}_{i\in I}\) of disjoint subsets \(A_i\in\mathcal{A}\), we have \(\mathbb{P}\left(\bigcup_{i\in I}A_i\right)=\sum_{i\in I}\mathbb{P}(A_i)\). The triplet \((\Omega, \mathcal{A}, \mathbb{P})\) is called a probability space.
                 <hr style="height:10px; visibility:hidden;"/>
                 Note that, in general, infinite sums require extra care as they may have different values for different rearrangements of the summands (see conditionally convergent series). However, the positivity assumption on \(\mathbb{P}\) makes the above infinite series absolutely convergent, and so its value is independent of the order of individual terms.
-                The prefix <it>sigma-</it> in sigma-additivity highlights that the corresponding property holds for countably infinite collections \(\{A_i\}_{i\in I}\). In constrast, additivity ensures the condition only for finite collections of subsets.
+                The prefix <it>sigma-</it> in sigma-additivity highlights that the corresponding property holds for countably infinite collections \(\{A_i\}_{i\in I}\). In contrast, additivity ensures the condition only for finite collections of subsets.
                 <hr style="height:15px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [continuity of probabilities]. Given a monotone increasing sequence \(\{A_i\}_{i=1}^{\infty}\) of events (\(A_i\subseteq A_{i+1}\) for all \(i\)) with a limit \(A=\bigcup_{i=1}^{\infty}\) (often written as \(A_i\uparrow A\)), we have \(\lim_{n\rightarrow\infty}\mathbb{P}(A_n)=\mathbb{P}(A)\).
                 <br>
@@ -117,7 +118,7 @@
                 as desired.
                 </ul>
                 <hr style="height:10px; visibility:hidden;"/>
-                Note that \(\mathbb{P}(B|A) = \mathbb{P}(B)\) is \(A,B\) are two independent events.
+                Note that \(\mathbb{P}(B|A) = \mathbb{P}(B)\) if \(A,B\) are two independent events.
                 <hr style="height:10px; visibility:hidden;"/>
                 <span style="font-weight: bold;"> Proposition</span> [chain rule]. Let \(\{A_i\}_{i=1}^{n}\) be a collection of events such that \(\mathbb{P}\left(\bigcap_{i=1}^{n-1}A_i\right)>0\). Then, \[\mathbb{P}\left(\bigcap_{i=1}^nA_i\right)=\mathbb{P}(A_1)\mathbb{P}(A_2|A_1)\mathbb{P}(A_3|A_1\cap A_2)\ldots\mathbb{P}\left(A_n\Big|\bigcap_{i=1}^{n-1}A_i\right).\]
                 <br>

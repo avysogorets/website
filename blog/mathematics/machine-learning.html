@@ -16,7 +16,8 @@
     	<link type="text/css" rel="stylesheet" href="/style.css?v24" />
     	<link rel="preconnect" href="https://fonts.googleapis.com">
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
 		<script id="MathJax-script" async
@@ -48,9 +49,9 @@
         </nav>
         <menu>
             <div class="menu-icon">
-                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+                <i class='bx bx-menu' style="color:#e8e8e8;font-size:34px;cursor:pointer;margin-right:15px;"></i>
             </div>
-            <ul class="menu-dropdown" style="background:black;">
+            <ul class="menu-dropdown" style="background:#1a1a1a;">
                 <li><a href="/" style="--i:0" class="menu-option-vert">Home</a></li>
                 <li><a href="/aboutme" style="--i:0;" class="menu-option-vert">About me</a></li>
                 <li><a href="/publications" style="--i:0;" class="menu-option-vert">Publications</a></li>
@@ -66,7 +67,7 @@
             </div>
             <ul style="list-style:none;">
                 <!--<li>
-                    <div style="padding-top:3px;;">
+                    <div style="padding-top:3px;">
                         <a href="#INTRO" style="text-decoration: none;" onclick="jump('#intro')">
                             <span class="middle-text" style="--c:rgb(88,88,88);--d:1;">
                                 1. Introduction: Models
@@ -89,13 +90,13 @@
                 <div style="flex-grow:0;">Introduction: Modeling</div><!--<div class="divider"></div>
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
-                Three years into my pure math studies at UMass Amherst, I had my first exprience in machine learning modeling at a summer research program at SDSU. The program was in mathematics, although ML frenzy had already started spreading across adjacent industries without mercy, and I was paired with more senior statisticians to work out a model to predict location of zeros of a Riemann Zeta function on the critical line. To start, an undereducated pure math geek, I instinctively wanted to first understand
-                what a "model" is in the most general sense, give it a rigorous definiton for my own peace of mind. Of course, this is a rather philoshopical feat, which was hard to understand for me back then since in my world everything must have had precise definition. This search for a formal framework of a "model" at the beginning of this supposedly practical and fun project wasted quite a bit of my time and also didn't lead to a satisfactory answer. Most explanations spoke of models as "sets of equations", "rules",
+                Three years into my pure math studies at UMass Amherst, I had my first experience in machine learning modeling at a summer research program at SDSU. The program was in mathematics, although ML frenzy had already started spreading across adjacent industries without mercy, and I was paired with more senior statisticians to work out a model to predict location of zeros of a Riemann Zeta function on the critical line. To start, an under-educated pure math geek, I instinctively wanted to first understand
+                what a "model" is in the most general sense, give it a rigorous definition for my own peace of mind. Of course, this is a rather philosophical feat, which was hard to understand for me back then since in my world everything must have had precise definition. This search for a formal framework of a "model" at the beginning of this supposedly practical and fun project wasted quite a bit of my time and also didn't lead to a satisfactory answer. Most explanations spoke of models as "sets of equations", "rules",
                 "relationships between quantities", etc. While conceptually all this makes sense and is true in some approximation, it just wasn't what I was looking for, and eventually I just moved on. Believe it or not, it took me 4 years, three courses in probability and statistics, and half of a PhD to formulate an answer to that question that I think is reasonably valid, general, and mathematically sound. And it's not even a product of my philosophical contemplations&mdash;I just randomly found it in the first pages
-                of an introductory textbook on statistics. the simplicity of it left me wishing that all statistics textbooks start with it rather than with repeatedly tossing fair coins or rolling dice.
+                of an introductory textbook on statistics. The simplicity of it left me wishing that all statistics textbooks start with it rather than with repeatedly tossing fair coins or rolling dice.
                 <br/><br/>
-                A <it>statistical</it> model is a collection of distributions. A parametric model \(\mathcal{P}\) is a collection of distributions \(\mathcal{P}=\{P_{\theta}\colon \theta\in\Theta\}\) parameterized by a finite number of parameters \(\theta\in\Theta\subseteq\mathbb{R}^d\). A Bayesian model is described by two collections&mdash;posteriors and priors. This may seem like a facier way of saying that a model "describes relationships between variables" but I find it way more satisfying
-                and telling and, looking back at my experiences with ML models, it definitely helps me understand what they are and how they are different. For example, linear regression corresponds to a set of conditional distributions \(Y|X=x\in\{\mathcal{N}(w^{\top}x, \sigma^2)\colon w\in\mathcal{R}^d, \sigma>0\}\) (not how the homoscedascity assumption is engraved in this), logistic regression corresponds to \(Y|X=x\in\{\text{Bern}([1+e^{-w^{\top}x}]^{-1})\}\). Neural
+                A <it>statistical</it> model is a collection of distributions. A parametric model \(\mathcal{P}\) is a collection of distributions \(\mathcal{P}=\{P_{\theta}\colon \theta\in\Theta\}\) parameterized by a finite number of parameters \(\theta\in\Theta\subseteq\mathbb{R}^d\). A Bayesian model is described by two collections&mdash;posteriors and priors. This may seem like a fancier way of saying that a model "describes relationships between variables" but I find it way more satisfying
+                and telling and, looking back at my experiences with ML models, it definitely helps me understand what they are and how they are different. For example, linear regression corresponds to a set of conditional distributions \(Y|X=x\in\{\mathcal{N}(w^{\top}x, \sigma^2)\colon w\in\mathcal{R}^d, \sigma>0\}\) (note how the homoscedasticity assumption is encoded in this), logistic regression corresponds to \(Y|X=x\in\{\text{Bern}([1+e^{-w^{\top}x}]^{-1})\}\). Neural
                 networks are also parametric models with associated distributions dependent on architecture. Now, not all models 
                 \(Y\)
             </div>-->
@@ -111,7 +112,7 @@
                 However, there are infinitely many such hyperplanes and some are more reasonable and useful from a practical perspective
                 than others. Having a privilege to choose one, we prefer a separating hyperplane that is as remote from all 
                 datapoints as possible. To make our intuition more precise, we wish to maximize the minimum distance to any sample
-                \(\gamma(w,b) = \lVert w\rVert^{-1}\min_{i}|w^{\top}x_i+b|\) while obviously making the correct predicitions, so \(y_i(w^{\top}x_i+b)\geq 0.\) for all \(i\in[n]\).
+                \(\gamma(w,b) = \lVert w\rVert^{-1}\min_{i}|w^{\top}x_i+b|\) while obviously making the correct predictions, so \(y_i(w^{\top}x_i+b)\geq 0.\) for all \(i\in[n]\).
                 <hr style="height:5px; visibility:hidden;"/>
                 <span onclick="toggleSubcategories('0')" class="text-link">
                 What is the distance from a point to a hyperplane?
@@ -140,12 +141,12 @@
                 is straightforward now that we proved that optimal values of the two problems agree.
                 <hr style="height:10px; visibility:hidden;"/>
                 This new formulation is exactly the SVM quadratic problem (sometimes written with an equivalent objective \(\min\lVert w\rVert^2\)). The above discussion is rather didactic&#8212;it shows that, for the optimal hyperplane \((w^{\star},b^{\star})\), there must be at least 
-                one datapoint \(x\) with an active constraint \(y({w^{\star}}^{\top}x+b)=1\) for otherwise the margin could be increased. In fact, more is true: both classes must have datapoints with active constraints
-                for the same reason. While the geometric intuition is more obvious, we can show it algebraically just as well. The datapoints with active constraints are called <it>support vectors</it>
-                because they determine the optimal hyperplane. Other datapoints can be just as well removed with no consequences for the optimization result (unless more data is added later). Let \(x\) be a support vector.
+                one data point \(x\) with an active constraint \(y({w^{\star}}^{\top}x+b)=1\) for otherwise the margin could be increased. In fact, more is true: both classes must have data points with active constraints
+                for the same reason. While the geometric intuition is more obvious, we can show it algebraically equally well. The datapoints with active constraints are called <it>support vectors</it>
+                because they determine the optimal hyperplane. Other datapoints can just as easily be removed with no consequences for the optimization result (unless more data is added later). Let \(x\) be a support vector.
                 The distance from \(x\) to the SVM hyperplane \((w^{\star},b^{\star})\). is the then the optimal margin \(\gamma(w^{\star}, b^{\star})\), which is \(\lVert w\rVert^{-1}|{w^{\star}}^{\top}x+b^{\star}|=\lVert w\rVert^{-1}\).
                 <hr style="height:10px; visibility:hidden;"/>
-                The KKT conditions can potentially reveal some insights about the solution to this convex problem. Let the dual variables be \(\{\lambda_i\}_{i=1}^n\). Since the Lagrangian 
+                The KKT conditions may reveal some insights about the solution to this convex problem. Let the dual variables be \(\{\lambda_i\}_{i=1}^n\). Since the Lagrangian 
                 \(L(w,b,\lambda)=\lVert w\rVert^2+\sum_{i=1}^n\lambda_i(1-y_i(w^{\top}x_i+b)\) is convex and differentiable in \(w,b\), it follows that \(\partial_{w,b}L(w,b,\lambda)=\{\nabla_{w,b}L(w,b,\lambda)\}\) for any feasible \(\lambda\).
                 The stationarity condition, necessarily satisfied at the solution \((w^{\star},b^{\star},\lambda^{\star})\), is then
                 \[\begin{align}0&=\nabla_w L(w,b,\lambda)=2w^{\star}-\sum_{i=1}^n\lambda^{\star}_i y_ix_i,\\0&=\nabla_b L(w,b,\lambda)=-\sum_{i=1}^n\lambda^{\star}_iy_i.\end{align}\]
@@ -181,7 +182,7 @@
                 With this dual problem we are now in position to introduce the <it>kernel trick</it>&#8212;a feature that makes linear methods extremely expressive.
                 It is often covered together with the SVM algorithm although it more generally applies to any linear learning algorithm with a decision rule \(\text{sgn}(w^{\top}x+b)\).
                 Note that the most recent optimization
-                problem depends not on the individual datapoints \(x_i\) but rather on their dot products \(x_i^{\top}x_j\). For starters, precomputing these dot products
+                problem depends not on the individual data points \(x_i\) but rather on their dot products \(x_i^{\top}x_j\). For starters, precomputing these dot products
                 will save us quite some runtime. Most importantly, however, we can now choose a different (higher-dimensional or even infinite-dimensional) optimization space where we embed our samples
                 using a potentially non-linear mapping \(\phi\), allowing us to capture non-linear patterns in the data or separate
                 originally linearly inseparable datasets. To this end, we just need to substitute the original \(x_i^{\top}x_j\) by \(\phi(x_i)^{\top}\phi(x_j)\). And there is more! We don't actually need to handcraft the mapping \(\phi\):
@@ -199,12 +200,12 @@
                 </ul>
                 <hr style="height:10px; visibility:hidden;"/>
                 Kernel SVM allows us to deal with linearly inseparable data by mapping it to a higher dimensional space and separating it there.
-                Often times, however, we actually do not need perfect separation and would tolerate some mistakes for sake of a simpler model, whether in the original or a higher-dimensional space.
+                Often, however, we do not need perfect separation and would tolerate some mistakes for the sake of a simpler model, whether in the original or a higher-dimensional space.
                 To this end, we relax the separability constraints in the original primal problem using <it>slack variables</it> and incorporate a penalty for making mistakes 
                 into the objective function: \[\min\left[\lVert w\rVert^2+C\sum_{i=1}^n\xi_i\right]\quad\text{subject to }\begin{cases}\begin{align}y_i(w^{\top}x+b)\geq 1-\xi_i\quad &\forall i\in[n],\\\xi_i\geq 0\quad\quad\quad &\forall i\in[n].\end{align}\end{cases}\]
-                where \(C\) is a hyperparameter and is not optimized. Like in many other machine learning algorithms, this parameter esentially controls the regularization (unlike most algorithms, though,
+                where \(C\) is a hyperparameter and is not optimized. Like in many other machine learning algorithms, this parameter essentially controls the regularization (unlike most algorithms, though,
                 higher values of \(C\) are associated with potentially overfitting solutions). The above optimization problem still remains quadratic with linear constraints and we call it <it>soft-margin SVM</it>
-                (as opposed to the original <it>hard-margin SVM</it>) since we now allow violations of the margin contraints. In soft-margin SVM, we naturally define support vectors to be the offenders of the constraint, i.e.,
+                (as opposed to the original <it>hard-margin SVM</it>) since we now allow violations of the margin constraints. In soft-margin SVM, we naturally define support vectors to be the offenders of the constraint, i.e.,
                 the datapoints with \(\xi_i>0\). By partitioning all samples into support and nuisance vectors, we can decompose the penalty term in the objective function:
                 \[\sum_{i=1}^n\xi_i = \begin{cases}1-y_i(w^{\top}x_i+b)&\text{if } y_i(w^{\top}x_i+b)<1,\\0&\text{otherwise.}\end{cases}\]
                 Thus, we can rewrite the objective as \[C\sum_{i=1}^{n}\max[0,1-y_i(w^{\top}x_i+b)]+\lVert w\rVert^2.\]

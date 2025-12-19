@@ -17,7 +17,8 @@
     	<link type="text/css" rel="stylesheet" href="/style.css?v24" />
     	<link rel="preconnect" href="https://fonts.googleapis.com">
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">    
+    	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">    
     	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 		<!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
 		<script id="MathJax-script" async
@@ -49,9 +50,9 @@
         </nav>
         <menu>
             <div class="menu-icon">
-                <i class='bx bx-menu' style="color:white;font-size:34px;cursor:pointer;margin-right:15px;"></i>
+                <i class='bx bx-menu' style="color:#e8e8e8;font-size:34px;cursor:pointer;margin-right:15px;"></i>
             </div>
-            <ul class="menu-dropdown" style="background:black;">
+            <ul class="menu-dropdown" style="background:#1a1a1a;">
                 <li><a href="/" style="--i:0" class="menu-option-vert">Home</a></li>
                 <li><a href="/aboutme" style="--i:0;" class="menu-option-vert">About me</a></li>
                 <li><a href="/publications" style="--i:0;" class="menu-option-vert">Publications</a></li>
@@ -108,8 +109,8 @@
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;"> 
                 <span style="font-weight: bold;"> Definition</span> [subgradient]. Consider any function \(f\colon D\rightarrow\mathbb{R}\) with domain \(D\subseteq\mathbb{R}^n\).
-                We say that \(g\in\mathbb{R}^n\) is a subgradient of \(f\) at \(x\) if, for any \(z\in D\), we have\(f(z)\geq f(x)+g^{\top}(z-x)\).
-                The collection of all subgradeints of \(f\) at \(x\) is called <it>subdifferential</it> and is denoted by \(\partial f(x)\). The function \(f\) is 
+                We say that \(g\in\mathbb{R}^n\) is a subgradient of \(f\) at \(x\) if, for any \(z\in D\), we have \(f(z)\geq f(x)+g^{\top}(z-x)\).
+                The collection of all subgradients of \(f\) at \(x\) is called <it>subdifferential</it> and is denoted by \(\partial f(x)\). The function \(f\) is 
                 <it>subdifferentiable</it> at \(x\) if \(\partial f(x)\) is nonempty. The function \(f\) is called <it>subdifferentiable</it> if it is subdifferentiable at
                 all points from its domain.
                 <hr style="height:10px; visibility:hidden;"/>
@@ -137,10 +138,10 @@
             </div>
             <div class="small-text" style="--c:rgb(88,88,88);--d:1;">
                 Consider a possibly non-convex optimization problem: \[\min f_0(x)\quad \text{subject to } \begin{cases} f_i(x)\leq 0 & \text{ for } i\in[M]\\ h_j(x)=0 &\text{ for } j\in[P],\end{cases}\]
-                with domain \(\mathcal{D}\) and \(\mathcal{X}\subseteq\mathcal{D}\) a nonempty feasible set. Furthermore, let the optimal value
+                with domain \(\mathcal{D}\) and \(\mathcal{X}\subseteq\mathcal{D}\), a nonempty feasible set. Furthermore, let the optimal value
                 of this problem be \(p^{\star}\). Note that \(P\) equality constraints just correspond to \(Ax=b\) for some \(A\in\mathbb{R}^P\times\mathbb{R}^{\text{dim}(\mathcal{D})}\) and \(b\in\mathbb{R}^P\).
                 Now, define a Lagrangian function \(L\colon\mathcal{D}\times\mathbb{R}^{M}\times\mathbb{R}^P\rightarrow\mathbb{R}\)
-                and the Lagrange dual function \(g\colon\mathbb{R}^{M}\times\mathbb{R}^P\rightarrow\mathbb{R}\), resectively, as
+                and the Lagrange dual function \(g\colon\mathbb{R}^{M}\times\mathbb{R}^P\rightarrow\mathbb{R}\), respectively, as
                 \[\begin{align}L(x,\lambda,\nu)&=f_0(x)+\sum_{i=1}^M\lambda_if_i(x)+\sum_{j=1}^P\nu_jh_j(x),\\g(\lambda,\nu)&=\inf_{x\in\mathcal{D}}L(x,\lambda,\nu).\end{align}\]
                 First, note that \(g\) is concave as a pointwise infimum of affine functions \(L(\cdot,\lambda,\nu)\).
                 Note that \(g(\lambda,\nu)\leq p^{\star}\) provided that \(\lambda\geq 0\). Indeed, since we assumed \(\mathcal{X}\) to be nonempty, let \(\tilde{x}\in\mathcal{X}\) be a feasible point. Then,
