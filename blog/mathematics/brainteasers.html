@@ -286,10 +286,10 @@
                 (i.e., no computers, notes, etc.) that will let you collectively figure out the average salary while also not revealing anyone's salary to anyone else.
             </span>
             <br>
-            <span onclick="toggleSubcategories('4-S')" class="text-link">
+            <span onclick="toggleSubcategories('3-S')" class="text-link">
                 Solution.
                 </span>
-                <ul id='4-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                <ul id='3-S' class="subcategories" style="color:black;margin-bottom:5px;">
                 Let the size of your team be \(N.\) Designate a person \(A_1\) to come up with some number, add their salary to it, and whisper the sum to person \(A_2.\) Next, the algorithm proceeds as follows: for all \(i\in\{2,3,\ldots,N\},\) person \(A_i\) adds their salary to the number they received from \(A_{i-1}\) and whispers the sum to person \(A_{i+1}.\) Person \(A_N\) would whisper their sum to person \(A_1,\) who finally subtracts his original number from the sum and announces the average salary.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
@@ -299,6 +299,16 @@
                 is allowed. The tradition dictates that once a person learns about his eye color, he is required to leave the island right after the gathering on the same day. No one had left the island for decades until a foreigner visited 
                 the island, sneaked into the daily gathering and said: "At least one of you has blue eyes" and left the island immediately. What will happen to the population of the island?
             </span>
+            <br>
+            <span onclick="toggleSubcategories('4-S')" class="text-link">
+                Solution.
+                </span>
+                <hr style="height:5px; visibility:hidden;"/>
+                <ul id='4-S' class="subcategories" style="color:black;margin-bottom:5px;">
+                As usual with these problems, start by investigating a simpler problem with fewer subjects. Obviously, if there is only one person on the island, he immediately learns he has blue eyes and has to depart. If there's two people, neither can make any conclusions immediately, so no one leaves on the first day. But this fact itself is all the evidence they need to conclude they have blue eyes: "if I did not have blue eyes, the other person would immediately know they had blue eyes and leave on the same day"; hence, both leave on day 2. It turns out this exact logic applies inductively. For three people, each of them will think: "if I didn't have blue eyes, then the other two people, who I see have blue eyes, will leave on day 2". Since this applies to each of the three and no one can deduce the color of their eyes any earlier, they all wait two days, observe that no one left, realize their hypothesis was false, and leave on day 3. Induction clearly applies and so starting with 100 people, they will all leave on day 100.<span style="float:right"><i class='bx bx-square'></i></span>
+                <hr style="height:15px; visibility:hidden;"/>
+                Perhaps a more interesting question is why this works. All islanders see other 99 blue-eyed compatriots every day and never leave, so what is that piece of new information that the foreigner bring to the tribe by stating the obvious? It's not any immediately available information, but it is something they can (and they know that everyone else can) deduce later. Like setting a ticking time bomb, the foreigner started all these intricate logical processes in the heads of the islanders that never existed before because there was no common starting point, no reference "day 0". And it's not only that everybody knew - it's that everybody knew eveyone else knew: had the foreigner tell the same information to everyone privately, nothing would have happened as nobody would know that the others know and hence expect others to act in a certain way, confriming or denying their hypotheses.
+                </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="eggs">
                 <span style="color:black;font-weight:bold;">5. Two eggs and a high-rise. </span> A building has 100 floors. The \(k\)-th floor is the highest floor an egg can be dropped from without breaking.
@@ -384,7 +394,7 @@
                 </span>
                 <hr style="height:5px; visibility:hidden;"/>
                 <ul id='3-S' class="subcategories" style="color:black;margin-bottom:5px;">
-                One naive linear-time and linear-space solution would be to use a hash table to store the number of times each ID appears in the logs and then traverse all its key-value pairs to find the one unmatched ID. However, due to the constant-space constraint, we can't use a hash table. In fact, this constraint makes it clear that data structures are useless here, and instead, we should come up with a clever <it>operation</it> to apply to the IDs as we traverse the logs. Ideally, this operation should be commutative (so the order of logs does not matter) and, most importantly, nilpotent of order 2 (so the second appearance of the same ID cancels out with the first). One such function is a bitwise OR. Provided that all IDs come in pairs except for one that appears only once, this ID equals the bitwise OR of all IDs in the logs.<span style="float:right"><i class='bx bx-square'></i></span>
+                One naive linear-time and linear-space solution would be to use a hash table to store the number of times each ID appears in the logs and then traverse all its key-value pairs to find the one unmatched ID. However, due to the constant-space constraint, we can't use a hash table. In fact, this constraint makes it clear that data structures are useless here, and instead, we should come up with a clever <it>operation</it> to apply to the IDs as we traverse the logs. Ideally, this operation should be commutative (so the order of logs does not matter) and, most importantly, nilpotent of order 2 (so the second appearance of the same ID cancels out with the first). One such function is a bitwise XOR. Provided that all IDs come in pairs except for one that appears only once, this ID equals the bitwise XOR of all IDs in the logs.<span style="float:right"><i class='bx bx-square'></i></span>
                 </ul>
             <hr style="height:15px; visibility:hidden;"/>
             <span id="rabbit">
